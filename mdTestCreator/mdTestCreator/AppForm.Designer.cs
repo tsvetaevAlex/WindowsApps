@@ -33,8 +33,9 @@
             bStart = new Button();
             tabControl1 = new TabControl();
             TestPage = new TabPage();
-            ReportPage = new TabPage();
             mdExtendion = new Label();
+            ReportPage = new TabPage();
+            testRow1 = new TestRow();
             tabControl1.SuspendLayout();
             TestPage.SuspendLayout();
             SuspendLayout();
@@ -78,6 +79,7 @@
             // 
             // TestPage
             // 
+            TestPage.Controls.Add(testRow1);
             TestPage.Controls.Add(mdExtendion);
             TestPage.Controls.Add(BoxTestname);
             TestPage.Controls.Add(BoxDescription);
@@ -90,6 +92,15 @@
             TestPage.Text = "TestPage";
             TestPage.UseVisualStyleBackColor = true;
             // 
+            // mdExtendion
+            // 
+            mdExtendion.AutoSize = true;
+            mdExtendion.Location = new Point(530, 12);
+            mdExtendion.Name = "mdExtendion";
+            mdExtendion.Size = new Size(28, 15);
+            mdExtendion.TabIndex = 3;
+            mdExtendion.Text = ".md";
+            // 
             // ReportPage
             // 
             ReportPage.Location = new Point(4, 24);
@@ -100,14 +111,12 @@
             ReportPage.Text = "ReportPage";
             ReportPage.UseVisualStyleBackColor = true;
             // 
-            // mdExtendion
+            // testRow1
             // 
-            mdExtendion.AutoSize = true;
-            mdExtendion.Location = new Point(530, 12);
-            mdExtendion.Name = "mdExtendion";
-            mdExtendion.Size = new Size(28, 15);
-            mdExtendion.TabIndex = 3;
-            mdExtendion.Text = ".md";
+            testRow1.Location = new Point(6, 81);
+            testRow1.Name = "testRow1";
+            testRow1.Size = new Size(707, 36);
+            testRow1.TabIndex = 4;
             // 
             // AppForm
             // 
@@ -132,5 +141,6 @@
         private TabPage TestPage;
         private TabPage ReportPage;
         private Label mdExtendion;
+        private TestRow testRow1;
     }
 }

@@ -38,7 +38,7 @@
             // stepNumber
             // 
             stepNumber.AutoSize = true;
-            stepNumber.Location = new Point(11, 14);
+            stepNumber.Location = new Point(11, 9);
             stepNumber.Name = "stepNumber";
             stepNumber.Size = new Size(13, 15);
             stepNumber.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // BoxStep
             // 
-            BoxStep.Location = new Point(30, 10);
+            BoxStep.Location = new Point(30, 5);
             BoxStep.Name = "BoxStep";
             BoxStep.PlaceholderText = "Type here short step description";
             BoxStep.Size = new Size(220, 23);
@@ -54,32 +54,31 @@
             // 
             // BoxExpected
             // 
-            BoxExpected.Location = new Point(260, 10);
+            BoxExpected.Location = new Point(260, 5);
             BoxExpected.Name = "BoxExpected";
+            BoxExpected.PlaceholderText = "Type here short expected result description";
             BoxExpected.Size = new Size(260, 23);
             BoxExpected.TabIndex = 2;
-            BoxExpected.PlaceholderText = "Type here short expected result description";
             // 
             // bAdd
             // 
             bAdd.FlatStyle = FlatStyle.Flat;
-            bAdd.Location = new Point(542, 10);
+            bAdd.Location = new Point(542, 5);
             bAdd.Name = "bAdd";
             bAdd.Size = new Size(75, 23);
             bAdd.TabIndex = 3;
             bAdd.Text = "Add Step";
             bAdd.UseVisualStyleBackColor = true;
-            bAdd.FlatStyle = FlatStyle.Flat;
             // 
             // bComplete
             // 
-            bComplete.Location = new Point(623, 10);
+            bComplete.FlatStyle = FlatStyle.Flat;
+            bComplete.Location = new Point(623, 5);
             bComplete.Name = "bComplete";
             bComplete.Size = new Size(75, 23);
             bComplete.TabIndex = 4;
             bComplete.Text = "button2";
             bComplete.UseVisualStyleBackColor = true;
-            bComplete.FlatStyle = FlatStyle.Flat;
             // 
             // TestRow
             // 
@@ -91,7 +90,7 @@
             Controls.Add(BoxStep);
             Controls.Add(stepNumber);
             Name = "TestRow";
-            Size = new Size(762, 85);
+            Size = new Size(707, 36);
             ResumeLayout(false);
             PerformLayout();
         }
