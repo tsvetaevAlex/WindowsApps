@@ -1,4 +1,4 @@
-namespace mdTest
+namespace mdTestCreator
 {
     internal static class Program
     {
