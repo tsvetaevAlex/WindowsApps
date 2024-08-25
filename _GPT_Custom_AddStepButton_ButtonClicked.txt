@@ -1,0 +1,604 @@
+C# window orms project.
+how to add user control to main form by ckick badd button in user control
+user control:
+namespace mdTestCreator
+{
+    partial class TestRowRecord : UserControl
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        public event EventHandler Custom_AddStepButton_ButtonClicked;
+        
+        public event EventHandler Custom_CompleteButton_ButttonClicked;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+        private void bAdd_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Custom_Control bAdd_Click", "Custom element", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Custom_AddStepButton_ButtonClicked?.Invoke(sender, e);
+        }
+
+        private void bComplete_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Custom_Control CompleteRecord_ButttonClicked", "Custom element", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Custom_CompleteButton_ButttonClicked?.Invoke(sender, e);
+        }
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            stepNumber = new Label();
+            BoxStep = new TextBox();
+            BoxExpected = new TextBox();
+            bAdd = new Button();
+            bComplete = new Button();
+            SuspendLayout();
+            // 
+            // stepNumber
+            // 
+            stepNumber.AutoSize = true;
+            stepNumber.Location = new Point(10, 10);
+            stepNumber.Name = "stepNumber";
+            stepNumber.Size = new Size(13, 15);
+            stepNumber.TabIndex = 0;
+            stepNumber.Text = "1";
+            // 
+            // BoxStep
+            // 
+            BoxStep.Location = new Point(33, 10);
+            BoxStep.Name = "BoxStep";
+            BoxStep.PlaceholderText = "Type here short step description";
+            BoxStep.Size = new Size(220, 23);
+            BoxStep.TabIndex = 1;
+            // 
+            // BoxExpected
+            // 
+            BoxExpected.Location = new Point(263, 10);
+            BoxExpected.Name = "BoxExpected";
+            BoxExpected.PlaceholderText = "Type here short expected result description";
+            BoxExpected.Size = new Size(260, 23);
+            BoxExpected.TabIndex = 2;
+            // 
+            // bAdd
+            // 
+            bAdd.FlatStyle = FlatStyle.Flat;
+            bAdd.Location = new Point(533, 10);
+            bAdd.Name = "bAdd";
+            bAdd.Size = new Size(80, 23);
+            bAdd.TabIndex = 3;
+            bAdd.Text = "добавить";
+            bAdd.UseVisualStyleBackColor = true;
+            bAdd.Click += bAdd_Click;
+            // 
+            // bComplete
+            // 
+            bComplete.FlatStyle = FlatStyle.Flat;
+            bComplete.Location = new Point(623, 10);
+            bComplete.Name = "bComplete";
+            bComplete.Size = new Size(80, 23);
+            bComplete.TabIndex = 4;
+            bComplete.Text = "Закончить";
+            bComplete.UseVisualStyleBackColor = true;
+            bComplete.Click += bComplete_Click;
+            // 
+            // TestRow
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(bComplete);
+            Controls.Add(bAdd);
+            Controls.Add(BoxExpected);
+            Controls.Add(BoxStep);
+            Controls.Add(stepNumber);
+            Name = "TestRow";
+            Size = new Size(710, 42);
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        private void InitializeCustomComponent(int rowNumber)
+        {
+            stepNumber = new Label();
+            BoxStep = new TextBox();
+            BoxExpected = new TextBox();
+            bAdd = new Button();
+            bComplete = new Button();
+            SuspendLayout();
+            // 
+            // stepNumber
+            // 
+            stepNumber.AutoSize = true;
+            stepNumber.Location = new Point(10, 10);
+            stepNumber.Name = "stepNumber";
+            stepNumber.Size = new Size(13, 15);
+            stepNumber.TabIndex = 0;
+            stepNumber.Text = stepNumber.ToString();
+            // 
+            // BoxStep
+            // 
+            BoxStep.Location = new Point(33, 10);
+            BoxStep.Name = "BoxStep";
+            BoxStep.PlaceholderText = "Type here short step description";
+            BoxStep.Size = new Size(220, 23);
+            BoxStep.TabIndex = 1;
+            // 
+            // BoxExpected
+            // 
+            BoxExpected.Location = new Point(263, 10);
+            BoxExpected.Name = "BoxExpected";
+            BoxExpected.PlaceholderText = "Type here short expected result description";
+            BoxExpected.Size = new Size(260, 23);
+            BoxExpected.TabIndex = 2;
+            // 
+            // bAdd
+            // 
+            bAdd.FlatStyle = FlatStyle.Flat;
+            bAdd.Location = new Point(533, 10);
+            bAdd.Name = "bAdd";
+            bAdd.Size = new Size(80, 23);
+            bAdd.TabIndex = 3;
+            bAdd.Text = "добавить";
+            bAdd.UseVisualStyleBackColor = true;
+            bAdd.Click += bAdd_Click;
+            // 
+            // bComplete
+            // 
+            bComplete.FlatStyle = FlatStyle.Flat;
+            bComplete.Location = new Point(623, 10);
+            bComplete.Name = "bComplete";
+            bComplete.Size = new Size(80, 23);
+            bComplete.TabIndex = 4;
+            bComplete.Text = "Закончить";
+            bComplete.UseVisualStyleBackColor = true;
+            bComplete.Click += bComplete_Click;
+            // 
+            // TestRow
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(bComplete);
+            Controls.Add(bAdd);
+            Controls.Add(BoxExpected);
+            Controls.Add(BoxStep);
+            Controls.Add(stepNumber);
+            Name = "TestRow";
+            Size = new Size(710, 42);
+            ResumeLayout(false);
+            PerformLayout();
+        }
+        #endregion
+
+        private Label stepNumber;
+        private TextBox BoxStep;
+        private TextBox BoxExpected;
+        private Button bAdd;
+        private Button bComplete;
+    }
+}
+
+
+maian form:
+using Microsoft.VisualBasic;
+
+namespace mdTestCreator
+{
+    partial class AppForm : Form
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        private TextBox BoxTestname;
+        private TextBox BoxDescription;
+        private Button bStart;
+        private TabControl tabs;
+        private TabPage TestPage;
+        private TabPage ReportPage;
+        private Label mdExtendion;
+        private TestRowRecord customElement;
+        private TestRowRecord PreviousTestRowRecord;
+        private TestRowRecord FirstTestrow;
+        public static int stepsQTY = 1;
+        public static bool isFirst = true;
+        private const string mainFormCaption = "message from main Form";
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            customElement = new TestRowRecord();
+            BoxTestname = new TextBox();
+            BoxDescription = new TextBox();
+            bStart = new Button();
+            tabs = new TabControl();
+            TestPage = new TabPage();
+            mdExtendion = new Label();
+            ReportPage = new TabPage();
+            tabs.SuspendLayout();
+            TestPage.SuspendLayout();
+            SuspendLayout();
+            // 
+            // customElement
+            // 
+            customElement.Location = new Point(0, 72);
+            customElement.Name = "customElement";
+            customElement.Size = new Size(762, 85);
+            customElement.TabIndex = 4;
+            customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+            // 
+            // BoxTestname
+            // 
+            BoxTestname.Location = new Point(10, 10);
+            BoxTestname.Name = "BoxTestname";
+            BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
+            BoxTestname.Size = new Size(510, 23);
+            BoxTestname.TabIndex = 0;
+            // 
+            // BoxDescription
+            // 
+            BoxDescription.Location = new Point(10, 43);
+            BoxDescription.Multiline = true;
+            BoxDescription.Name = "BoxDescription";
+            BoxDescription.PlaceholderText = "Type here short description what this test case will do.";
+            BoxDescription.Size = new Size(510, 23);
+            BoxDescription.TabIndex = 1;
+            // 
+            // bStart
+            // 
+            bStart.Location = new Point(570, 10);
+            bStart.Name = "bStart";
+            bStart.Size = new Size(80, 23);
+            bStart.TabIndex = 2;
+            bStart.Text = "Lets Start";
+            bStart.UseVisualStyleBackColor = true;
+            bStart.Click += bStart_Click;
+            // 
+            // tabs
+            // 
+            tabs.Controls.Add(TestPage);
+            tabs.Controls.Add(ReportPage);
+            tabs.Location = new Point(-4, 12);
+            tabs.Name = "tabs";
+            tabs.SelectedIndex = 0;
+            tabs.Size = new Size(1018, 565);
+            tabs.TabIndex = 4;
+            // 
+            // TestPage
+            // 
+            TestPage.Controls.Add(customElement);
+            TestPage.Controls.Add(mdExtendion);
+            TestPage.Controls.Add(BoxTestname);
+            TestPage.Controls.Add(BoxDescription);
+            TestPage.Controls.Add(bStart);
+            TestPage.Location = new Point(4, 24);
+            TestPage.Name = "TestPage";
+            TestPage.Padding = new Padding(3);
+            TestPage.Size = new Size(1010, 537);
+            TestPage.TabIndex = 0;
+            TestPage.Text = "TestPage";
+            TestPage.UseVisualStyleBackColor = true;
+            // 
+            // mdExtendion
+            // 
+            mdExtendion.AutoSize = true;
+            mdExtendion.Location = new Point(530, 12);
+            mdExtendion.Name = "mdExtendion";
+            mdExtendion.Size = new Size(28, 15);
+            mdExtendion.TabIndex = 3;
+            mdExtendion.Text = ".md";
+            // 
+            // ReportPage
+            // 
+            ReportPage.Location = new Point(4, 24);
+            ReportPage.Name = "ReportPage";
+            ReportPage.Padding = new Padding(3);
+            ReportPage.Size = new Size(992, 430);
+            ReportPage.TabIndex = 1;
+            ReportPage.Text = "ReportPage";
+            ReportPage.UseVisualStyleBackColor = true;
+            // 
+            // AppForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1008, 729);
+            Controls.Add(tabs);
+            Name = "AppForm";
+            Text = "msTestCreator";
+            tabs.ResumeLayout(false);
+            TestPage.ResumeLayout(false);
+            TestPage.PerformLayout();
+            ResumeLayout(false);
+        }
+
+        private void InitializeCustomComponent(int number)
+        {
+            customElement = new TestRowRecord(number);
+
+            if (isFirst)
+            {
+                FirstTestrow = customElement;
+                PreviousTestRowRecord = customElement;
+            }
+            else
+            {
+                PreviousTestRowRecord = customElement;
+            }
+            int Y = number * 66; //2 textbox 23 each + 10 between boxes and 10 bekow;
+            customElement.Location = new Point(0, Y);
+            customElement.Size = new Size(762, 41);
+            customElement.TabIndex = 4;
+            Controls.Add(customElement);
+        }
+
+        private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
+        {
+            // Optionally, do something when a new step is added
+            MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            InitializeCustomComponent(stepsQTY);
+            // Update PreviousTestRowRecord to point to the new control
+
+        }
+        private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
+        {
+            // Optionally, do something when a new step is added
+            MessageBox.Show("VUstom Complete buttton clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Update PreviousTestRowRecord to point to the new control
+            PreviousTestRowRecord = sender as TestRowRecord;
+        }
+        //private void Custom_AddStepButton_ButttonClicked(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Custom_AddStepButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //}
+
+
+
+        private void bStart_Click(object sender, EventArgs e)
+        {
+            if (BoxTestname.Text == string.Empty)
+            {
+                MessageBox.Show("Please input short test case name.(filename)", caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                InitializeCustomComponent(stepsQTY);
+            }
+        }
+    }
+}
+ChatGPT сказал:
+ChatGPT
+To add a UserControl to the main form when the "Add" button is clicked in the UserControl, you can follow the steps below:
+
+Modify the InitializeCustomComponent method in the AppForm to update the main form with the new UserControl.
+
+Handle the event in the Custom_AddStepButton_ButtonClicked method so that it adds a new TestRowRecord control to the form.
+
+Update the layout to properly position each new TestRowRecord control.
+
+Here’s how you can update your code:
+
+Updated AppForm Code:
+
+
+==================================== code ============================================
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace mdTestCreator
+{
+    partial class AppForm : Form
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        private TextBox BoxTestname;
+        private TextBox BoxDescription;
+        private Button bStart;
+        private TabControl tabs;
+        private TabPage TestPage;
+        private TabPage ReportPage;
+        private Label mdExtendion;
+        private TestRowRecord customElement;
+        private TestRowRecord PreviousTestRowRecord;
+        private TestRowRecord FirstTestrow;
+        public static int stepsQTY = 1;
+        public static bool isFirst = true;
+        private const string mainFormCaption = "message from main Form";
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            customElement = new TestRowRecord();
+            BoxTestname = new TextBox();
+            BoxDescription = new TextBox();
+            bStart = new Button();
+            tabs = new TabControl();
+            TestPage = new TabPage();
+            mdExtendion = new Label();
+            ReportPage = new TabPage();
+            tabs.SuspendLayout();
+            TestPage.SuspendLayout();
+            SuspendLayout();
+            // 
+            // customElement
+            // 
+            customElement.Location = new Point(0, 72);
+            customElement.Name = "customElement";
+            customElement.Size = new Size(762, 85);
+            customElement.TabIndex = 4;
+            customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+            // 
+            // BoxTestname
+            // 
+            BoxTestname.Location = new Point(10, 10);
+            BoxTestname.Name = "BoxTestname";
+            BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
+            BoxTestname.Size = new Size(510, 23);
+            BoxTestname.TabIndex = 0;
+            // 
+            // BoxDescription
+            // 
+            BoxDescription.Location = new Point(10, 43);
+            BoxDescription.Multiline = true;
+            BoxDescription.Name = "BoxDescription";
+            BoxDescription.PlaceholderText = "Type here short description what this test case will do.";
+            BoxDescription.Size = new Size(510, 23);
+            BoxDescription.TabIndex = 1;
+            // 
+            // bStart
+            // 
+            bStart.Location = new Point(570, 10);
+            bStart.Name = "bStart";
+            bStart.Size = new Size(80, 23);
+            bStart.TabIndex = 2;
+            bStart.Text = "Let`s Start";
+            bStart.UseVisualStyleBackColor = true;
+            bStart.Click += bStart_Click;
+            // 
+            // tabs
+            // 
+            tabs.Controls.Add(TestPage);
+            tabs.Controls.Add(ReportPage);
+            tabs.Location = new Point(-4, 12);
+            tabs.Name = "tabs";
+            tabs.SelectedIndex = 0;
+            tabs.Size = new Size(1018, 565);
+            tabs.TabIndex = 4;
+            // 
+            // TestPage
+            // 
+            TestPage.Controls.Add(customElement);
+            TestPage.Controls.Add(mdExtendion);
+            TestPage.Controls.Add(BoxTestname);
+            TestPage.Controls.Add(BoxDescription);
+            TestPage.Controls.Add(bStart);
+            TestPage.Location = new Point(4, 24);
+            TestPage.Name = "TestPage";
+            TestPage.Padding = new Padding(3);
+            TestPage.Size = new Size(1010, 537);
+            TestPage.TabIndex = 0;
+            TestPage.Text = "TestPage";
+            TestPage.UseVisualStyleBackColor = true;
+            // 
+            // mdExtendion
+            // 
+            mdExtendion.AutoSize = true;
+            mdExtendion.Location = new Point(530, 12);
+            mdExtendion.Name = "mdExtendion";
+            mdExtendion.Size = new Size(28, 15);
+            mdExtendion.TabIndex = 3;
+            mdExtendion.Text = ".md";
+            // 
+            // ReportPage
+            // 
+            ReportPage.Location = new Point(4, 24);
+            ReportPage.Name = "ReportPage";
+            ReportPage.Padding = new Padding(3);
+            ReportPage.Size = new Size(992, 430);
+            ReportPage.TabIndex = 1;
+            ReportPage.Text = "ReportPage";
+            ReportPage.UseVisualStyleBackColor = true;
+            // 
+            // AppForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1008, 729);
+            Controls.Add(tabs);
+            Name = "AppForm";
+            Text = "msTestCreator";
+            tabs.ResumeLayout(false);
+            TestPage.ResumeLayout(false);
+            TestPage.PerformLayout();
+            ResumeLayout(false);
+        }
+
+        private void InitializeCustomComponent(int number)
+        {
+            customElement = new TestRowRecord(number);
+
+            if (isFirst)
+            {
+                FirstTestrow = customElement;
+                PreviousTestRowRecord = customElement;
+                isFirst = false;
+            }
+            else
+            {
+                PreviousTestRowRecord = customElement;
+            }
+
+            int Y = number * 66; // Adjust the Y-coordinate based on the number of steps
+            customElement.Location = new Point(0, Y);
+            customElement.Size = new Size(762, 41);
+            customElement.TabIndex = 4;
+            TestPage.Controls.Add(customElement);
+            stepsQTY++; // Increment step count for the next row
+        }
+
+        private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
+        {
+            InitializeCustomComponent(stepsQTY); // Add new TestRowRecord when the "Add" button is clicked
+        }
+
+        private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
+        {
+            MessageBox.Show("Custom Complete button clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            PreviousTestRowRecord = sender as TestRowRecord;
+        }
+
+        private void bStart_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(BoxTestname.Text))
+            {
+                MessageBox.Show("Please input a short test case name (filename)", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                InitializeCustomComponent(stepsQTY);
+            }
+        }
+    }
+}
+
+Key Points:
+The Custom_AddStepButton_ButtonClicked method now calls InitializeCustomComponent to create a new TestRowRecord and add it to the TestPage.
+The InitializeCustomComponent method calculates the Y-coordinate based on the number of steps to ensure the new TestRowRecord is positioned correctly.
+stepsQTY is incremented each time a new step is added, ensuring that subsequent controls are positioned below the previous ones.
+This setup should give you the desired functionality of adding new user controls dynamically to the main form when the "Add" button is clicked in the UserControl.
+

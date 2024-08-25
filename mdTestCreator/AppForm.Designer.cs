@@ -1,6 +1,8 @@
-﻿namespace mdTestCreator
+﻿using Microsoft.VisualBasic;
+
+namespace mdTestCreator
 {
-    partial class AppForm
+    partial class AppForm : Form
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -11,7 +13,12 @@
         private TabPage TestPage;
         private TabPage ReportPage;
         private Label mdExtendion;
-        private TestRow customElement;
+        private TestRowRecord customElement;
+        private TestRowRecord PreviousTestRowRecord;
+        private TestRowRecord FirstTestКow;
+        public static int stepsQTY = 1;
+        public static bool isFirst = true;
+        private const string mainFormCaption = "message from main Form";
 
         protected override void Dispose(bool disposing)
         {
@@ -22,14 +29,22 @@
             base.Dispose(disposing);
         }
 
+        private void AddFirstSTepRow()
+        {
+            MessageBox.Show("we are inside InitFirstSTepRow", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SuspendLayout();
+            FirstTestКow = new TestRowRecord();
+            FirstTestКow.Location = new Point(0, 66);
+            FirstTestКow.Size = new Size(762, 41);
+            FirstTestКow.TabIndex = 4;
+            PreviousTestRowRecord = FirstTestКow;
+            Controls.Add(FirstTestКow);
+            ResumeLayout(true);
+        }
+
         private void InitializeComponent()
         {
-            customElement = new TestRow();
-
-            // Подписка на события
-            customElement.Custom_AddStepButton_ButttonClicked += Custom_AddStepButton_ButttonClicked;
-            customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
-
+            customElement = new TestRowRecord();
             BoxTestname = new TextBox();
             BoxDescription = new TextBox();
             bStart = new Button();
@@ -41,15 +56,28 @@
             TestPage.SuspendLayout();
             SuspendLayout();
 
-            // Инициализация и настройка элементов управления
-            BoxTestname.BorderStyle = BorderStyle.Fixed3D;
+            // 
+            // customElement
+            // 
+            customElement.Location = new Point(0, 72);
+            customElement.Name = "customElement";
+            customElement.Size = new Size(762, 85);
+            customElement.TabIndex = 4;
+            customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+
+            // 
+            // BoxTestname
+            // 
             BoxTestname.Location = new Point(10, 10);
             BoxTestname.Name = "BoxTestname";
             BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
             BoxTestname.Size = new Size(510, 23);
             BoxTestname.TabIndex = 0;
 
-            BoxDescription.BorderStyle = BorderStyle.Fixed3D;
+            // 
+            // BoxDescription
+            // 
             BoxDescription.Location = new Point(10, 43);
             BoxDescription.Multiline = true;
             BoxDescription.Name = "BoxDescription";
@@ -57,6 +85,9 @@
             BoxDescription.Size = new Size(510, 23);
             BoxDescription.TabIndex = 1;
 
+            // 
+            // bStart
+            // 
             bStart.Location = new Point(570, 10);
             bStart.Name = "bStart";
             bStart.Size = new Size(80, 23);
@@ -65,15 +96,21 @@
             bStart.UseVisualStyleBackColor = true;
             bStart.Click += bStart_Click;
 
+            // 
+            // tabs
+            // 
             tabs.Controls.Add(TestPage);
             tabs.Controls.Add(ReportPage);
-            tabs.Location = new Point(-9, 12);
+            tabs.Location = new Point(-4, 12);
             tabs.Name = "tabs";
             tabs.SelectedIndex = 0;
-            tabs.Size = new Size(1000, 458);
+            tabs.Size = new Size(1018, 565);
             tabs.TabIndex = 4;
 
-            TestPage.Controls.Add(customElement); // Добавляем customElement на форму
+            // 
+            // TestPage
+            // 
+            TestPage.Controls.Add(customElement);
             TestPage.Controls.Add(mdExtendion);
             TestPage.Controls.Add(BoxTestname);
             TestPage.Controls.Add(BoxDescription);
@@ -81,16 +118,14 @@
             TestPage.Location = new Point(4, 24);
             TestPage.Name = "TestPage";
             TestPage.Padding = new Padding(3);
-            TestPage.Size = new Size(992, 430);
+            TestPage.Size = new Size(1010, 537);
             TestPage.TabIndex = 0;
             TestPage.Text = "TestPage";
             TestPage.UseVisualStyleBackColor = true;
 
-            customElement.Location = new Point(0, 72);
-            customElement.Name = "customElement";
-            customElement.Size = new Size(762, 85);
-            customElement.TabIndex = 4;
-
+            // 
+            // mdExtendion
+            // 
             mdExtendion.AutoSize = true;
             mdExtendion.Location = new Point(530, 12);
             mdExtendion.Name = "mdExtendion";
@@ -98,6 +133,9 @@
             mdExtendion.TabIndex = 3;
             mdExtendion.Text = ".md";
 
+            // 
+            // ReportPage
+            // 
             ReportPage.Location = new Point(4, 24);
             ReportPage.Name = "ReportPage";
             ReportPage.Padding = new Padding(3);
@@ -106,6 +144,9 @@
             ReportPage.Text = "ReportPage";
             ReportPage.UseVisualStyleBackColor = true;
 
+            // 
+            // AppForm
+            // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1008, 729);
@@ -118,21 +159,84 @@
             ResumeLayout(false);
         }
 
-        private void Custom_AddStepButton_ButttonClicked(object sender, EventArgs e)
+        private void InitializeCustomComponent(int stepNumber)
         {
-            MessageBox.Show("Custom_AddStepButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var newTestRow = new TestRowRecord();
+
+            // Calculate position based on the current step number
+            int yPos = 72 + (stepsQTY * 66); // Adjust the vertical position
+            newTestRow.Location = new Point(0, yPos);
+            newTestRow.Size = new Size(762, 41);
+            newTestRow.TabIndex = stepsQTY;
+
+            // Subscribe to events
+            newTestRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            newTestRow.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+
+            // Add the new control to the TestPage
+            TestPage.Controls.Add(newTestRow);
+
+            // Increment step count
+            stepsQTY++;
+        }
+        private void InitializeFirstCustomComponent(int number)
+        {
+            customElement = new TestRowRecord();
+            customElement.Location = new Point(0, 66);
+            customElement.Size = new Size(762, 41);
+            customElement.TabIndex = 4;
+            Controls.Add(customElement);
+
+            if (isFirst)
+            {
+                FirstTestКow = new TestRowRecord();;
+                PreviousTestRowRecord = customElement;
+            }
+            else
+            {
+                PreviousTestRowRecord = customElement;
+            }
+            int Y = number * 66; //2 textbox 23 each + 10 between boxes and 10 bekow;
+            customElement.Location = new Point(0, Y);
+            customElement.Size = new Size(762, 41);
+            customElement.TabIndex = 4;
+            Controls.Add(customElement);
+            PerformLayout();
         }
 
+        private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
+        {
+            // Optionally, do something when a new step is added
+            MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            InitializeCustomComponent(stepsQTY);
+            // Update PreviousTestRowRecord to point to the new control
+
+        }
         private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
         {
-            MessageBox.Show("Custom_CompleteButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Optionally, do something when a new step is added
+            MessageBox.Show("VUstom Complete buttton clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Update PreviousTestRowRecord to point to the new control
+            PreviousTestRowRecord = sender as TestRowRecord;
         }
+        //private void Custom_AddStepButton_ButttonClicked(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Custom_AddStepButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //}
+
+
 
         private void bStart_Click(object sender, EventArgs e)
         {
             if (BoxTestname.Text == string.Empty)
             {
                 MessageBox.Show("Please input short test case name.(filename)", caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Init First test step row", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddFirstSTepRow();
             }
         }
     }

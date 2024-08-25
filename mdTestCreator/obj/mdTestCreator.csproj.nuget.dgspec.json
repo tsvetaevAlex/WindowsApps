@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator\\mdTestCreator.csproj": {}
+    "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator.csproj": {}
   },
   "projects": {
-    "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator\\mdTestCreator.csproj": {
+    "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator\\mdTestCreator.csproj",
+        "projectUniqueName": "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator.csproj",
         "projectName": "mdTestCreator",
-        "projectPath": "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator\\mdTestCreator.csproj",
+        "projectPath": "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator.csproj",
         "packagesPath": "C:\\Users\\tsvet\\.nuget\\packages\\",
-        "outputPath": "W:\\src\\WindowsApps\\mdTestCreator\\mdTestCreator\\obj\\",
+        "outputPath": "W:\\src\\WindowsApps\\mdTestCreator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "W:\\IDE\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
