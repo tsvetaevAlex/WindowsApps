@@ -15,6 +15,9 @@ namespace mdTestCreator
 
         public Action CompleteRecord_ButttonClicked { get; internal set; }
 
+        private void TestPagePanel_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
     }
 }

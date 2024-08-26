@@ -34,17 +34,23 @@ namespace mdTestCreator
             MessageBox.Show("we are inside InitFirstSTepRow", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             SuspendLayout();
             FirstTestКow = new TestRowRecord();
-            FirstTestКow.Location = new Point(0, 66);
+            FirstTestКow.Location = new Point(0, 76);
             FirstTestКow.Size = new Size(762, 41);
             FirstTestКow.TabIndex = 4;
             PreviousTestRowRecord = FirstTestКow;
             Controls.Add(FirstTestКow);
+            TestPage.Controls.Add(FirstTestКow);
             ResumeLayout(true);
+            if (isFirst)
+            {
+                isFirst = false;
+            }
+
+            stepsQTY++;
         }
 
         private void InitializeComponent()
         {
-            customElement = new TestRowRecord();
             BoxTestname = new TextBox();
             BoxDescription = new TextBox();
             bStart = new Button();
@@ -55,17 +61,15 @@ namespace mdTestCreator
             tabs.SuspendLayout();
             TestPage.SuspendLayout();
             SuspendLayout();
-
             // 
             // customElement
             // 
-            customElement.Location = new Point(0, 72);
-            customElement.Name = "customElement";
-            customElement.Size = new Size(762, 85);
-            customElement.TabIndex = 4;
-            customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
-            customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
-
+            //customElement.Location = new Point(10, 72);
+            //customElement.Name = "customElement";
+            //customElement.Size = new Size(762, 85);
+            //customElement.TabIndex = 4;
+            //customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            //customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
             // 
             // BoxTestname
             // 
@@ -74,7 +78,6 @@ namespace mdTestCreator
             BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
             BoxTestname.Size = new Size(510, 23);
             BoxTestname.TabIndex = 0;
-
             // 
             // BoxDescription
             // 
@@ -84,7 +87,6 @@ namespace mdTestCreator
             BoxDescription.PlaceholderText = "Type here short description what this test case will do.";
             BoxDescription.Size = new Size(510, 23);
             BoxDescription.TabIndex = 1;
-
             // 
             // bStart
             // 
@@ -95,7 +97,6 @@ namespace mdTestCreator
             bStart.Text = "Let`s Start";
             bStart.UseVisualStyleBackColor = true;
             bStart.Click += bStart_Click;
-
             // 
             // tabs
             // 
@@ -104,12 +105,12 @@ namespace mdTestCreator
             tabs.Location = new Point(-4, 12);
             tabs.Name = "tabs";
             tabs.SelectedIndex = 0;
-            tabs.Size = new Size(1018, 565);
+            tabs.Size = new Size(1024, 768);
             tabs.TabIndex = 4;
-
             // 
             // TestPage
             // 
+            TestPage.BackColor = Color.Transparent;
             TestPage.Controls.Add(customElement);
             TestPage.Controls.Add(mdExtendion);
             TestPage.Controls.Add(BoxTestname);
@@ -118,11 +119,9 @@ namespace mdTestCreator
             TestPage.Location = new Point(4, 24);
             TestPage.Name = "TestPage";
             TestPage.Padding = new Padding(3);
-            TestPage.Size = new Size(1010, 537);
+            TestPage.Size = new Size(1016, 740);
             TestPage.TabIndex = 0;
             TestPage.Text = "TestPage";
-            TestPage.UseVisualStyleBackColor = true;
-
             // 
             // mdExtendion
             // 
@@ -132,24 +131,22 @@ namespace mdTestCreator
             mdExtendion.Size = new Size(28, 15);
             mdExtendion.TabIndex = 3;
             mdExtendion.Text = ".md";
-
             // 
             // ReportPage
             // 
             ReportPage.Location = new Point(4, 24);
             ReportPage.Name = "ReportPage";
             ReportPage.Padding = new Padding(3);
-            ReportPage.Size = new Size(992, 430);
+            ReportPage.Size = new Size(1016, 740);
             ReportPage.TabIndex = 1;
             ReportPage.Text = "ReportPage";
             ReportPage.UseVisualStyleBackColor = true;
-
             // 
             // AppForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1008, 729);
+            ClientSize = new Size(1008, 768);
             Controls.Add(tabs);
             Name = "AppForm";
             Text = "msTestCreator";
@@ -162,10 +159,11 @@ namespace mdTestCreator
         private void InitializeCustomComponent(int stepNumber)
         {
             var newTestRow = new TestRowRecord();
-
+            var prevRow = PreviousTestRowRecord;
             // Calculate position based on the current step number
-            int yPos = 72 + (stepsQTY * 66); // Adjust the vertical position
-            newTestRow.Location = new Point(0, yPos);
+
+            int pointY = isFirst ? 66 : prevRow.Location.Y + prevRow.Height + 10;
+            newTestRow.Location = new Point(0, pointY);
             newTestRow.Size = new Size(762, 41);
             newTestRow.TabIndex = stepsQTY;
 
@@ -181,6 +179,7 @@ namespace mdTestCreator
         }
         private void InitializeFirstCustomComponent(int number)
         {
+            int Yposition = PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + 10;
             customElement = new TestRowRecord();
             customElement.Location = new Point(0, 66);
             customElement.Size = new Size(762, 41);
@@ -189,6 +188,7 @@ namespace mdTestCreator
 
             if (isFirst)
             {
+                Yposition = 66;
                 FirstTestКow = new TestRowRecord();;
                 PreviousTestRowRecord = customElement;
             }
@@ -196,8 +196,8 @@ namespace mdTestCreator
             {
                 PreviousTestRowRecord = customElement;
             }
-            int Y = number * 66; //2 textbox 23 each + 10 between boxes and 10 bekow;
-            customElement.Location = new Point(0, Y);
+            //int Y = number * 66; //2 textbox 23 each + 10 between boxes and 10 bekow;
+            customElement.Location = new Point(0, (customElement.Height*number + 10));
             customElement.Size = new Size(762, 41);
             customElement.TabIndex = 4;
             Controls.Add(customElement);
@@ -206,8 +206,18 @@ namespace mdTestCreator
 
         private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
         {
+
+            /*
+             myform.Paint += (o, e) => {
+                    Graphics g = e.Graphics;
+                    using (Pen selPen = new Pen(Color.Blue))
+                    {
+                        g.DrawRectangle(selPen, 10, 10, 50, 50);
+                    }
+                };
+             */
             // Optionally, do something when a new step is added
-            MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             InitializeCustomComponent(stepsQTY);
             // Update PreviousTestRowRecord to point to the new control
 
@@ -224,8 +234,6 @@ namespace mdTestCreator
         //{
         //    MessageBox.Show("Custom_AddStepButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
         //}
-
-
 
         private void bStart_Click(object sender, EventArgs e)
         {

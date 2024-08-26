@@ -1,4 +1,6 @@
-﻿namespace mdTestCreator
+﻿using System.Windows.Forms;
+
+namespace mdTestCreator
 {
     partial class TestRowRecord : UserControl
     {
@@ -47,12 +49,14 @@
             BoxExpected = new TextBox();
             bAdd = new Button();
             bComplete = new Button();
+            CustomTestStepPanel = new Panel();
+            CustomTestStepPanel.SuspendLayout();
             SuspendLayout();
             // 
             // stepNumber
             // 
             stepNumber.AutoSize = true;
-            stepNumber.Location = new Point(10, 10);
+            stepNumber.Location = new Point(3, 11);
             stepNumber.Name = "stepNumber";
             stepNumber.Size = new Size(13, 15);
             stepNumber.TabIndex = 0;
@@ -60,7 +64,7 @@
             // 
             // BoxStep
             // 
-            BoxStep.Location = new Point(33, 10);
+            BoxStep.Location = new Point(22, 8);
             BoxStep.Name = "BoxStep";
             BoxStep.PlaceholderText = "Type here short step description";
             BoxStep.Size = new Size(220, 23);
@@ -68,7 +72,7 @@
             // 
             // BoxExpected
             // 
-            BoxExpected.Location = new Point(263, 10);
+            BoxExpected.Location = new Point(248, 8);
             BoxExpected.Name = "BoxExpected";
             BoxExpected.PlaceholderText = "Type here short expected result description";
             BoxExpected.Size = new Size(260, 23);
@@ -77,7 +81,7 @@
             // bAdd
             // 
             bAdd.FlatStyle = FlatStyle.Flat;
-            bAdd.Location = new Point(533, 10);
+            bAdd.Location = new Point(514, 8);
             bAdd.Name = "bAdd";
             bAdd.Size = new Size(80, 23);
             bAdd.TabIndex = 3;
@@ -88,7 +92,7 @@
             // bComplete
             // 
             bComplete.FlatStyle = FlatStyle.Flat;
-            bComplete.Location = new Point(623, 10);
+            bComplete.Location = new Point(600, 8);
             bComplete.Name = "bComplete";
             bComplete.Size = new Size(80, 23);
             bComplete.TabIndex = 4;
@@ -96,19 +100,30 @@
             bComplete.UseVisualStyleBackColor = true;
             bComplete.Click += bComplete_Click;
             // 
-            // TestRow
+            // CustomTestStepPanel
+            // 
+            CustomTestStepPanel.BackColor = Color.Transparent;
+            CustomTestStepPanel.BorderStyle = BorderStyle.FixedSingle;
+            CustomTestStepPanel.Controls.Add(stepNumber);
+            CustomTestStepPanel.Controls.Add(bComplete);
+            CustomTestStepPanel.Controls.Add(BoxStep);
+            CustomTestStepPanel.Controls.Add(bAdd);
+            CustomTestStepPanel.Controls.Add(BoxExpected);
+            CustomTestStepPanel.Location = new Point(2, 2);
+            CustomTestStepPanel.Name = "CustomTestStepPanel";
+            CustomTestStepPanel.Size = new Size(700, 41);
+            CustomTestStepPanel.TabIndex = 0;
+            // 
+            // TestRowRecord
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(bComplete);
-            Controls.Add(bAdd);
-            Controls.Add(BoxExpected);
-            Controls.Add(BoxStep);
-            Controls.Add(stepNumber);
-            Name = "TestRow";
-            Size = new Size(710, 42);
+            Controls.Add(CustomTestStepPanel);
+            Name = "TestRowRecord";
+            Size = new Size(702, 42);
+            CustomTestStepPanel.ResumeLayout(false);
+            CustomTestStepPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         private void InitializeCustomComponent(int rowNumber)
@@ -188,5 +203,6 @@
         private TextBox BoxExpected;
         private Button bAdd;
         private Button bComplete;
+        private Panel CustomTestStepPanel;
     }
 }

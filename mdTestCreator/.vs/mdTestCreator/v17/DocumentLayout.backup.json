@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "W:\\src\\WindowsApps\\mdTestCreator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|W:\\src\\WindowsApps\\mdTestCreator\\testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\testrowrecord.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|W:\\src\\WindowsApps\\mdTestCreator\\appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,43 +34,80 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TestRowRecord.cs",
+              "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs",
+              "RelativeDocumentMoniker": "TestRowRecord.cs",
+              "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs",
+              "RelativeToolTip": "TestRowRecord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T18:46:36.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppForm.cs [Design]",
+              "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs",
+              "RelativeDocumentMoniker": "AppForm.cs",
+              "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs [Design]",
+              "RelativeToolTip": "AppForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-25T22:14:15.185Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "TestRowRecord.cs [Design]",
+              "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs",
+              "RelativeDocumentMoniker": "TestRowRecord.cs",
+              "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs [Design]",
+              "RelativeToolTip": "TestRowRecord.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-25T22:10:58.584Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TestRowRecord.Designer.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.Designer.cs",
               "RelativeDocumentMoniker": "TestRowRecord.Designer.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.Designer.cs",
               "RelativeToolTip": "TestRowRecord.Designer.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAqwHEAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAALkAAAAAAAAAAAAswMkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T18:46:43.061Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AppForm.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs",
               "RelativeDocumentMoniker": "AppForm.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs",
               "RelativeToolTip": "AppForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T18:37:58.811Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AppForm.Designer.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.Designer.cs",
               "RelativeDocumentMoniker": "AppForm.Designer.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.Designer.cs",
               "RelativeToolTip": "AppForm.Designer.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAA1wCwAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAcwEcAAABpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T13:54:44.654Z",
               "EditorCaption": ""
