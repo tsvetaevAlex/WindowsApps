@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualBasic;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace mdTestCreator
 {
@@ -45,11 +47,11 @@ namespace mdTestCreator
             if (isFirst)
             {
                 isFirst = false;
+                stepsQTY++;
             }
             PreviousTestRowRecord.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
             PreviousTestRowRecord.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
 
-            stepsQTY++;
         }
 
         private void InitializeComponent()
@@ -158,69 +160,27 @@ namespace mdTestCreator
             ResumeLayout(false);
         }
 
-        private void InitializeCustomComponent(int stepNumber)
-        {
-            var newTestRow = new TestRowRecord();
-            var prevRow = PreviousTestRowRecord;
-            // Calculate position based on the current step number
-
-            int pointY = isFirst ? 66 : prevRow.Location.Y + prevRow.Height + 10;
-            newTestRow.Location = new Point(0, pointY);
-            newTestRow.Size = new Size(762, 41);
-            newTestRow.TabIndex = stepsQTY;
-
-            // Subscribe to events
-            newTestRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
-            newTestRow.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
-
-            // Add the new control to the TestPage
-            TestPage.Controls.Add(newTestRow);
-
-            // Increment step count
-            stepsQTY++;
-        }
-        private void InitializeFirstCustomComponent(int number)
-        {
-            int Yposition = PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + 10;
-            customElement = new TestRowRecord();
-            customElement.Location = new Point(0, 66);
-            customElement.Size = new Size(762, 41);
-            customElement.TabIndex = 4;
-            Controls.Add(customElement);
-
-            if (isFirst)
-            {
-                Yposition = 66;
-                FirstTestКow = new TestRowRecord();
-                PreviousTestRowRecord = customElement;
-            }
-            else
-            {
-                PreviousTestRowRecord = customElement;
-            }
-            //int Y = number * 66; //2 textbox 23 each + 10 between boxes and 10 bekow;
-            customElement.Location = new Point(0, (customElement.Height*number + 10));
-            customElement.Size = new Size(762, 41);
-            customElement.TabIndex = 4;
-            Controls.Add(customElement);
-            PerformLayout();
-        }
-
         private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
         {
 
-            stepsQTY++;
             TestRowRecord newStepRow = new TestRowRecord();
-            newStepRow.Location =  new Point(PreviousTestRowRecord.Location.X, PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + 10);
+            newStepRow.Location =  new Point(PreviousTestRowRecord.Location.X, PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + indent);
             newStepRow.SetRowNumber(stepsQTY);
             newStepRow.Size = new Size(700, 32);
             newStepRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
             newStepRow.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+            stepsQTY++;
 
             Controls.Add(newStepRow);
             TestPage.Controls.Add(newStepRow);
             PreviousTestRowRecord = newStepRow;
-            //indent
+
+            // Scroll to bottom
+            TestPage.VerticalScroll.Value = TestPage.VerticalScroll.Maximum;
+            TestPage.PerformLayout();  // Ensure the layout is updated
+
+            //            TestPage.VerticalScroll.Value = VerticalScroll.Value;
+            //
             /*
              myform.Paint += (o, e) => {
                     Graphics g = e.Graphics;
