@@ -56,7 +56,7 @@ namespace mdTestCreator
             // stepNumber
             // 
             stepNumber.AutoSize = true;
-            stepNumber.Location = new Point(3, 11);
+            stepNumber.Location = new Point(10, 4);
             stepNumber.Name = "stepNumber";
             stepNumber.Size = new Size(13, 15);
             stepNumber.TabIndex = 0;
@@ -64,24 +64,24 @@ namespace mdTestCreator
             // 
             // BoxStep
             // 
-            BoxStep.Location = new Point(22, 8);
+            BoxStep.Location = new Point(33, 3);
             BoxStep.Name = "BoxStep";
             BoxStep.PlaceholderText = "Type here short step description";
-            BoxStep.Size = new Size(220, 23);
+            BoxStep.Size = new Size(210, 23);
             BoxStep.TabIndex = 1;
             // 
             // BoxExpected
             // 
-            BoxExpected.Location = new Point(248, 8);
+            BoxExpected.Location = new Point(253, 3);
             BoxExpected.Name = "BoxExpected";
             BoxExpected.PlaceholderText = "Type here short expected result description";
-            BoxExpected.Size = new Size(260, 23);
+            BoxExpected.Size = new Size(257, 23);
             BoxExpected.TabIndex = 2;
             // 
             // bAdd
             // 
             bAdd.FlatStyle = FlatStyle.Flat;
-            bAdd.Location = new Point(514, 8);
+            bAdd.Location = new Point(517, 3);
             bAdd.Name = "bAdd";
             bAdd.Size = new Size(80, 23);
             bAdd.TabIndex = 3;
@@ -92,7 +92,7 @@ namespace mdTestCreator
             // bComplete
             // 
             bComplete.FlatStyle = FlatStyle.Flat;
-            bComplete.Location = new Point(600, 8);
+            bComplete.Location = new Point(607, 3);
             bComplete.Name = "bComplete";
             bComplete.Size = new Size(80, 23);
             bComplete.TabIndex = 4;
@@ -105,13 +105,13 @@ namespace mdTestCreator
             CustomTestStepPanel.BackColor = Color.Transparent;
             CustomTestStepPanel.BorderStyle = BorderStyle.FixedSingle;
             CustomTestStepPanel.Controls.Add(stepNumber);
-            CustomTestStepPanel.Controls.Add(bComplete);
             CustomTestStepPanel.Controls.Add(BoxStep);
-            CustomTestStepPanel.Controls.Add(bAdd);
             CustomTestStepPanel.Controls.Add(BoxExpected);
-            CustomTestStepPanel.Location = new Point(2, 2);
+            CustomTestStepPanel.Controls.Add(bAdd);
+            CustomTestStepPanel.Controls.Add(bComplete);
+            CustomTestStepPanel.Location = new Point(0, 0);
             CustomTestStepPanel.Name = "CustomTestStepPanel";
-            CustomTestStepPanel.Size = new Size(700, 41);
+            CustomTestStepPanel.Size = new Size(697, 30);
             CustomTestStepPanel.TabIndex = 0;
             // 
             // TestRowRecord
@@ -120,7 +120,7 @@ namespace mdTestCreator
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(CustomTestStepPanel);
             Name = "TestRowRecord";
-            Size = new Size(702, 42);
+            Size = new Size(690, 30);
             CustomTestStepPanel.ResumeLayout(false);
             CustomTestStepPanel.PerformLayout();
             ResumeLayout(false);
@@ -138,7 +138,7 @@ namespace mdTestCreator
             // stepNumber
             // 
             stepNumber.AutoSize = true;
-            stepNumber.Location = new Point(10, 10);
+            stepNumber.Location = new Point(1, 1);
             stepNumber.Name = "stepNumber";
             stepNumber.Size = new Size(13, 15);
             stepNumber.TabIndex = 0;
@@ -197,6 +197,11 @@ namespace mdTestCreator
             PerformLayout();
         }
         #endregion
+
+        public void SetRowNumber(int number)
+        {
+            stepNumber.Text = number.ToString();
+        }
 
         private Label stepNumber;
         private TextBox BoxStep;

@@ -17,6 +17,7 @@ namespace mdTestCreator
         private TestRowRecord PreviousTestRowRecord;
         private TestRowRecord FirstTestКow;
         public static int stepsQTY = 1;
+        private const int indent = 10;
         public static bool isFirst = true;
         private const string mainFormCaption = "message from main Form";
 
@@ -31,11 +32,11 @@ namespace mdTestCreator
 
         private void AddFirstSTepRow()
         {
-            MessageBox.Show("we are inside InitFirstSTepRow", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("we are inside InitFirstSTepRow", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             SuspendLayout();
             FirstTestКow = new TestRowRecord();
-            FirstTestКow.Location = new Point(0, 76);
-            FirstTestКow.Size = new Size(762, 41);
+            FirstTestКow.Location = new Point(10, 76);
+            FirstTestКow.Size = new Size(700, 32);
             FirstTestКow.TabIndex = 4;
             PreviousTestRowRecord = FirstTestКow;
             Controls.Add(FirstTestКow);
@@ -45,6 +46,8 @@ namespace mdTestCreator
             {
                 isFirst = false;
             }
+            PreviousTestRowRecord.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            PreviousTestRowRecord.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
 
             stepsQTY++;
         }
@@ -68,8 +71,6 @@ namespace mdTestCreator
             //customElement.Name = "customElement";
             //customElement.Size = new Size(762, 85);
             //customElement.TabIndex = 4;
-            //customElement.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
-            //customElement.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
             // 
             // BoxTestname
             // 
@@ -122,6 +123,7 @@ namespace mdTestCreator
             TestPage.Size = new Size(1016, 740);
             TestPage.TabIndex = 0;
             TestPage.Text = "TestPage";
+            TestPage.AutoScroll = true;
             // 
             // mdExtendion
             // 
@@ -189,7 +191,7 @@ namespace mdTestCreator
             if (isFirst)
             {
                 Yposition = 66;
-                FirstTestКow = new TestRowRecord();;
+                FirstTestКow = new TestRowRecord();
                 PreviousTestRowRecord = customElement;
             }
             else
@@ -207,6 +209,18 @@ namespace mdTestCreator
         private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
         {
 
+            stepsQTY++;
+            TestRowRecord newStepRow = new TestRowRecord();
+            newStepRow.Location =  new Point(PreviousTestRowRecord.Location.X, PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + 10);
+            newStepRow.SetRowNumber(stepsQTY);
+            newStepRow.Size = new Size(700, 32);
+            newStepRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
+            newStepRow.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
+
+            Controls.Add(newStepRow);
+            TestPage.Controls.Add(newStepRow);
+            PreviousTestRowRecord = newStepRow;
+            //indent
             /*
              myform.Paint += (o, e) => {
                     Graphics g = e.Graphics;
@@ -218,14 +232,14 @@ namespace mdTestCreator
              */
             // Optionally, do something when a new step is added
             //MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            InitializeCustomComponent(stepsQTY);
+            //InitializeCustomComponent(stepsQTY);
             // Update PreviousTestRowRecord to point to the new control
 
         }
         private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
         {
             // Optionally, do something when a new step is added
-            MessageBox.Show("VUstom Complete buttton clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Custom Complete buttton clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Update PreviousTestRowRecord to point to the new control
             PreviousTestRowRecord = sender as TestRowRecord;
@@ -243,7 +257,7 @@ namespace mdTestCreator
             }
             else
             {
-                MessageBox.Show("Init First test step row", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Init First test step row", caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 AddFirstSTepRow();
             }
         }
