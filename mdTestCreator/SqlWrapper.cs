@@ -9,7 +9,7 @@ class SqlWrapper
     private readonly string db_name = string.Empty;
     private readonly string db_user = string.Empty;
     private readonly string db_pswd = string.Empty;
-    public static MySqlConnection sqlConnection = null;
+    public static MySqlConnection sqlConnection;
     private static string ConnectionString = "";
     private const string sqlWrapperCaption = "message from sqslWrapper.";
 
@@ -91,7 +91,7 @@ class SqlWrapper
         }// End of InitDB()
     }
 
-    private MySqlConnection Get_db_Connection()
+    public static MySqlConnection Get_db_Connection()
     {
         while (true)
         {
@@ -115,7 +115,7 @@ class SqlWrapper
     }// end of Get_db_Connection
 
 
-    public int get_lastID()
+    public static int Get_lastID()
     {
         int rteurnValue = 1;
         string query = "SELECT LAST_INSERT_ID();";

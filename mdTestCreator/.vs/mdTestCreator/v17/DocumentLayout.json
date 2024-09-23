@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "W:\\src\\WindowsApps\\mdTestCreator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\sqlwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:sqlwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:appform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\testrowrecord.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|W:\\src\\WindowsApps\\mdTestCreator\\testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\sqlwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:sqlwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
@@ -43,10 +47,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|w:\\src\\windowsapps\\mdtestcreator\\testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|W:\\src\\WindowsApps\\mdTestCreator\\testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D60A8B4B-BA88-4620-A276-34FD7E639199}|mdTestCreator.csproj|solutionrelative:testrowrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -56,11 +56,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "App.config",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\App.config",
               "RelativeDocumentMoniker": "App.config",
@@ -69,18 +69,17 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2024-09-18T18:25:00.125Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "TestRowRecord.Designer.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.Designer.cs",
               "RelativeDocumentMoniker": "TestRowRecord.Designer.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.Designer.cs",
               "RelativeToolTip": "TestRowRecord.Designer.cs",
-              "ViewState": "AgIAAJoAAAAAAAAAAAAcwA0AAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwCgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T18:46:43.061Z",
               "IsPinned": true,
@@ -88,13 +87,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AppForm.Designer.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.Designer.cs",
               "RelativeDocumentMoniker": "AppForm.Designer.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.Designer.cs",
               "RelativeToolTip": "AppForm.Designer.cs",
-              "ViewState": "AgIAAOsAAAAAAAAAAAAQwAYBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAuwC8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T13:54:44.654Z",
               "IsPinned": true,
@@ -102,13 +101,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "SqlWrapper.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\SqlWrapper.cs",
               "RelativeDocumentMoniker": "SqlWrapper.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\SqlWrapper.cs",
               "RelativeToolTip": "SqlWrapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADgvyUAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAApwGcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-22T21:32:43.016Z",
               "IsPinned": true,
@@ -116,18 +115,17 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ServerSession.cs",
               "DocumentMoniker": "C:\\Users\\tsvet\\AppData\\Local\\SourceServer\\f32e5490ea03eca0e4e01f81882ad010f516eacc04197006b556bbba0d1f5115\\src\\MySqlConnector\\Core\\ServerSession.cs",
               "ToolTip": "C:\\Users\\tsvet\\AppData\\Local\\SourceServer\\f32e5490ea03eca0e4e01f81882ad010f516eacc04197006b556bbba0d1f5115\\src\\MySqlConnector\\Core\\ServerSession.cs",
               "ViewState": "AgIAAGcDAAAAAAAAAAAmwHQDAAB1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-21T22:10:54.292Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-21T22:10:54.292Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ValueTask.cs",
               "DocumentMoniker": "C:\\Users\\tsvet\\AppData\\Local\\SourceServer\\11c6b946fd2ca90f5f82fb3c118c7aaacc0bf621380f5ab4edbb3c1bf87b8fae\\src\\libraries\\System.Private.CoreLib\\src\\System\\Threading\\Tasks\\ValueTask.cs",
               "ToolTip": "C:\\Users\\tsvet\\AppData\\Local\\SourceServer\\11c6b946fd2ca90f5f82fb3c118c7aaacc0bf621380f5ab4edbb3c1bf87b8fae\\src\\libraries\\System.Private.CoreLib\\src\\System\\Threading\\Tasks\\ValueTask.cs",
@@ -137,7 +135,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "App.config",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\App.config",
               "RelativeDocumentMoniker": "App.config",
@@ -145,12 +143,11 @@
               "RelativeToolTip": "App.config",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-09-17T14:21:35.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-17T14:21:35.177Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -162,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "TestRowRecord.cs",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs",
               "RelativeDocumentMoniker": "TestRowRecord.cs",
@@ -175,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AppForm.cs [Design]",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs",
               "RelativeDocumentMoniker": "AppForm.cs",
@@ -187,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "TestRowRecord.cs [Design]",
               "DocumentMoniker": "W:\\src\\WindowsApps\\mdTestCreator\\TestRowRecord.cs",
               "RelativeDocumentMoniker": "TestRowRecord.cs",
@@ -205,7 +202,7 @@
               "RelativeDocumentMoniker": "AppForm.cs",
               "ToolTip": "W:\\src\\WindowsApps\\mdTestCreator\\AppForm.cs",
               "RelativeToolTip": "AppForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T18:37:58.811Z",
               "EditorCaption": ""

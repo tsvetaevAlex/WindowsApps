@@ -18,6 +18,7 @@ namespace mdTestCreator
         private TabPage ReportPage;
         private Label mdExtendion;
         private TestRowRecord PreviousTestRowRecord;
+        private TestRowRecord CurrentTestRow;
         private TestRowRecord FirstTestRow;
         private static SqlWrapper sql_wrapper = new SqlWrapper();
         private static MySqlConnection SqlConnection = null;
@@ -40,16 +41,16 @@ namespace mdTestCreator
         {
             MessageBox.Show("we are inside InitFirstSTepRow", "mainform", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SuspendLayout();
-            SqlConnection = SqlWrapper.sqlConnection;
-            FirstTestRow = new TestRowRecord();
-            SqlWrapper sqlConnection = new SqlWrapper();
+            TestRowRecord FirstTestRow = new TestRowRecord();
             FirstTestRow.Location = new Point(10, 76);
             FirstTestRow.Size = new Size(700, 32);
             FirstTestRow.TabIndex = 4;
             PreviousTestRowRecord = FirstTestRow;
             Controls.Add(FirstTestRow);
             TestPage.Controls.Add(FirstTestRow);
-            ResumeLayout(true);
+            ResumeLayout();
+            PerformLayout();
+            CurrentTestRow = FirstTestRow;
             if (isFirst)
             {
                 isFirst = false;
@@ -62,17 +63,16 @@ namespace mdTestCreator
 
         private void InitializeComponent()
         {
+            TabControl tabs = new TabControl();
+            tabs.SuspendLayout();
             BoxTestname = new TextBox();
             BoxDescription = new TextBox();
             bStart = new Button();
-            tabs = new TabControl();
             TestPage = new TabPage();
             mdExtendion = new Label();
             ReportPage = new TabPage();
             boxTestNumber = new TextBox();
-            tabs.SuspendLayout();
-            TestPage.SuspendLayout();
-            SuspendLayout();
+            tabs.ResumeLayout();
             // 
             // BoxTestname
             // 
@@ -110,6 +110,7 @@ namespace mdTestCreator
             tabs.SelectedIndex = 0;
             tabs.Size = new Size(1024, 768);
             tabs.TabIndex = 4;
+            
             // 
             // TestPage
             // 
@@ -171,6 +172,7 @@ namespace mdTestCreator
 
         private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
         {
+            TestPage.SuspendLayout();
             MessageBox.Show($"we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow
@@ -194,69 +196,28 @@ namespace mdTestCreator
             TestPage.VerticalScroll.Value = TestPage.VerticalScroll.Maximum;
             TestPage.PerformLayout();  // Ensure the layout is updated
 
-            //            TestPage.VerticalScroll.Value = VerticalScroll.Value;
-            //
-            /*
-             myform.Paint += (o, e) => {
-                    Graphics g = e.Graphics;
-                    using (Pen selPen = new Pen(Color.Blue))
-                    {
-                        g.DrawRectangle(selPen, 10, 10, 50, 50);
-                    }
-                };
-             */
-            // Optionally, do something when a new step is added
-            //MessageBox.Show("Custom New Step Added", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //InitializeCustomComponent(stepsQTY);
-            // Update PreviousTestRowRecord to point to the new control
-
         }
         private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
         {
             Application.Exit();
-            // Optionally, do something when a new step is added
-            //MessageBox.Show("Custom Complete buttton clicked", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Update PreviousTestRowRecord to point to the new control
             PreviousTestRowRecord = sender as TestRowRecord;
         }
-        //private void Custom_AddStepButton_ButttonClicked(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Custom_AddStepButton_ButttonClicked", "main Application Form", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
-
-        //private string Get_db__ConnectionString()
-        //{
-        //    string host = ConfigurationManager.AppSettings["dbHost"];
-        //    string user = ConfigurationManager.AppSettings["db_User"];
-        //    string pswd = ConfigurationManager.AppSettings["db_pswd"];
-
-        //    MessageBox.Show($"Config:{ConfigurationManager.AppSettings.Get("greeting")}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    string ConnectionString = $"server={host};user={user};password={pswd};"; // Replace 'yourpassword' with your actual MySQL password
-
-
-        //    return ConnectionString;
-        //}
-
-        
 
         private void bStart_Click(object sender, EventArgs e)
         {
-            while (true)
+
+            if (BoxTestname.Text == string.Empty)
             {
-                if (BoxTestname.Text == string.Empty)
-                {
-                    MessageBox.Show("Please input short test case name.(filename)", "mainform", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show($"Please input short test case name: 'filename'", "mainform", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show($"Test name / filename: {BoxTestname.Text}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddFirstSTepRow();
 
-                if (BoxTestname.Text != string.Empty)
-                {
-                    break;
-                }
-                Thread.Sleep(1000);
-            }// end of while()
-            InitializeComponent();
+            }
+
         }// end of bStart_Click
-
     }
 }

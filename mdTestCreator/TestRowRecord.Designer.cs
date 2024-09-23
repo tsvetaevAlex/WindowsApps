@@ -35,6 +35,7 @@ namespace mdTestCreator
 
         private void bComplete_Click(object sender, EventArgs e)
         {
+            //Application.Exit();
             //MessageBox.Show("Custom_Control CompleteRecord_ButttonClicked", "Custom element", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Custom_CompleteButton_ButttonClicked?.Invoke(sender, e);
         }
