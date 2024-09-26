@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using MySqlConnector;
-using System.Configuration;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
+﻿using MySqlConnector;
 
 namespace mdTestCreator
 {
@@ -178,10 +175,12 @@ namespace mdTestCreator
             // we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow
             TestRowRecord newStepRow = new TestRowRecord();
             Controls.Add(newStepRow);
+            int xPosition = PreviousTestRowRecord.Location.X;
             int NewRowYposition = PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + indent;
             TestPage.Controls.Add(newStepRow);
             newStepRow.Location = new Point(PreviousTestRowRecord.Location.X, NewRowYposition);
-            MessageBox.Show($"new roe location: {NewRowYposition}{Environment.NewLine} PreviousTestRowRecord Y Location: {PreviousTestRowRecord.Location.Y}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"new roц location: {xPosition}/{NewRowYposition}{Environment.NewLine} PreviousTestRowRecord Y Location: {PreviousTestRowRecord.Location.Y}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CurrentTestRow = newStepRow;
             PreviousTestRowRecord = newStepRow;
             ResumeLayout(true);
             TestPage.PerformLayout();
@@ -201,7 +200,7 @@ namespace mdTestCreator
         {
             Application.Exit();
 
-            PreviousTestRowRecord = sender as TestRowRecord;
+            //PreviousTestRowRecord = sender as TestRowRecord;
         }
 
         private void bStart_Click(object sender, EventArgs e)
