@@ -39,6 +39,7 @@ namespace mdTestCreator
             MessageBox.Show("we are inside InitFirstSTepRow", "mainform", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SuspendLayout();
             TestRowRecord FirstTestRow = new TestRowRecord();
+            FirstTestRow.SetRowNumber(stepsQTY);
             FirstTestRow.Location = new Point(10, 76);
             FirstTestRow.Size = new Size(700, 32);
             FirstTestRow.TabIndex = 4;
@@ -170,7 +171,7 @@ namespace mdTestCreator
         private void Custom_AddStepButton_ButtonClicked(object sender, EventArgs e)
         {
             TestPage.SuspendLayout();
-            MessageBox.Show($"we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show($"we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow
             TestRowRecord newStepRow = new TestRowRecord();
@@ -179,7 +180,7 @@ namespace mdTestCreator
             int NewRowYposition = PreviousTestRowRecord.Location.Y + PreviousTestRowRecord.Height + indent;
             TestPage.Controls.Add(newStepRow);
             newStepRow.Location = new Point(PreviousTestRowRecord.Location.X, NewRowYposition);
-            MessageBox.Show($"new roц location: {xPosition}/{NewRowYposition}{Environment.NewLine} PreviousTestRowRecord Y Location: {PreviousTestRowRecord.Location.Y}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show($"new roц location: {xPosition}/{NewRowYposition}{Environment.NewLine} PreviousTestRowRecord Y Location: {PreviousTestRowRecord.Location.Y}", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
             CurrentTestRow = newStepRow;
             PreviousTestRowRecord = newStepRow;
             ResumeLayout(true);
