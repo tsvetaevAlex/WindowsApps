@@ -19,5 +19,15 @@ namespace mdTestCreator
         {
 
         }
+
+        private void BoxStep_TextChanged(object sender, EventArgs e)
+        {
+            stepAction = BoxStep.Text;
+        }
+
+        private void BoxExpected_TextChanged(object sender, EventArgs e)
+        {
+            stepExpectedResult = BoxExpected.Text;
+        }
     }
 }

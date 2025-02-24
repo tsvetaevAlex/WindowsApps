@@ -9,16 +9,19 @@ class SqlWrapper
     private readonly string db_name = string.Empty;
     private readonly string db_user = string.Empty;
     private readonly string db_pswd = string.Empty;
-    public static MySqlConnection sqlConnection;
+    public static MySqlConnection sqlConnection = null;
     private static string ConnectionString = "";
     private const string sqlWrapperCaption = "message from sqslWrapper.";
 
     public SqlWrapper()
     {
-        db_host = ConfigurationManager.AppSettings["db_Host"];
-        db_name = ConfigurationManager.AppSettings["db_name"];
-        db_user = ConfigurationManager.AppSettings["db_User"];
-        db_pswd = ConfigurationManager.AppSettings["db_pswd"];
+        if (File.Exists("App.config"))
+        {
+            db_host = ConfigurationManager.AppSettings["db_Host"];
+            db_name = ConfigurationManager.AppSettings["db_name"];
+            db_user = ConfigurationManager.AppSettings["db_User"];
+            db_pswd = ConfigurationManager.AppSettings["db_pswd"];
+        }
 
         ConnectionString = $"server={db_host};user={db_user};password={db_pswd};";
     }
@@ -87,6 +90,21 @@ class SqlWrapper
             catch (Exception e)
             {
                 Console.WriteLine($"Exception has been thrown: {e.Message}");
+            }
+            try
+            {
+                string usedb = $"use {db_name};";
+                MySqlCommand create_db_cmd = new MySqlCommand(usedb, sqlConnection);
+                create_db_cmd.CommandText = usedb;
+                int createResult = create_db_cmd.ExecuteNonQuery();
+                MessageBox.Show($"switch to ви {db_name} completed successfully", sqlWrapperCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception e)
+            {
+                string failMsg = $"switch to ви {db_name} failed ||ssssssssssssssss {e.Message}";
+                MessageBox.Show(failMsg, sqlWrapperCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine(failMsg);
+
             }
         }// End of InitDB()
     }

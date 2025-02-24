@@ -30,7 +30,7 @@ namespace mdTestCreator
         private void bAdd_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Custom_Control bAdd_Click", "Custom element", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Custom_AddStepButton_ButtonClicked?.Invoke(sender, e);
+            Custom_AddStepButton_ButtonClicked ?.Invoke(sender, e);
         }
 
         private void bComplete_Click(object sender, EventArgs e)
@@ -70,6 +70,7 @@ namespace mdTestCreator
             BoxStep.PlaceholderText = "Type here short step description";
             BoxStep.Size = new Size(210, 23);
             BoxStep.TabIndex = 1;
+            BoxStep.TextChanged += BoxStep_TextChanged;
             // 
             // BoxExpected
             // 
@@ -78,6 +79,7 @@ namespace mdTestCreator
             BoxExpected.PlaceholderText = "Type here short expected result description";
             BoxExpected.Size = new Size(257, 23);
             BoxExpected.TabIndex = 2;
+            BoxExpected.TextChanged += BoxExpected_TextChanged;
             // 
             // bAdd
             // 
@@ -112,7 +114,7 @@ namespace mdTestCreator
             CustomTestStepPanel.Controls.Add(bComplete);
             CustomTestStepPanel.Location = new Point(0, 0);
             CustomTestStepPanel.Name = "CustomTestStepPanel";
-            CustomTestStepPanel.Size = new Size(697, 30);
+            CustomTestStepPanel.Size = new Size(700, 30);
             CustomTestStepPanel.TabIndex = 0;
             // 
             // TestRowRecord
@@ -204,11 +206,13 @@ namespace mdTestCreator
             stepNumber.Text = number.ToString();
         }
 
-        private Label stepNumber;
+        public Label stepNumber;
         private TextBox BoxStep;
         private TextBox BoxExpected;
         private Button bAdd;
         private Button bComplete;
         private Panel CustomTestStepPanel;
+        public string stepAction = string.Empty;
+        public string stepExpectedResult= string.Empty;
     }
 }
