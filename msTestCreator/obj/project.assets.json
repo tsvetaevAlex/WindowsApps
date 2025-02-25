@@ -308,11 +308,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "W:\\src\\mdCreator_20-02-2025\\mdTestCreator_fixUI\\mdTestCreator.csproj",
+      "projectUniqueName": "W:\\src\\WindowsApps\\msTestCreator\\mdTestCreator.csproj",
       "projectName": "mdTestCreator",
-      "projectPath": "W:\\src\\mdCreator_20-02-2025\\mdTestCreator_fixUI\\mdTestCreator.csproj",
+      "projectPath": "W:\\src\\WindowsApps\\msTestCreator\\mdTestCreator.csproj",
       "packagesPath": "C:\\Users\\tsvet\\.nuget\\packages\\",
-      "outputPath": "W:\\src\\mdCreator_20-02-2025\\mdTestCreator_fixUI\\obj\\",
+      "outputPath": "W:\\src\\WindowsApps\\msTestCreator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "W:\\IDE\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -327,7 +327,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -345,7 +344,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -379,7 +379,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

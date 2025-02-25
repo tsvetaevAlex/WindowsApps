@@ -33,7 +33,6 @@ namespace mdTestCreator
 
         private void AddFirstSTepRow()
         {
-            LogsBox.Text += "AddFirstSTepRow" + Environment.NewLine;
             //LogsBox.Text += $"AddFirstSTepRow{Environment.NewLine}";
             //MessageBox.Show("we are inside InitFirstSTepRow", "mainform", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SuspendLayout();
@@ -60,8 +59,6 @@ namespace mdTestCreator
         {
             components = new System.ComponentModel.Container();
             TestPage = new TabPage();
-            LogsBox = new TextBox();
-            TestDataButton = new Button();
             boxTestNumber = new TextBox();
             BoxTestname = new TextBox();
             BoxDescription = new TextBox();
@@ -77,38 +74,16 @@ namespace mdTestCreator
             // 
             TestPage.AutoScroll = true;
             TestPage.BackColor = Color.Transparent;
-            TestPage.Controls.Add(LogsBox);
-            TestPage.Controls.Add(TestDataButton);
-            TestPage.Controls.Add(boxTestNumber);
             TestPage.Controls.Add(BoxTestname);
             TestPage.Controls.Add(BoxDescription);
             TestPage.Controls.Add(mdExtendion);
             TestPage.Controls.Add(bStart);
-            TestPage.Location = new Point(10, 24);
+            TestPage.Location = new Point(4, 24);
             TestPage.Name = "TestPage";
             TestPage.Padding = new Padding(3);
-            TestPage.Size = new Size(980, 730);
+            TestPage.Size = new Size(652, 730);
             TestPage.TabIndex = 0;
             TestPage.Text = "TestPage";
-            // 
-            // LogsBox
-            // 
-            LogsBox.Location = new Point(710, 10);
-            LogsBox.Multiline = true;
-            LogsBox.Name = "LogsBox";
-            LogsBox.ScrollBars = ScrollBars.Vertical;
-            LogsBox.Size = new Size(270, 242);
-            LogsBox.TabIndex = 6;
-            // 
-            // TestDataButton
-            // 
-            TestDataButton.Location = new Point(570, 43);
-            TestDataButton.Name = "TestDataButton";
-            TestDataButton.Size = new Size(80, 23);
-            TestDataButton.TabIndex = 5;
-            TestDataButton.Text = "Test Data";
-            TestDataButton.UseVisualStyleBackColor = true;
-            TestDataButton.MouseClick += TestDataButton_MouseClick;
             // 
             // boxTestNumber
             // 
@@ -162,7 +137,7 @@ namespace mdTestCreator
             tabs.Location = new Point(10, 10);
             tabs.Name = "tabs";
             tabs.SelectedIndex = 0;
-            tabs.Size = new Size(1000, 758);
+            tabs.Size = new Size(660, 758);
             tabs.TabIndex = 4;
             // 
             // contextMenuStrip1
@@ -174,7 +149,7 @@ namespace mdTestCreator
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1000, 768);
+            ClientSize = new Size(694, 768);
             Controls.Add(tabs);
             Name = "AppForm";
             Text = "mdTestCreator ver 1.0";
@@ -192,14 +167,10 @@ namespace mdTestCreator
             }
             catch (Exception ex)
             { 
-                MessageBox.Show($"shit happens: Exception: {ex.Message}; at AppForm.Designer.line 189", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"sorry data record to file failed. Exception: {ex.Message}; at AppForm.Designer.line 172", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             TestPage.SuspendLayout();
             stepsQTY++;
-            // we are in Custom_AddStepButton_ButtonClicked from AddFirstSTepRow
-            //MessageBox.Show($"AddStepButton|{stepsQTY}|{CurrentTestRow.stepAction}|{CurrentTestRow.stepExpectedResult}|", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LogsBox.Text += ($"AddStepButton|{stepsQTY}|{CurrentTestRow.stepAction}|{CurrentTestRow.stepExpectedResult}|"+ Environment.NewLine);
-            //mdWriter.Close();
             TestRowRecord newStepRow = new TestRowRecord();
             Controls.Add(newStepRow);
             int xPosition = CurrentTestRow.Location.X;
@@ -221,30 +192,25 @@ namespace mdTestCreator
         }
         private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
         {
-            
+            mdWriter.Appendline(CurrentTestRow);
             System.Windows.Forms.Application.Exit();
-
-            //PreviousTestRowRecord = sender as TestRowRecord;
         }
 
         private void bStart_Click(object sender, EventArgs e)
         {
             Header header = new Header(BoxTestname.Text, BoxDescription.Text);
-                LogsBox.Text += "bStart_Click" + Environment.NewLine;
             mdWriter = new MdWriter();
             mdWriter.AddHeader();
             AddFirstSTepRow();
         }// end of bStart_Click
 
         private TabPage TestPage;
-        private Button TestDataButton;
         private TextBox boxTestNumber;
         private TextBox BoxTestname;
         private TextBox BoxDescription;
         private Label mdExtendion;
         private Button bStart;
         private TabControl tabs;
-        public TextBox LogsBox;
         private ContextMenuStrip contextMenuStrip1;
     }
 }
