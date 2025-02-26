@@ -1,4 +1,5 @@
-﻿using Button = System.Windows.Forms.Button;
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using Button = System.Windows.Forms.Button;
 using TextBox = System.Windows.Forms.TextBox;
 
 namespace mdTestCreator
@@ -41,13 +42,12 @@ namespace mdTestCreator
             FirstTestRow.Size = new Size(700, 32);
             FirstTestRow.TabIndex = 4;
             Controls.Add(FirstTestRow);
-            TestPage.Controls.Add(FirstTestRow);
+            UserPanel.Controls.Add(FirstTestRow);
             ResumeLayout();
             PerformLayout();
             if (isFirst)
             {
                 isFirst = false;
-                stepsQTY ++;
             }
             CurrentTestRow = FirstTestRow;
             CurrentTestRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
@@ -57,33 +57,51 @@ namespace mdTestCreator
 
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            TestPage = new TabPage();
-            boxTestNumber = new TextBox();
             BoxTestname = new TextBox();
             BoxDescription = new TextBox();
             mdExtendion = new Label();
             bStart = new Button();
-            tabs = new TabControl();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            TestPage.SuspendLayout();
-            tabs.SuspendLayout();
+            boxTestNumber = new TextBox();
+            UserPanel = new Panel();
+            UserPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // TestPage
+            // BoxTestname
             // 
-            TestPage.AutoScroll = true;
-            TestPage.BackColor = Color.Transparent;
-            TestPage.Controls.Add(BoxTestname);
-            TestPage.Controls.Add(BoxDescription);
-            TestPage.Controls.Add(mdExtendion);
-            TestPage.Controls.Add(bStart);
-            TestPage.Location = new Point(4, 24);
-            TestPage.Name = "TestPage";
-            TestPage.Padding = new Padding(3);
-            TestPage.Size = new Size(652, 730);
-            TestPage.TabIndex = 0;
-            TestPage.Text = "TestPage";
+            BoxTestname.Location = new Point(61, 6);
+            BoxTestname.Name = "BoxTestname";
+            BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
+            BoxTestname.Size = new Size(460, 23);
+            BoxTestname.TabIndex = 0;
+            BoxTestname.TextChanged += BoxTestname_TextChanged;
+            // 
+            // BoxDescription
+            // 
+            BoxDescription.Location = new Point(14, 35);
+            BoxDescription.Multiline = true;
+            BoxDescription.Name = "BoxDescription";
+            BoxDescription.PlaceholderText = "Type here short description what this test case will do.";
+            BoxDescription.Size = new Size(510, 23);
+            BoxDescription.TabIndex = 1;
+            // 
+            // mdExtendion
+            // 
+            mdExtendion.AutoSize = true;
+            mdExtendion.Location = new Point(531, 11);
+            mdExtendion.Name = "mdExtendion";
+            mdExtendion.Size = new Size(28, 15);
+            mdExtendion.TabIndex = 3;
+            mdExtendion.Text = ".md";
+            // 
+            // bStart
+            // 
+            bStart.Location = new Point(571, 6);
+            bStart.Name = "bStart";
+            bStart.Size = new Size(107, 23);
+            bStart.TabIndex = 2;
+            bStart.Text = "Начать работу";
+            bStart.UseVisualStyleBackColor = true;
+            bStart.Click += bStart_Click;
             // 
             // boxTestNumber
             // 
@@ -94,68 +112,27 @@ namespace mdTestCreator
             boxTestNumber.Size = new Size(40, 23);
             boxTestNumber.TabIndex = 4;
             // 
-            // BoxTestname
+            // UserPanel
             // 
-            BoxTestname.Location = new Point(60, 10);
-            BoxTestname.Name = "BoxTestname";
-            BoxTestname.PlaceholderText = "Type here short test case name title(filename)";
-            BoxTestname.Size = new Size(460, 23);
-            BoxTestname.TabIndex = 0;
-            BoxTestname.TextChanged += BoxTestname_TextChanged;
-            // 
-            // BoxDescription
-            // 
-            BoxDescription.Location = new Point(10, 43);
-            BoxDescription.Multiline = true;
-            BoxDescription.Name = "BoxDescription";
-            BoxDescription.PlaceholderText = "Type here short description what this test case will do.";
-            BoxDescription.Size = new Size(510, 23);
-            BoxDescription.TabIndex = 1;
-            // 
-            // mdExtendion
-            // 
-            mdExtendion.AutoSize = true;
-            mdExtendion.Location = new Point(530, 15);
-            mdExtendion.Name = "mdExtendion";
-            mdExtendion.Size = new Size(28, 15);
-            mdExtendion.TabIndex = 3;
-            mdExtendion.Text = ".md";
-            // 
-            // bStart
-            // 
-            bStart.Location = new Point(570, 10);
-            bStart.Name = "bStart";
-            bStart.Size = new Size(80, 23);
-            bStart.TabIndex = 2;
-            bStart.Text = "Let`s Start";
-            bStart.UseVisualStyleBackColor = true;
-            bStart.Click += bStart_Click;
-            // 
-            // tabs
-            // 
-            tabs.Controls.Add(TestPage);
-            tabs.Location = new Point(10, 10);
-            tabs.Name = "tabs";
-            tabs.SelectedIndex = 0;
-            tabs.Size = new Size(660, 758);
-            tabs.TabIndex = 4;
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(61, 4);
+            UserPanel.Controls.Add(BoxTestname);
+            UserPanel.Controls.Add(BoxDescription);
+            UserPanel.Controls.Add(bStart);
+            UserPanel.Controls.Add(mdExtendion);
+            UserPanel.Location = new Point(-6, -2);
+            UserPanel.Name = "UserPanel";
+            UserPanel.Size = new Size(711, 862);
+            UserPanel.TabIndex = 5;
             // 
             // AppForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(694, 768);
-            Controls.Add(tabs);
+            ClientSize = new Size(704, 861);
+            Controls.Add(UserPanel);
             Name = "AppForm";
             Text = "mdTestCreator ver 1.0";
-            TestPage.ResumeLayout(false);
-            TestPage.PerformLayout();
-            tabs.ResumeLayout(false);
+            UserPanel.ResumeLayout(false);
+            UserPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -169,25 +146,25 @@ namespace mdTestCreator
             { 
                 MessageBox.Show($"sorry data record to file failed. Exception: {ex.Message}; at AppForm.Designer.line 172", mainFormCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            TestPage.SuspendLayout();
+            UserPanel.SuspendLayout();
             stepsQTY++;
             TestRowRecord newStepRow = new TestRowRecord();
             Controls.Add(newStepRow);
             int xPosition = CurrentTestRow.Location.X;
             int NewRowYposition = CurrentTestRow.Location.Y + CurrentTestRow.Height + indent;
-            TestPage.Controls.Add(newStepRow);
+            UserPanel.Controls.Add(newStepRow);
             newStepRow.Location = new Point(CurrentTestRow.Location.X, NewRowYposition);
             CurrentTestRow = newStepRow;
             ResumeLayout(true);
-            TestPage.PerformLayout();
+            UserPanel.PerformLayout();
             newStepRow.SetRowNumber(stepsQTY);
             newStepRow.Size = new Size(700, 32);
             newStepRow.Custom_AddStepButton_ButtonClicked += Custom_AddStepButton_ButtonClicked;
             newStepRow.Custom_CompleteButton_ButttonClicked += Custom_CompleteButton_ButttonClicked;
 
             // Scroll to bottom
-            TestPage.VerticalScroll.Value = TestPage.VerticalScroll.Maximum;
-            TestPage.PerformLayout();  // Ensure the layout is updated
+            UserPanel.VerticalScroll.Value = UserPanel.VerticalScroll.Maximum;
+            UserPanel.PerformLayout();  // Ensure the layout is updated
 
         }
         private void Custom_CompleteButton_ButttonClicked(object sender, EventArgs e)
@@ -203,14 +180,11 @@ namespace mdTestCreator
             mdWriter.AddHeader();
             AddFirstSTepRow();
         }// end of bStart_Click
-
-        private TabPage TestPage;
         private TextBox boxTestNumber;
         private TextBox BoxTestname;
         private TextBox BoxDescription;
         private Label mdExtendion;
         private Button bStart;
-        private TabControl tabs;
-        private ContextMenuStrip contextMenuStrip1;
+        private Panel UserPanel;
     }
 }
