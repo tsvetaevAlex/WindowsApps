@@ -1,0 +1,10 @@
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\bin\Debug\BudgethelperGUI.exe.config
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\bin\Debug\BudgethelperGUI.exe
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\bin\Debug\BudgethelperGUI.pdb
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.csproj.AssemblyReference.cache
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.MainForm.resources
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.Properties.Resources.resources
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.csproj.GenerateResource.cache
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.csproj.CoreCompileInputs.cache
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.exe
+W:\src\WindowsApps\BudgethelperGUI\BudgethelperGUI\obj\Debug\BudgethelperGUI.pdb
