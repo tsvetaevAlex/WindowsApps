@@ -1,7 +1,8 @@
 #Budgethelper
 ## C#  Windows Forms (WinForms) приложение
-### NET Framework 4.7.3
-
+```
+<TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+```
 WindowsApps / develop  / BudgethelperGUI at 19.12.2025@ 18.01<br>
 !Latest commit](:https://github.com/tsvetaevAlex/WindowsApps/commit/c67129bda76ee2dc3127585a6550bc083164373b)
 BudgethelperGUI
