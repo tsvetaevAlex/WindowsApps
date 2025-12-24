@@ -1,0 +1,5 @@
+G:\src\WEB\Web-Portal\WebAutomationFramework\DebugLibs\WebAutomation.Logger.dll
+G:\src\WEB\Web-Portal\WebAutomationFramework\DebugLibs\WebAutomation.Logger.pdb
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger\obj\Debug\WebAutomation.Logger.csprojResolveAssemblyReference.cache
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger\obj\Debug\WebAutomation.Logger.dll
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger\obj\Debug\WebAutomation.Logger.pdb

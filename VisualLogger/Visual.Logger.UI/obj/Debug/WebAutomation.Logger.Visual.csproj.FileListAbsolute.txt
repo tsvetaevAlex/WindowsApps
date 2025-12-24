@@ -1,0 +1,16 @@
+G:\src\WEB\Web-Portal\WebAutomationFramework\DebugLibs\WebAutomation.Logger.Visual.exe.config
+G:\src\WEB\Web-Portal\WebAutomationFramework\DebugLibs\WebAutomation.Logger.Visual.exe
+G:\src\WEB\Web-Portal\WebAutomationFramework\DebugLibs\WebAutomation.Logger.Visual.pdb
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.csprojResolveAssemblyReference.cache
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.VisualLogger.resources
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.Properties.Resources.resources
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.csproj.GenerateResource.Cache
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.exe
+G:\src\WEB\Web-Portal\WebAutomationFramework\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.pdb
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.csproj.AssemblyReference.cache
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.VisualLogger.resources
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.Properties.Resources.resources
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.csproj.GenerateResource.cache
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.csproj.CoreCompileInputs.cache
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.exe
+W:\src\__Archive\gDriveBackUp\src\WebAutomation.Logger.Visual\obj\Debug\WebAutomation.Logger.Visual.pdb
