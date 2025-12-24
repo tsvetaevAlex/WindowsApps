@@ -1,18 +1,17 @@
 ﻿using System.ServiceModel;
-using Visual.Logger.Contract;
 
 namespace Visual.Logger.Contract
 {
-    [ServiceContract] // Говорим WCF что это интерфейс для запросов сервису
+    [ServiceContract]
     public interface IVisualLogger
     {
-        [OperationContract] // Делегируемый метод.
+        [OperationContract]
         void SendMessageToVisualLogger(LogLevel logLevel, string logMessage);
 
-        [OperationContract] // Делегируемый метод.
-        void StopLogger();
-
-        [OperationContract] // Делегируемый метод.
+        [OperationContract]
         void SetWindowTitle(string windowTitle);
+
+        [OperationContract]
+        void StopLogger();
     }
 }
