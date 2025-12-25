@@ -1,0 +1,72 @@
+MainWindow.xaml
+____________________________________________
+<Window x:Class="VisualLoggerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Title="VisualLogger Client" Height="300" Width="400">
+    <StackPanel Margin="10">
+        <TextBox Name="txtMessage" Width="350" Height="25" />
+        <Button Content="Send" Width="100" Click="btnSend_Click" Margin="0,5,0,5"/>
+        <TextBox Name="txtLog" Width="350" Height="200" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+    </StackPanel>
+</Window>
+
+
+MainWindow.xaml.cs
+________________________________________________
+using System;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace VisualLoggerWPF
+{
+    public partial class MainWindow : Window
+    {
+        private TcpClient _client;
+        private NetworkStream _stream;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            ConnectToServer();
+        }
+
+        private async void ConnectToServer()
+        {
+            _client = new TcpClient();
+            try
+            {
+                await _client.ConnectAsync("127.0.0.1", 4000);
+                _stream = _client.GetStream();
+                txtLog.AppendText("Connected to VisualLogger!\n");
+            }
+            catch (Exception ex)
+            {
+                txtLog.AppendText($"Error: {ex.Message}\n");
+            }
+        }
+
+        private async void btnSend_Click(object sender, RoutedEventArgs e)
+        {
+            if (_stream == null) return;
+
+            string message = txtMessage.Text;
+            if (string.IsNullOrWhiteSpace(message)) return;
+
+            byte[] buffer = Encoding.UTF8.GetBytes(message + "\n");
+            await _stream.WriteAsync(buffer, 0, buffer.Length);
+
+            txtLog.AppendText($"Sent: {message}\n");
+            txtMessage.Clear();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _stream?.Close();
+            _client?.Close();
+            base.OnClosed(e);
+        }
+    }
+}
+	
