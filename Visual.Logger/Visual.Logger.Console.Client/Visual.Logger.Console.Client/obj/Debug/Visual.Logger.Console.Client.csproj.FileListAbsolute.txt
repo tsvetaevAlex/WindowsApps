@@ -1,0 +1,7 @@
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\obj\Debug\Visual.Logger.Console.Client.csproj.AssemblyReference.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\obj\Debug\Visual.Logger.Console.Client.csproj.CoreCompileInputs.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\bin\Debug\Visual.Logger.Console.Client.exe.config
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\bin\Debug\Visual.Logger.Console.Client.exe
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\bin\Debug\Visual.Logger.Console.Client.pdb
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\obj\Debug\Visual.Logger.Console.Client.exe
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.Console.Client\Visual.Logger.Console.Client\obj\Debug\Visual.Logger.Console.Client.pdb

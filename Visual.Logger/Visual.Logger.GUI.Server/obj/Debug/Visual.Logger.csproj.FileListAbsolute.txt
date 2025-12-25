@@ -1,0 +1,10 @@
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\bin\Debug\Visual.Logger.exe.config
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\bin\Debug\Visual.Logger.exe
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\bin\Debug\Visual.Logger.pdb
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.csproj.AssemblyReference.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.GUI.VisualLoggerForm.resources
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.Properties.Resources.resources
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.csproj.GenerateResource.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.csproj.CoreCompileInputs.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.exe
+W:\src\WindowsApps\Visual.Logger\Visual.Logger\obj\Debug\Visual.Logger.pdb
