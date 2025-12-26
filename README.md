@@ -4,4 +4,4 @@
 
 now in develop: \
 ## for QA 
-**mdCreator** tool to simplify work with QA test artifacts. crate test cases as .md files using gitlab Markdown. <br>
+**mdTestCreator** tool to simplify work with QA test artifacts. crate test cases as .md files using gitlab Markdown. <br>
