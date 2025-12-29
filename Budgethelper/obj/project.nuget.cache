@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "2zGMoxucVlI=",
+  "success": true,
+  "projectFilePath": "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\Visual.Logger.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tsvet\\.nuget\\packages\\epplus\\8.0.3\\epplus.8.0.3.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\epplus.interfaces\\8.0.0\\epplus.interfaces.8.0.0.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\microsoft.io.recyclablememorystream\\3.0.1\\microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\stub.system.data.sqlite.core.netframework\\1.0.119\\stub.system.data.sqlite.core.netframework.1.0.119.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.data.sqlite\\2.0.2\\system.data.sqlite.2.0.2.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.data.sqlite.packages\\1.0.112\\system.data.sqlite.packages.1.0.112.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.3\\system.runtime.compilerservices.unsafe.4.5.3.nupkg.sha512",
+    "C:\\Users\\tsvet\\.nuget\\packages\\system.security.cryptography.xml\\8.0.2\\system.security.cryptography.xml.8.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

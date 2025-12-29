@@ -1,0 +1,5 @@
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.GUI.Server\obj\Debug\Visual.Logger.csproj.AssemblyReference.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.GUI.Server\obj\Debug\Visual.Logger.Server.VisualLoggerForm.resources
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.GUI.Server\obj\Debug\Visual.Logger.Properties.Resources.resources
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.GUI.Server\obj\Debug\Visual.Logger.csproj.GenerateResource.cache
+W:\src\WindowsApps\Visual.Logger\Visual.Logger.GUI.Server\obj\Debug\Visual.Logger.csproj.CoreCompileInputs.cache
