@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\Visual.Logger.csproj": {}
+  },
+  "projects": {
+    "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\Visual.Logger.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\Visual.Logger.csproj",
+        "projectName": "Visual.Logger",
+        "projectPath": "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\Visual.Logger.csproj",
+        "packagesPath": "C:\\Users\\tsvet\\.nuget\\packages\\",
+        "outputPath": "W:\\src\\WindowsApps\\Visual.Logger\\Visual.Logger.GUI.Server\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "UsingMicrosoftNETSdk": false,
+        "fallbackFolders": [
+          "W:\\IDE\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\tsvet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net481"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net481": {
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net481": {
+          "dependencies": {
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
+            "System.Data.SQLite.Packages": {
+              "target": "Package",
+              "version": "[1.0.112, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-arm64": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
