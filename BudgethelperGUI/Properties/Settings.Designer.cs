@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BudgethelperGUI.Properties
+namespace Budgethelper.Properties
 {
 
 

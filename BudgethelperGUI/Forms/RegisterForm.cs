@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace BudgethelperGUI
+namespace Budgethelper
 {
     public partial class RegisterForm : Form
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using BudgethelperGUI.Forms;
+using Budgethelper.Forms;
 
-namespace BudgethelperGUI
+namespace Budgethelper
 {
     static class Program
     {

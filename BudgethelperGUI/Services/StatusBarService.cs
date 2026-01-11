@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BudgethelperGUI.Services
+namespace Budgethelper.Services
 {
     public sealed class StatusBarService : IDisposable
     {

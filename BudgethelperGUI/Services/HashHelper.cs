@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BudgethelperGUI.Services
+namespace Budgethelper.Services
 {
     public static class HashHelper
     {

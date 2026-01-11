@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BudgethelperGUI.Services;
+using Budgethelper.Services;
 
-namespace BudgethelperGUI.Forms
+namespace Budgethelper.Forms
 {
     partial class MainForm : Form
     {

@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
 
-namespace BudgethelperGUI.Services
+namespace Budgethelper.Services
 {
     public class RegistryHelper
     {
@@ -55,4 +55,4 @@ namespace BudgethelperGUI.Services
             });
         }
     }// end of class RegistryHelper
-}// end of namespace BudgethelperGUI.Services
+}// end of namespace Budgethelper.Services

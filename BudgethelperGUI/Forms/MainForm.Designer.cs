@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace BudgethelperGUI.Forms
+namespace Budgethelper.Forms
 {
     partial class MainForm
     {

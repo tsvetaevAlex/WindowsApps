@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using BudgethelperGUI;
-using BudgethelperGUI.Services;
-using BudgethelperGUI.Forms;
+using Budgethelper;
+using Budgethelper.Services;
+using Budgethelper.Forms;
 
-namespace BudgethelperGUI
+namespace Budgethelper
 {
     partial class RegisterForm
     {

@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BudgethelperGUI.Services
+namespace Budgethelper.Services
 {
     public class RegistryService
     {
