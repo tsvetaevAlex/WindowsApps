@@ -1,82 +1,163 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using Budgethelper;
-using Budgethelper.Services;
-using Budgethelper.Forms;
 
-namespace Budgethelper
+namespace Budgethelper.Forms
 {
     partial class RegisterForm
     {
         private System.ComponentModel.IContainer components = null;
 
-        private TextBox txtFirstName;
+        private TextBox txtName;
+        private TextBox txtSurname;
         private TextBox txtLastName;
         private TextBox txtPassword;
         private TextBox txtConfirmPassword;
+
+        private Label lblName;
+        private Label lblSurname;
+        private Label lblLastName;
+        private Label lblPassword;
+        private Label lblConfirmPassword;
+
+        private Label lblNameRequired;
+        private Label lblSurnameRequired;
+
         private Button btnRegister;
         private Button btnCancel;
         private CheckBox chkShowPassword;
 
+        private ToolTip toolTip;
+
         private void InitializeComponent()
         {
-            this.txtFirstName = new TextBox();
-            this.txtLastName = new TextBox();
-            this.txtPassword = new TextBox();
-            this.txtConfirmPassword = new TextBox();
-            this.btnRegister = new Button();
-            this.btnCancel = new Button();
-            this.chkShowPassword = new CheckBox();
+            components = new System.ComponentModel.Container();
+            toolTip = new ToolTip(components);
 
-            // txtFirstName
-            this.txtFirstName.Location = new System.Drawing.Point(20, 20);
-            this.txtFirstName.Width = 200;
-            this.txtFirstName.Text = "First Name";
-            this.txtFirstName.GotFocus += RemovePlaceholder;
-            this.txtFirstName.LostFocus += AddPlaceholder;
+            txtName = new TextBox();
+            txtSurname = new TextBox();
+            txtLastName = new TextBox();
+            txtPassword = new TextBox();
+            txtConfirmPassword = new TextBox();
 
-            // txtLastName
-            this.txtLastName.Location = new System.Drawing.Point(20, 50);
-            this.txtLastName.Width = 200;
-            this.txtLastName.Text = "Last Name";
-            this.txtLastName.GotFocus += RemovePlaceholder;
-            this.txtLastName.LostFocus += AddPlaceholder;
+            lblName = new Label();
+            lblSurname = new Label();
+            lblLastName = new Label();
+            lblPassword = new Label();
+            lblConfirmPassword = new Label();
 
-            // txtPassword
-            this.txtPassword.Location = new System.Drawing.Point(20, 80);
-            this.txtPassword.Width = 200;
-            this.txtPassword.PasswordChar = '●';
+            lblNameRequired = new Label();
+            lblSurnameRequired = new Label();
 
-            // txtConfirmPassword
-            this.txtConfirmPassword.Location = new System.Drawing.Point(20, 110);
-            this.txtConfirmPassword.Width = 200;
-            this.txtConfirmPassword.PasswordChar = '●';
+            btnRegister = new Button();
+            btnCancel = new Button();
+            chkShowPassword = new CheckBox();
 
-            // btnRegister
-            this.btnRegister.Text = "Register";
-            this.btnRegister.Location = new System.Drawing.Point(20, 165);
-            this.btnRegister.Width = 90;
-
-            // btnCancel
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.Location = new System.Drawing.Point(130, 165);
-            this.btnCancel.Width = 90;
-
-            // chkShowPassword
-            this.chkShowPassword.Text = "Show Password";
-            this.chkShowPassword.Location = new System.Drawing.Point(20, 140);
-
-            // RegisterForm
-            this.ClientSize = new System.Drawing.Size(260, 200);
-            this.Controls.AddRange(new Control[]
-            {
-                txtFirstName, txtLastName, txtPassword, txtConfirmPassword,
-                btnRegister, btnCancel, chkShowPassword
-            });
+            // Form
+            this.ClientSize = new Size(300, 380);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Register";
+
+            int labelX = 20;
+            int inputX = 150;
+            int y = 20;
+            int verticalSpacing = 35;
+            int textBoxWidth = 120;
+
+            // Name
+            lblName.Text = "Name:";
+            lblName.Location = new Point(labelX, y);
+            lblName.AutoSize = true;
+
+            lblNameRequired.Text = "*";
+            lblNameRequired.ForeColor = Color.Red;
+            lblNameRequired.Location = new Point(labelX + 50, y);
+            lblNameRequired.AutoSize = true;
+
+            txtName.Location = new Point(inputX, y - 3);
+            txtName.Width = textBoxWidth;
+            txtName.Text = "Enter name";
+
+            y += verticalSpacing;
+
+            // Surname
+            lblSurname.Text = "Surname:";
+            lblSurname.Location = new Point(labelX, y);
+            lblSurname.AutoSize = true;
+
+            lblSurnameRequired.Text = "*";
+            lblSurnameRequired.ForeColor = Color.Red;
+            lblSurnameRequired.Location = new Point(labelX + 70, y);
+            lblSurnameRequired.AutoSize = true;
+
+            txtSurname.Location = new Point(inputX, y - 3);
+            txtSurname.Width = textBoxWidth;
+            txtSurname.Text = "Enter surname";
+
+            y += verticalSpacing;
+
+            // Last Name
+            lblLastName.Text = "Last Name (optional):";
+            lblLastName.Location = new Point(labelX, y);
+            lblLastName.AutoSize = true;
+
+            txtLastName.Location = new Point(inputX, y - 3);
+            txtLastName.Width = textBoxWidth;
+            txtLastName.Text = "Enter last name (optional)";
+
+            y += verticalSpacing;
+
+            // Password
+            lblPassword.Text = "Password:";
+            lblPassword.Location = new Point(labelX, y);
+            lblPassword.AutoSize = true;
+
+            txtPassword.Location = new Point(inputX, y - 3);
+            txtPassword.Width = textBoxWidth;
+            txtPassword.PasswordChar = '●';
+
+            y += verticalSpacing;
+
+            // Confirm Password
+            lblConfirmPassword.Text = "Confirm Password:";
+            lblConfirmPassword.Location = new Point(labelX, y);
+            lblConfirmPassword.AutoSize = true;
+
+            txtConfirmPassword.Location = new Point(inputX, y - 3);
+            txtConfirmPassword.Width = textBoxWidth;
+            txtConfirmPassword.PasswordChar = '●';
+
+            y += verticalSpacing + 10;
+
+            // Show Password Checkbox
+            chkShowPassword.Text = "Show password";
+            chkShowPassword.Location = new Point(labelX, y);
+            chkShowPassword.AutoSize = true;
+
+            y += verticalSpacing;
+
+            // Buttons
+            btnRegister.Text = "Register";
+            btnRegister.Location = new Point(labelX, y);
+            btnRegister.Width = 100;
+
+            btnCancel.Text = "Cancel";
+            btnCancel.Location = new Point(labelX + 120, y);
+            btnCancel.Width = 100;
+
+            // Add controls
+            this.Controls.AddRange(new Control[]
+            {
+                lblName, lblNameRequired, txtName,
+                lblSurname, lblSurnameRequired, txtSurname,
+                lblLastName, txtLastName,
+                lblPassword, txtPassword,
+                lblConfirmPassword, txtConfirmPassword,
+                chkShowPassword,
+                btnRegister, btnCancel
+            });
         }
 
         protected override void Dispose(bool disposing)
@@ -84,21 +165,6 @@ namespace Budgethelper
             if (disposing && (components != null))
                 components.Dispose();
             base.Dispose(disposing);
-        }
-
-        // Placeholder методы
-        private void RemovePlaceholder(object sender, EventArgs e)
-        {
-            TextBox tb = sender as TextBox;
-            if (tb == txtFirstName && tb.Text == "First Name") tb.Text = "";
-            if (tb == txtLastName && tb.Text == "Last Name") tb.Text = "";
-        }
-
-        private void AddPlaceholder(object sender, EventArgs e)
-        {
-            TextBox tb = sender as TextBox;
-            if (tb == txtFirstName && string.IsNullOrWhiteSpace(tb.Text)) tb.Text = "First Name";
-            if (tb == txtLastName && string.IsNullOrWhiteSpace(tb.Text)) tb.Text = "Last Name";
         }
     }
 }

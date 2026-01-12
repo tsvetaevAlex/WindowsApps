@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Budgethelper.Services
 {
-    public static class HashHelper
+    public static class HashService
     {
         public static string GetMd5(string input)
         {

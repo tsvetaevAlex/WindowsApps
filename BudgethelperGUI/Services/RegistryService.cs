@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,8 +8,44 @@ namespace Budgethelper.Services
 {
     public class RegistryService
     {
+
         // Фиксированный путь к разделу реестра
-        private const string RegistryPath = @"Software\BudgetHelper";
+        private const string registryPath = @"Software\_BudgetHelper";// Путь к разделу реестра, где хотим создать переменную
+        private static object RegistryValue = new object();
+        public RegistryService()
+        {
+
+        }
+
+        public void SetKey(string name, string value)
+        {
+            // Путь к разделу реестра, где хотим создать переменную
+            // Открываем (или создаем) раздел
+            //use branch CurrentUser to avoid admin permissions request
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
+            {
+                if (key != null)
+                {
+                    // Создаем или обновляем значение
+                    try
+                    {
+                        key.SetValue(name, value, RegistryValueKind.String);
+                        Console.ResetColor();
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"New UId has been successfully registered");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.ResetColor();
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"at registry set value exception has ben happend:\r\n{e.Message}");
+                        Console.ResetColor();
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Проверяет, существует ли значение с указанным именем
@@ -17,7 +54,7 @@ namespace Budgethelper.Services
         {
             return Task.Factory.StartNew(() =>
             {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryPath))
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath))
                 {
                     return key != null && key.GetValue(name) != null;
                 }
@@ -31,7 +68,7 @@ namespace Budgethelper.Services
         {
             return Task.Factory.StartNew(() =>
             {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryPath))
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath))
                 {
                     if (key != null)
                     {
@@ -50,7 +87,7 @@ namespace Budgethelper.Services
         {
             return Task.Factory.StartNew(() =>
             {
-                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryPath))
+                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
                 {
                     key.SetValue("FirstName", firstName);
                     key.SetValue("LastName", lastName);
@@ -58,7 +95,6 @@ namespace Budgethelper.Services
                 }
             });
         }
-
         /// <summary>
         /// Хеширует пароль с помощью SHA256
         /// </summary>
@@ -70,5 +106,5 @@ namespace Budgethelper.Services
                 return System.Convert.ToBase64String(hashBytes);
             }
         }
-    }
-}
+    }// end of class RegistryHelper
+}// end of namespace Budgethelper.Services
