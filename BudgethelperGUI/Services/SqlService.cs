@@ -1,5 +1,4 @@
-﻿using Budget.Models;
-using Budgethelper.Models;
+﻿using Budgethelper.Models;
 using System;
 using System.Data.SQLite;
 using System.IO;
