@@ -12,13 +12,13 @@ namespace Budgethelper
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Запускаем проверку регистрации
-            var registerForm = new RegisterForm();
-            if (registerForm.ShowDialog() == DialogResult.OK)
+            using (var register = new RegisterForm())
             {
-                Application.Run(new MainForm());
+                if (register.ShowDialog() != DialogResult.OK)
+                    return;
             }
+
+            Application.Run(new MainForm());
         }
     }
 }
-

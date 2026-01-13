@@ -1,110 +1,61 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using Budgethelper.Models;
 
 namespace Budgethelper.Services
 {
-    public class RegistryService
+    public sealed class RegistryService
     {
+        private const string RegistryPath = @"Software\_BudgetHelper";
 
-        // Фиксированный путь к разделу реестра
-        private const string registryPath = @"Software\_BudgetHelper";// Путь к разделу реестра, где хотим создать переменную
-        private static object RegistryValue = new object();
-        public RegistryService()
+        public bool UserExists()
         {
-
-        }
-
-        public void SetKey(string name, string value)
-        {
-            // Путь к разделу реестра, где хотим создать переменную
-            // Открываем (или создаем) раздел
-            //use branch CurrentUser to avoid admin permissions request
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
+            using (var key = Registry.CurrentUser.OpenSubKey(RegistryPath))
             {
-                if (key != null)
-                {
-                    // Создаем или обновляем значение
-                    try
-                    {
-                        key.SetValue(name, value, RegistryValueKind.String);
-                        Console.ResetColor();
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"New UId has been successfully registered");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.ResetColor();
-
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"at registry set value exception has ben happend:\r\n{e.Message}");
-                        Console.ResetColor();
-                    }
-                }
+                return key != null &&
+                       key.GetValue("UserId") != null &&
+                       key.GetValue("PasswordHash") != null;
             }
         }
 
-        /// <summary>
-        /// Проверяет, существует ли значение с указанным именем
-        /// </summary>
-        public Task<bool> ExistsAsync(string name)
+        public void SaveUser(User user)
         {
-            return Task.Factory.StartNew(() =>
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            using (var key = Registry.CurrentUser.CreateSubKey(RegistryPath))
             {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath))
-                {
-                    return key != null && key.GetValue(name) != null;
-                }
-            });
+                key.SetValue("UserId", user.Id);
+                key.SetValue("FirstName", user.FirstName);
+                key.SetValue("Surename", user.Surename);
+                key.SetValue("LastName", user.LastName);
+                key.SetValue("PasswordHash", user.PasswordHash);
+            }
         }
 
-        /// <summary>
-        /// Получает значение по имени
-        /// </summary>
-        public Task<string> GetAsync(string name)
+        public User LoadUser()
         {
-            return Task.Factory.StartNew(() =>
+            using (var key = Registry.CurrentUser.OpenSubKey(RegistryPath))
             {
-                using (RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath))
-                {
-                    if (key != null)
-                    {
-                        object val = key.GetValue(name);
-                        if (val != null) return val.ToString();
-                    }
+                if (key == null)
                     return null;
-                }
-            });
-        }
 
-        /// <summary>
-        /// Сохраняет данные пользователя (имя, фамилия, хеш пароля)
-        /// </summary>
-        public Task SaveUserAsync(string firstName, string lastName, string password)
-        {
-            return Task.Factory.StartNew(() =>
-            {
-                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(registryPath))
-                {
-                    key.SetValue("FirstName", firstName);
-                    key.SetValue("LastName", lastName);
-                    key.SetValue("PasswordHash", HashPassword(password));
-                }
-            });
-        }
-        /// <summary>
-        /// Хеширует пароль с помощью SHA256
-        /// </summary>
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha = SHA256.Create())
-            {
-                byte[] hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return System.Convert.ToBase64String(hashBytes);
+                return new User(
+                    id: key.GetValue("UserId") as string,
+                    firstName: key.GetValue("FirstName") as string,
+                    surename: key.GetValue("Surename") as string,
+                    lastName: key.GetValue("LastName") as string,
+                    passwordHash: key.GetValue("PasswordHash") as string
+                );
             }
         }
-    }// end of class RegistryHelper
-}// end of namespace Budgethelper.Services
+
+        public string GetPasswordHash()
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(RegistryPath))
+            {
+                return key?.GetValue("PasswordHash") as string;
+            }
+        }
+    }
+}
