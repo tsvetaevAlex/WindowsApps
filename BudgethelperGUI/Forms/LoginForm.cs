@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using Budgethelper.Services;
+using BudgetHelper.Services;
 
 namespace Budgethelper.Forms
 {

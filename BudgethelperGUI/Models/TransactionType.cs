@@ -6,5 +6,3 @@ namespace Budgethelper.Models
         Expense
     }
 }
-
-

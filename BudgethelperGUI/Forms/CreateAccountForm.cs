@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Budgethelper.Forms
 {
     public partial class CreateAccountForm : Form
     {
-        public string AccountName => txtName.Text.Trim();
-        public int InitialBalance => (int)nudBalance.Value;
-        public string Currency { get; }
+        public string AccountName { get; private set; }
+        public int InitialBalance { get; private set; }
 
         public CreateAccountForm(string currency)
         {
-            Currency = currency;
             InitializeComponent();
-            lblCurrency.Text = currency;
+            lblCurrency.Text = $"Currency: {currency}";
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(AccountName))
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
-                MessageBox.Show("Введите название счёта");
+                MessageBox.Show("Account name required");
                 return;
             }
 
-            DialogResult = DialogResult.OK;
-            Close();
-        }
+            if (!int.TryParse(txtBalance.Text, out int balance))
+            {
+                MessageBox.Show("Invalid balance");
+                return;
+            }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
+            AccountName = txtName.Text.Trim();
+            InitialBalance = balance;
+
+            DialogResult = DialogResult.OK;
             Close();
         }
     }

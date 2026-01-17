@@ -4,58 +4,93 @@ namespace Budgethelper.Forms
 {
     partial class AddTransactionForm
     {
-        private NumericUpDown nudAmount;
-        private RadioButton rbIncome;
-        private RadioButton rbExpense;
+        private TextBox txtAmount;
+        private ComboBox cbType;
+        private DateTimePicker dtpDate;
         private TextBox txtDescription;
-        private Button btnOk;
-        private Button btnCancel;
+        private Button btnAdd;
+        private Label lblAmount;
+        private Label lblType;
+        private Label lblDate;
+        private Label lblDescription;
 
         private void InitializeComponent()
         {
-            nudAmount = new NumericUpDown();
-            rbIncome = new RadioButton();
-            rbExpense = new RadioButton();
+            txtAmount = new TextBox();
+            cbType = new ComboBox();
+            dtpDate = new DateTimePicker();
             txtDescription = new TextBox();
-            btnOk = new Button();
-            btnCancel = new Button();
+            btnAdd = new Button();
+            lblAmount = new Label();
+            lblType = new Label();
+            lblDate = new Label();
+            lblDescription = new Label();
 
             SuspendLayout();
 
-            nudAmount.Location = new System.Drawing.Point(20, 20);
-            nudAmount.Maximum = 1_000_000;
+            // Amount
+            lblAmount.Text = "Amount";
+            lblAmount.Left = 20;
+            lblAmount.Top = 20;
 
-            rbIncome.Text = "Income";
-            rbIncome.Location = new System.Drawing.Point(20, 60);
-            rbIncome.Checked = true;
+            txtAmount.Left = 120;
+            txtAmount.Top = 16;
+            txtAmount.Width = 400;
 
-            rbExpense.Text = "Expense";
-            rbExpense.Location = new System.Drawing.Point(120, 60);
+            // Type
+            lblType.Text = "Type";
+            lblType.Left = 20;
+            lblType.Top = 60;
 
-            txtDescription.Location = new System.Drawing.Point(20, 100);
-            txtDescription.Width = 240;
+            cbType.Left = 120;
+            cbType.Top = 56;
+            cbType.Width = 400;
+            cbType.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            btnOk.Text = "OK";
-            btnOk.Location = new System.Drawing.Point(20, 140);
-            btnOk.Click += btnOk_Click;
+            // Date
+            lblDate.Text = "Date";
+            lblDate.Left = 20;
+            lblDate.Top = 100;
 
-            btnCancel.Text = "Cancel";
-            btnCancel.Location = new System.Drawing.Point(120, 140);
-            btnCancel.Click += btnCancel_Click;
+            dtpDate.Left = 120;
+            dtpDate.Top = 96;
+            dtpDate.Width = 400;
+            dtpDate.Format = DateTimePickerFormat.Custom;
+            dtpDate.CustomFormat = "dd/MM/yyyy";
 
-            ClientSize = new System.Drawing.Size(280, 190);
+            // Description
+            lblDescription.Text = "Description";
+            lblDescription.Left = 20;
+            lblDescription.Top = 140;
+
+            txtDescription.Left = 120;
+            txtDescription.Top = 136;
+            txtDescription.Width = 400;
+            txtDescription.Height = 60;
+            txtDescription.Multiline = true;
+
+            // Button
+            btnAdd.Text = "Add transaction";
+            btnAdd.Left = 350;
+            btnAdd.Top = 210;
+            btnAdd.Width = 170;
+            btnAdd.Click += btnAdd_Click;
+
+            // Form
+            ClientSize = new System.Drawing.Size(560, 270);
             Controls.AddRange(new Control[]
             {
-                nudAmount,
-                rbIncome,
-                rbExpense,
-                txtDescription,
-                btnOk,
-                btnCancel
+                lblAmount, txtAmount,
+                lblType, cbType,
+                lblDate, dtpDate,
+                lblDescription, txtDescription,
+                btnAdd
             });
 
             Text = "Add transaction";
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             StartPosition = FormStartPosition.CenterParent;
 
             ResumeLayout(false);

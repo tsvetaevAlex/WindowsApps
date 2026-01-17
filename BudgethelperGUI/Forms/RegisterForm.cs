@@ -5,6 +5,11 @@ namespace Budgethelper.Forms
 {
     public partial class RegisterForm : Form
     {
+        public string FirstName => txtFirstName.Text.Trim();
+        public string Surname => txtSurname.Text.Trim();
+        public string Patronymic => txtPatronymic.Text.Trim();
+        public string Password => txtPassword.Text;
+
         public RegisterForm()
         {
             InitializeComponent();
@@ -12,7 +17,14 @@ namespace Budgethelper.Forms
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            // логика регистрации
+            if (string.IsNullOrWhiteSpace(FirstName) ||
+                string.IsNullOrWhiteSpace(Surname) ||
+                string.IsNullOrWhiteSpace(Password))
+            {
+                MessageBox.Show("Имя, фамилия и пароль обязательны");
+                return;
+            }
+
             DialogResult = DialogResult.OK;
             Close();
         }

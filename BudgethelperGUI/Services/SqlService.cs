@@ -1,153 +1,56 @@
-﻿using Budgethelper.Models;
-using System;
-using System.Data.SQLite;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using Budgethelper.Models;
 
 namespace BudgetHelper.Services
 {
-    public sealed class SqlService : IDisposable
+    public class SqlService
     {
-        private const string AppName = "BudgetHelper";
-        private const string DbFolderName = "SqlService";
+        public SqlService(string userId) { }
 
-        public SQLiteConnection Connection { get; private set; }
-
-        public SqlService(string userId)
+        public List<AccountItem> GetAccounts()
         {
-            string dbPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                AppName,
-                DbFolderName,
-                userId + ".sqlite");
-
-            Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
-
-            if (!File.Exists(dbPath))
-                SQLiteConnection.CreateFile(dbPath);
-
-            Connection = new SQLiteConnection($"Data Source={dbPath};Version=3;");
-            Connection.Open();
-
-            VerifySchema();
-        }
-
-        private void VerifySchema()
-        {
-            using (var cmd = Connection.CreateCommand())
+            return new List<AccountItem>
             {
-                cmd.CommandText =
-@"
-CREATE TABLE IF NOT EXISTS Accounts (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name TEXT NOT NULL,
-    Balance INTEGER NOT NULL,
-    Currency TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Transactions (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    AccountName TEXT NOT NULL,
-    Amount INTEGER NOT NULL,
-    Type INTEGER NOT NULL,
-    Description TEXT,
-    Date TEXT NOT NULL
-);
-";
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public bool HasAccounts(string currency)
-        {
-            using (var cmd = Connection.CreateCommand())
-            {
-                cmd.CommandText =
-                    "SELECT COUNT(*) FROM Accounts WHERE Currency=@c";
-                cmd.Parameters.AddWithValue("@c", currency);
-                return (long)cmd.ExecuteScalar() > 0;
-            }
-        }
-
-        public long CreateAccount(string name, int balance, string currency)
-        {
-            using (var cmd = Connection.CreateCommand())
-            {
-                cmd.CommandText =
-@"
-INSERT INTO Accounts (Name, Balance, Currency)
-VALUES (@n,@b,@c);
-SELECT last_insert_rowid();
-";
-                cmd.Parameters.AddWithValue("@n", name);
-                cmd.Parameters.AddWithValue("@b", balance);
-                cmd.Parameters.AddWithValue("@c", currency);
-
-                return (long)cmd.ExecuteScalar();
-            }
-        }
-
-        public SQLiteDataReader LoadAccounts(string currency)
-        {
-            var cmd = Connection.CreateCommand();
-            cmd.CommandText =
-                "SELECT Name, Balance FROM Accounts WHERE Currency=@c";
-            cmd.Parameters.AddWithValue("@c", currency);
-            return cmd.ExecuteReader();
+                new AccountItem { Id="1", Name="Cash", Balance=1200 },
+                new AccountItem { Id="2", Name="Card", Balance=5400 }
+            };
         }
 
         public void AddTransaction(
-            string accountName,
-            int amount,
+            string accountId,
+            decimal amount,
             TransactionType type,
-            string description)
+            string description,
+            DateTime date)
         {
-            int delta = type == TransactionType.Expense
-                ? -amount
-                : amount;
-
-            using (var tx = Connection.BeginTransaction())
-            {
-                using (var cmd = Connection.CreateCommand())
-                {
-                    cmd.CommandText =
-@"
-INSERT INTO Transactions
-(AccountName, Amount, Type, Description, Date)
-VALUES
-(@a,@am,@t,@d,@dt);
-";
-                    cmd.Parameters.AddWithValue("@a", accountName);
-                    cmd.Parameters.AddWithValue("@am", delta);
-                    cmd.Parameters.AddWithValue("@t", (int)type);
-                    cmd.Parameters.AddWithValue("@d", description);
-                    cmd.Parameters.AddWithValue("@dt",
-                        DateTime.Now.ToString("dd-MM-yyyy"));
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                using (var cmd = Connection.CreateCommand())
-                {
-                    cmd.CommandText =
-@"
-UPDATE Accounts
-SET Balance = Balance + @delta
-WHERE Name = @name;
-";
-                    cmd.Parameters.AddWithValue("@delta", delta);
-                    cmd.Parameters.AddWithValue("@name", accountName);
-                    cmd.ExecuteNonQuery();
-                }
-
-                tx.Commit();
-            }
+            // INSERT INTO transactions
+            // UPDATE accounts SET balance = balance +/- amount
         }
 
-        public void Dispose()
+        public List<Transaction> LoadTransactions(
+            string accountId,
+            DateTime from,
+            DateTime to,
+            TransactionType? type)
         {
-            Connection?.Close();
-            Connection?.Dispose();
+            return new List<Transaction>
+            {
+                new Transaction
+                {
+                    Date = DateTime.Today,
+                    Type = TransactionType.Income,
+                    Amount = 500,
+                    Description = "Salary"
+                },
+                new Transaction
+                {
+                    Date = DateTime.Today,
+                    Type = TransactionType.Expense,
+                    Amount = 120,
+                    Description = "Food"
+                }
+            };
         }
     }
 }
-

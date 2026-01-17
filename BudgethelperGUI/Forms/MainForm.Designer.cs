@@ -1,53 +1,56 @@
 ﻿using System.Windows.Forms;
+using Budgethelper.Controls;
 
 namespace Budgethelper.Forms
 {
     partial class MainForm
     {
-        private System.ComponentModel.IContainer components = null;
-
-        private ListView lvUsdAccounts;
-        private Button btnAddTransaction;
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && components != null)
-                components.Dispose();
-
-            base.Dispose(disposing);
-        }
+        private AccountsGroup accountsGroup;
+        private TransactionsGroup transactionsGroup;
+        private DataGridView dgv;
+        private DateTimePicker dtFrom, dtTo;
+        private ComboBox cmbType;
 
         private void InitializeComponent()
         {
-            lvUsdAccounts = new ListView();
-            btnAddTransaction = new Button();
+            this.Text = "BudgetHelper";
+            this.Width = 900;
+            this.Height = 600;
 
-            SuspendLayout();
+            accountsGroup = new AccountsGroup { Dock = DockStyle.Top };
+            transactionsGroup = new TransactionsGroup { Dock = DockStyle.Top };
 
-            // lvUsdAccounts
-            lvUsdAccounts.Dock = DockStyle.Top;
-            lvUsdAccounts.Height = 250;
-            lvUsdAccounts.View = View.Details;
-            lvUsdAccounts.FullRowSelect = true;
-            lvUsdAccounts.GridLines = true;
+            GroupBox gbAccounts = new GroupBox
+            {
+                Text = "Выбор аккаунта",
+                Dock = DockStyle.Top,
+                Height = 70
+            };
+            gbAccounts.Controls.Add(accountsGroup);
 
-            lvUsdAccounts.Columns.Add("Account", 200);
-            lvUsdAccounts.Columns.Add("Balance", 120);
+            GroupBox gbAdd = new GroupBox
+            {
+                Text = "Добавление транзакции",
+                Dock = DockStyle.Top,
+                Height = 80
+            };
+            gbAdd.Controls.Add(transactionsGroup);
 
-            // btnAddTransaction
-            btnAddTransaction.Text = "Add transaction";
-            btnAddTransaction.Dock = DockStyle.Top;
-            btnAddTransaction.Height = 40;
-            btnAddTransaction.Click += btnAddTransaction_Click;
+            dgv = new DataGridView { Dock = DockStyle.Fill };
+            dgv.Columns.Add("Date", "Date");
+            dgv.Columns.Add("Type", "Type");
+            dgv.Columns.Add("Amount", "Amount");
+            dgv.Columns.Add("Desc", "Comment");
 
-            // MainForm
-            ClientSize = new System.Drawing.Size(600, 400);
-            Controls.Add(btnAddTransaction);
-            Controls.Add(lvUsdAccounts);
-            Text = "BudgetHelper";
-            Load += MainForm_Load;
+            dtFrom = new DateTimePicker();
+            dtTo = new DateTimePicker();
+            cmbType = new ComboBox();
+            cmbType.Items.AddRange(new object[] { "All", Models.TransactionType.Income, Models.TransactionType.Expense });
+            cmbType.SelectedIndex = 0;
 
-            ResumeLayout(false);
+            this.Controls.Add(dgv);
+            this.Controls.Add(gbAdd);
+            this.Controls.Add(gbAccounts);
         }
     }
 }

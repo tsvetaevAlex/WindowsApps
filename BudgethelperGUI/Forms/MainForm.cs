@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using BudgetHelper.Services;
+using Budgethelper.Controls;
 using Budgethelper.Models;
 
 namespace Budgethelper.Forms
@@ -12,48 +14,38 @@ namespace Budgethelper.Forms
         public MainForm()
         {
             InitializeComponent();
-            _sql = new SqlService("default-user");
-        }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            LoadUsdAccounts();
-        }
+            _sql = new SqlService("user1");
 
-        private void LoadUsdAccounts()
-        {
-            lvUsdAccounts.Items.Clear();
+            accountsGroup.Bind(_sql);
+            transactionsGroup.Bind(_sql, () => accountsGroup.SelectedAccountId);
 
-            using (var r = _sql.LoadAccounts("USD"))
+            accountsGroup.AccountChanged += id =>
             {
-                while (r.Read())
-                {
-                    var item = new ListViewItem(r["Name"].ToString());
-                    item.SubItems.Add(r["Balance"].ToString());
-                    lvUsdAccounts.Items.Add(item);
-                }
-            }
+                transactionsGroup.EnableForAccount(!string.IsNullOrEmpty(id));
+                LoadTransactions();
+            };
+
+            transactionsGroup.TransactionAdded += () =>
+            {
+                accountsGroup.Reload();
+                LoadTransactions();
+            };
         }
 
-        private void btnAddTransaction_Click(object sender, EventArgs e)
+        private void LoadTransactions()
         {
-            if (lvUsdAccounts.SelectedItems.Count == 0)
-                return;
+            dgv.Rows.Clear();
 
-            string accountName = lvUsdAccounts.SelectedItems[0].Text;
-
-            using (var f = new AddTransactionForm())
+            foreach (var tx in _sql.LoadTransactions(
+                accountsGroup.SelectedAccountId,
+                dtFrom.Value,
+                dtTo.Value,
+                cmbType.SelectedIndex == 0 ? null : (TransactionType?)cmbType.SelectedItem))
             {
-                if (f.ShowDialog() != DialogResult.OK)
-                    return;
-
-                _sql.AddTransaction(
-                    accountName,
-                    f.Amount,
-                    f.Type,
-                    f.Description);
-
-                LoadUsdAccounts();
+                int r = dgv.Rows.Add(tx.Date, tx.Type, tx.Amount, tx.Description);
+                dgv.Rows[r].DefaultCellStyle.ForeColor =
+                    tx.Type == TransactionType.Income ? Color.DarkGreen : Color.DarkRed;
             }
         }
     }

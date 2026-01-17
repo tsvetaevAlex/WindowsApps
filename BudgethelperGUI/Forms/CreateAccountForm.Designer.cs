@@ -4,62 +4,64 @@ namespace Budgethelper.Forms
 {
     partial class CreateAccountForm
     {
+        private TextBox txtName;
+        private TextBox txtBalance;
         private Label lblName;
         private Label lblBalance;
         private Label lblCurrency;
-        private TextBox txtName;
-        private NumericUpDown nudBalance;
-        private Button btnOk;
-        private Button btnCancel;
+        private Button btnCreate;
 
         private void InitializeComponent()
         {
+            txtName = new TextBox();
+            txtBalance = new TextBox();
             lblName = new Label();
             lblBalance = new Label();
             lblCurrency = new Label();
-            txtName = new TextBox();
-            nudBalance = new NumericUpDown();
-            btnOk = new Button();
-            btnCancel = new Button();
+            btnCreate = new Button();
 
             SuspendLayout();
 
-            lblName.Text = "Название счёта:";
-            lblName.Location = new System.Drawing.Point(20, 20);
+            lblCurrency.Left = 20;
+            lblCurrency.Top = 15;
+            lblCurrency.Width = 300;
 
-            txtName.Location = new System.Drawing.Point(150, 20);
-            txtName.Width = 200;
+            lblName.Text = "Account name";
+            lblName.Left = 20;
+            lblName.Top = 50;
 
-            lblBalance.Text = "Начальный баланс:";
-            lblBalance.Location = new System.Drawing.Point(20, 60);
+            txtName.Left = 140;
+            txtName.Top = 46;
+            txtName.Width = 260;
 
-            nudBalance.Location = new System.Drawing.Point(150, 60);
-            nudBalance.Maximum = 1_000_000;
+            lblBalance.Text = "Initial balance";
+            lblBalance.Left = 20;
+            lblBalance.Top = 90;
 
-            lblCurrency.Location = new System.Drawing.Point(150, 95);
-            lblCurrency.AutoSize = true;
+            txtBalance.Left = 140;
+            txtBalance.Top = 86;
+            txtBalance.Width = 260;
 
-            btnOk.Text = "Создать";
-            btnOk.Location = new System.Drawing.Point(150, 130);
-            btnOk.Click += btnOk_Click;
+            btnCreate.Text = "Create";
+            btnCreate.Left = 280;
+            btnCreate.Top = 130;
+            btnCreate.Width = 120;
+            btnCreate.Click += btnCreate_Click;
 
-            btnCancel.Text = "Отмена";
-            btnCancel.Location = new System.Drawing.Point(260, 130);
-            btnCancel.Click += btnCancel_Click;
-
-            ClientSize = new System.Drawing.Size(380, 180);
+            ClientSize = new System.Drawing.Size(430, 180);
             Controls.AddRange(new Control[]
             {
-                lblName, txtName,
-                lblBalance, nudBalance,
                 lblCurrency,
-                btnOk, btnCancel
+                lblName, txtName,
+                lblBalance, txtBalance,
+                btnCreate
             });
 
-            Text = "Создание счёта";
+            Text = "Create account";
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
             StartPosition = FormStartPosition.CenterParent;
+            MaximizeBox = false;
+            MinimizeBox = false;
 
             ResumeLayout(false);
         }

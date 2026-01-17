@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AccountsGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AccountsGroup.Designer.cs">
+      <DependentUpon>AccountsGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TransactionsGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TransactionsGroup.Designer.cs">
+      <DependentUpon>TransactionsGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddTransactionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +88,8 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountItem.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\HashService.cs" />
@@ -84,6 +98,9 @@
     <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Services\SqlService.cs" />
     <Compile Include="Services\StatusBarService.cs" />
+    <EmbeddedResource Include="Controls\AccountsGroup.resx">
+      <DependentUpon>AccountsGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

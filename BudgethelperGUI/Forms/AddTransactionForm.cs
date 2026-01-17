@@ -1,36 +1,41 @@
-﻿using Budgethelper.Models;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Budgethelper.Models;
 
 namespace Budgethelper.Forms
 {
     public partial class AddTransactionForm : Form
     {
-        public int Amount => (int)nudAmount.Value;
-        public TransactionType Type =>
-            rbIncome.Checked ? TransactionType.Income : TransactionType.Expense;
-        public string Description => txtDescription.Text;
+        public int Amount { get; private set; }
+        public TransactionType TransactionKind { get; private set; }
+        public DateTime Date { get; private set; }
+        public string Description { get; private set; }
 
         public AddTransactionForm()
         {
             InitializeComponent();
+
+            cbType.Items.Add(TransactionType.Income);
+            cbType.Items.Add(TransactionType.Expense);
+            cbType.SelectedIndex = 0;
+
+            dtpDate.Value = DateTime.Now;
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (Amount <= 0)
+            if (!int.TryParse(txtAmount.Text, out int amount) || amount <= 0)
             {
-                MessageBox.Show("Сумма должна быть больше 0");
+                MessageBox.Show("Invalid amount");
                 return;
             }
 
-            DialogResult = DialogResult.OK;
-            Close();
-        }
+            Amount = amount;
+            TransactionKind = (TransactionType)cbType.SelectedItem;
+            Date = dtpDate.Value.Date;
+            Description = txtDescription.Text.Trim();
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
+            DialogResult = DialogResult.OK;
             Close();
         }
     }
