@@ -1,73 +1,48 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows.Forms;
+﻿using Budgethelper.Services;
 using BudgetHelper.Services;
+using System;
+using System.Windows.Forms;
 
 namespace Budgethelper.Forms
 {
     public partial class LoginForm : Form
     {
-        private readonly RegistryService _registry;
-
         public LoginForm()
         {
             InitializeComponent();
-            _registry = new RegistryService();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPassword.Text))
-            {
-                MessageBox.Show(
-                    "Введите пароль",
-                    "Ошибка",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
-            }
+            string passwordHash = HashService.GetMd5(txtPassword.Text);
 
-            string enteredHash = HashPassword(txtPassword.Text);
-            string storedHash = _registry.GetPasswordHash();
-
-            if (storedHash == null || enteredHash != storedHash)
+            if (!RegistryService.ValidatePassword(passwordHash))
             {
                 MessageBox.Show(
                     "Неверный пароль",
-                    "Ошибка авторизации",
+                    "Авторизация",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-
-                txtPassword.Clear();
-                txtPassword.Focus();
+                    MessageBoxIcon.Error
+                );
                 return;
             }
 
+            Logger.SendMessage("User logged in");
             DialogResult = DialogResult.OK;
             Close();
         }
 
+        // ✅ ДОБАВЛЕНО
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            Logger.SendMessage("Login cancelled");
             Application.Exit();
         }
 
+        // ✅ ДОБАВЛЕНО
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            txtPassword.PasswordChar =
-                chkShowPassword.Checked ? '\0' : '●';
-        }
-
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha = SHA256.Create())
-            {
-                byte[] hashBytes =
-                    sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                return Convert.ToBase64String(hashBytes);
-            }
+            txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
     }
 }

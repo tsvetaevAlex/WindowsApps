@@ -1,94 +1,67 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Security.Cryptography;
-using System.Text;
 
-namespace BudgetHelper.Services
+namespace Budgethelper.Services
 {
-    public sealed class RegistryService
+    public static class RegistryService
     {
-        private const string RootPath = @"Software\BudgetHelper";
+        private const string Root = @"Software\BudgetHelper";
 
-        // =========================
-        // Public API
-        // =========================
-
-        public bool UserExists()
+        public static bool UserExists()
         {
-            using (var key = Registry.CurrentUser.OpenSubKey(RootPath))
+            using (var key = Registry.CurrentUser.OpenSubKey(Root))
             {
-                return key != null &&
-                       key.GetValue("Uid") != null &&
-                       key.GetValue("PasswordHash") != null;
+                return key != null && key.GetValue("UID") != null;
             }
         }
 
-        public void SaveUser(
-            string name,
-            string surename,
+        public static void SaveUser(
+            string uid,
+            string firstName,
+            string sureName,
             string lastName,
-            string password)
+            string passwordHash)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name is empty");
-
-            if (string.IsNullOrWhiteSpace(surename))
-                throw new ArgumentException("Surename is empty");
-
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password is empty");
-
-            string uid = Guid.NewGuid().ToString();
-            string hash = ComputeHash(password);
-
-            using (var key = Registry.CurrentUser.CreateSubKey(RootPath))
+            using (var key = Registry.CurrentUser.CreateSubKey(Root))
             {
-                key.SetValue("Uid", uid);
-                key.SetValue("Name", name);
-                key.SetValue("Surename", surename);
-                key.SetValue("LastName", lastName ?? string.Empty);
-                key.SetValue("PasswordHash", hash);
+                key.SetValue("UID", uid);
+                key.SetValue("FirstName", firstName);
+                key.SetValue("SureName", sureName);
+                key.SetValue("LastName", lastName ?? "");
+                key.SetValue("Password", passwordHash);
             }
         }
 
-        public string GetUid() => Read("Uid");
-        public string GetName() => Read("Name");
-        public string GetSurename() => Read("Surename");
-        public string GetLastName() => Read("LastName");
-
-        public bool ValidatePassword(string password)
+        public static string GetUid()
         {
-            string storedHash = Read("PasswordHash");
-            if (storedHash == null)
-                return false;
-
-            return storedHash == ComputeHash(password);
-        }
-
-        // =========================
-        // Helpers
-        // =========================
-
-        private string Read(string keyName)
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey(RootPath))
+            using (var key = Registry.CurrentUser.OpenSubKey(Root))
             {
-                return key?.GetValue(keyName)?.ToString();
+                return key?.GetValue("UID")?.ToString();
             }
         }
 
-        private static string ComputeHash(string input)
+        public static bool ValidatePassword(string password)
         {
-            using (var sha = SHA256.Create())
+            using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(Root))
             {
-                byte[] bytes = Encoding.UTF8.GetBytes(input);
-                byte[] hash = sha.ComputeHash(bytes);
+                if (key == null)
+                    return false;
 
-                var sb = new StringBuilder();
-                foreach (byte b in hash)
-                    sb.Append(b.ToString("x2"));
+                var storedHash = key.GetValue("Password") as string;
+                if (string.IsNullOrEmpty(storedHash))
+                    return false;
 
-                return sb.ToString();
+                string inputHash = HashService.GetMd5(password);
+                return string.Equals(storedHash, inputHash, StringComparison.Ordinal);
+            }
+        }
+
+
+        public static string GetPasswordHash()
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(Root))
+            {
+                return key?.GetValue("Password")?.ToString();
             }
         }
     }

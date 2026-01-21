@@ -1,24 +1,39 @@
-﻿using System;
-using System.Windows.Forms;
-using Budgethelper.Forms;
-
+﻿using BudgetHelper.Services;
+using Visual.Logger;
 namespace Budgethelper
 {
-    static class Program
+    internal static class Program
     {
-        [STAThread]
+        [System.STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
-            using (var register = new RegisterForm())
+            // === Visual.Logger ===
+            VisualLogger logger =
+                new VisualLogger();
+            logger.Show();
+
+            // === Registry ===
+            if (!Budgethelper.Services.RegistryService.UserExists())
             {
-                if (register.ShowDialog() != DialogResult.OK)
-                    return;
+                System.Windows.Forms.Application.Run(
+                    new Budgethelper.Forms.RegisterForm()
+                );
+                return;
             }
 
-            Application.Run(new MainForm());
+            string uid = Budgethelper.Services.RegistryService.GetUid();
+
+            // === SqlService (AppServices) ===
+            BudgetHelper.Services.SqlService sql =
+                new BudgetHelper.Services.SqlService(uid);
+
+            // === Main UI ===
+            System.Windows.Forms.Application.Run(
+                new Budgethelper.Forms.MainForm()
+            );
         }
     }
 }

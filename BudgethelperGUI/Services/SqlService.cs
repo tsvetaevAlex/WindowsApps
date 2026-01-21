@@ -1,56 +1,76 @@
 ﻿using System;
-using System.Collections.Generic;
-using Budgethelper.Models;
+using System.Data.SQLite;
+using System.IO;
+using System.Windows.Forms;
 
 namespace BudgetHelper.Services
 {
     public class SqlService
     {
-        public SqlService(string userId) { }
+        private readonly string _dbPath;
+        private readonly string _connectionString;
 
-        public List<AccountItem> GetAccounts()
+        public SqlService(string uid)
         {
-            return new List<AccountItem>
-            {
-                new AccountItem { Id="1", Name="Cash", Balance=1200 },
-                new AccountItem { Id="2", Name="Card", Balance=5400 }
-            };
+            _dbPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "BudgetHelper",
+                "SqlService",
+                uid + ".sqlite"
+            );
+
+            Directory.CreateDirectory(Path.GetDirectoryName(_dbPath));
+            _connectionString = $"Data Source={_dbPath};Version=3;";
+
+            EnsureDatabase();
         }
 
-        public void AddTransaction(
-            string accountId,
-            decimal amount,
-            TransactionType type,
-            string description,
-            DateTime date)
+        private SQLiteConnection GetConnection()
         {
-            // INSERT INTO transactions
-            // UPDATE accounts SET balance = balance +/- amount
+            var conn = new SQLiteConnection(_connectionString);
+            conn.Open();
+            return conn;
         }
 
-        public List<Transaction> LoadTransactions(
-            string accountId,
-            DateTime from,
-            DateTime to,
-            TransactionType? type)
+        private void EnsureDatabase()
         {
-            return new List<Transaction>
+            if (!File.Exists(_dbPath))
+                SQLiteConnection.CreateFile(_dbPath);
+
+            using (var conn = GetConnection())
+            using (var cmd = conn.CreateCommand())
             {
-                new Transaction
-                {
-                    Date = DateTime.Today,
-                    Type = TransactionType.Income,
-                    Amount = 500,
-                    Description = "Salary"
-                },
-                new Transaction
-                {
-                    Date = DateTime.Today,
-                    Type = TransactionType.Expense,
-                    Amount = 120,
-                    Description = "Food"
-                }
-            };
+                cmd.CommandText = @"
+CREATE TABLE IF NOT EXISTS Accounts (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT NOT NULL,
+    Currency TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Transactions (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    AccountId INTEGER,
+    Amount REAL NOT NULL,
+    CreatedAt TEXT NOT NULL
+);";
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public decimal GetBalance(string currency)
+        {
+            using (var conn = GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+SELECT IFNULL(SUM(t.Amount),0)
+FROM Transactions t
+JOIN Accounts a ON a.Id = t.AccountId
+WHERE a.Currency = @c";
+
+                cmd.Parameters.AddWithValue("@c", currency);
+                return Convert.ToDecimal(cmd.ExecuteScalar());
+            }
         }
     }
 }

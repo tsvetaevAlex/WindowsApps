@@ -1,52 +1,93 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using BudgetHelper.Services;
-using Budgethelper.Controls;
-using Budgethelper.Models;
 
 namespace Budgethelper.Forms
 {
-    public partial class MainForm : Form
+    public class MainForm : Form
     {
-        private SqlService _sql;
+        // Tabs
+        private TabControl tabControl;
+
+        // StatusBar
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel lblUser;
+        private ToolStripStatusLabel lblCurrency;
+        private ToolStripStatusLabel lblBalance;
+        private ToolStripStatusLabel lblStatus;
 
         public MainForm()
         {
-            InitializeComponent();
+            Text = "BudgetHelper";
+            Width = 900;
+            Height = 600;
+            StartPosition = FormStartPosition.CenterScreen;
 
-            _sql = new SqlService("user1");
+            InitializeTabs();
+            InitializeStatusBar();
+        }
 
-            accountsGroup.Bind(_sql);
-            transactionsGroup.Bind(_sql, () => accountsGroup.SelectedAccountId);
-
-            accountsGroup.AccountChanged += id =>
+        private void InitializeTabs()
+        {
+            tabControl = new TabControl
             {
-                transactionsGroup.EnableForAccount(!string.IsNullOrEmpty(id));
-                LoadTransactions();
+                Dock = DockStyle.Fill
             };
 
-            transactionsGroup.TransactionAdded += () =>
+            tabControl.TabPages.Add(CreateTab("Счета"));
+            tabControl.TabPages.Add(CreateTab("Транзакции"));
+            tabControl.TabPages.Add(CreateTab("Статистика"));
+
+            Controls.Add(tabControl);
+        }
+
+        private TabPage CreateTab(string title)
+        {
+            return new TabPage
             {
-                accountsGroup.Reload();
-                LoadTransactions();
+                Text = title
             };
         }
 
-        private void LoadTransactions()
+        private void InitializeStatusBar()
         {
-            dgv.Rows.Clear();
+            statusStrip = new StatusStrip();
 
-            foreach (var tx in _sql.LoadTransactions(
-                accountsGroup.SelectedAccountId,
-                dtFrom.Value,
-                dtTo.Value,
-                cmbType.SelectedIndex == 0 ? null : (TransactionType?)cmbType.SelectedItem))
-            {
-                int r = dgv.Rows.Add(tx.Date, tx.Type, tx.Amount, tx.Description);
-                dgv.Rows[r].DefaultCellStyle.ForeColor =
-                    tx.Type == TransactionType.Income ? Color.DarkGreen : Color.DarkRed;
-            }
+            lblUser = new ToolStripStatusLabel("Пользователь: —");
+            lblCurrency = new ToolStripStatusLabel("Валюта: —");
+            lblBalance = new ToolStripStatusLabel("Баланс: 0.00");
+            lblStatus = new ToolStripStatusLabel("Готово");
+
+            statusStrip.Items.Add(lblUser);
+            statusStrip.Items.Add(new ToolStripSeparator());
+            statusStrip.Items.Add(lblCurrency);
+            statusStrip.Items.Add(new ToolStripSeparator());
+            statusStrip.Items.Add(lblBalance);
+            statusStrip.Items.Add(new ToolStripSeparator());
+            statusStrip.Items.Add(lblStatus);
+
+            Controls.Add(statusStrip);
+        }
+
+        // ===== Публичные методы для будущей логики =====
+
+        public void SetUser(string userName)
+        {
+            lblUser.Text = $"Пользователь: {userName}";
+        }
+
+        public void SetCurrency(string currency)
+        {
+            lblCurrency.Text = $"Валюта: {currency}";
+        }
+
+        public void SetBalance(decimal balance)
+        {
+            lblBalance.Text = $"Баланс: {balance:F2}";
+        }
+
+        public void SetStatus(string text)
+        {
+            lblStatus.Text = text;
         }
     }
 }

@@ -1,0 +1,52 @@
+﻿using System.Drawing;
+using System.Windows.Forms;
+using BudgethelperGUI.Logging;
+
+namespace Visual.Logger
+{
+    public sealed class VisualLoggerForm : Form
+    {
+        private RichTextBox rtbLogger;
+
+        public VisualLoggerForm()
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
+        {
+            rtbLogger = new RichTextBox();
+
+            rtbLogger.Dock = DockStyle.Fill;
+            rtbLogger.ReadOnly = true;
+            rtbLogger.BackColor = Color.Black;
+            rtbLogger.ForeColor = Color.Lime;
+            rtbLogger.Font = new Font("Consolas", 11);
+            rtbLogger.BorderStyle = BorderStyle.None;
+
+            Text = "Visual Logger";
+            Size = new Size(800, 400);
+            Controls.Add(rtbLogger);
+        }
+
+        public void Subscribe(ILogger logger)
+        {
+            logger.MessageLogged += OnMessageLogged;
+        }
+
+        private void OnMessageLogged(LogMessage msg)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new MethodInvoker(delegate { OnMessageLogged(msg); }));
+                return;
+            }
+
+            rtbLogger.SelectionColor = msg.Color;
+            rtbLogger.AppendText(
+                string.Format("[{0:HH:mm:ss}] {1}\n", msg.Time, msg.Text)
+            );
+            rtbLogger.ScrollToCaret();
+        }
+    }
+}

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{76D1D1A8-4868-4249-BF49-F6A56DDC6075}</ProjectGuid>
+    <ProjectGuid>{0D77569A-0590-47FE-B52E-4701A9BA1D0B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BudgethelperGUI</RootNamespace>
-    <AssemblyName>BudgethelperGUI</AssemblyName>
+    <RootNamespace>Visual.Logger</RootNamespace>
+    <AssemblyName>Visual.Logger</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -52,9 +52,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Budgethelper.Program</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,62 +66,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\AccountsGroup.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\AccountsGroup.Designer.cs">
-      <DependentUpon>AccountsGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TransactionsGroup.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TransactionsGroup.Designer.cs">
-      <DependentUpon>TransactionsGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AddTransactionForm.cs">
+    <Compile Include="Forms\VisualLogger.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddTransactionForm.Designer.cs">
-      <DependentUpon>AddTransactionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CreateAccountForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CreateAccountForm.Designer.cs">
-      <DependentUpon>CreateAccountForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\LoginForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RegisterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Models\AccountItem.cs" />
-    <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TransactionType.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Services\AppServicesLocator.cs" />
-    <Compile Include="Services\HashService.cs" />
+    <Compile Include="Forms\VisualLogger.Designer.cs" />
+    <Compile Include="Logger\AppLogger.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logger\LogMessage.cs" />
+    <Compile Include="Models\logLevel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Logger.cs" />
-    <Compile Include="Services\RegistryService.cs" />
-    <Compile Include="Services\SqlService.cs" />
-    <Compile Include="Services\StatusBarService.cs" />
-    <EmbeddedResource Include="Controls\AccountsGroup.resx">
-      <DependentUpon>AccountsGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RegisterForm.resx">
-      <DependentUpon>RegisterForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\VisualLogger.resx">
+      <DependentUpon>VisualLogger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -144,28 +97,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="using System.Drawing%3b" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core">
-      <Version>1.0.119</Version>
-    </PackageReference>
     <PackageReference Include="System.Data.SQLite.x64">
       <Version>1.0.119</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Visual.Logger\Visual.Logger.csproj">
-      <Project>{0d77569a-0590-47fe-b52e-4701a9ba1d0b}</Project>
-      <Name>Visual.Logger</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Visual.Logger.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

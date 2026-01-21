@@ -1,73 +1,29 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Threading;
-using System.Threading.Tasks;
+﻿
+using BudgetHelper.Services;
 using System.Windows.Forms;
 
 namespace Budgethelper.Services
 {
-    public sealed class StatusBarService : IDisposable
+    public class StatusBarService
     {
-        private readonly RichTextBox _rtb;
-        private readonly CancellationTokenSource _cts = new CancellationTokenSource();
-        private readonly Stopwatch _uptime = new Stopwatch();
-        private int _counter;
+        private readonly ToolStripStatusLabel _lblRur;
+        private readonly ToolStripStatusLabel _lblUsd;
+        private readonly SqlService _sql;
 
-        public StatusBarService(RichTextBox rtb)
+        public StatusBarService(
+            ToolStripStatusLabel lblRur,
+            ToolStripStatusLabel lblUsd,
+            SqlService sql)
         {
-            _rtb = rtb ?? throw new ArgumentNullException(nameof(rtb));
+            _lblRur = lblRur;
+            _lblUsd = lblUsd;
+            _sql = sql;
         }
 
-        public void Start()
+        public void Refresh()
         {
-            if (_uptime.IsRunning)
-                return;
-
-            _uptime.Start();
-            _ = LoopAsync();
-        }
-
-        private async Task LoopAsync()
-        {
-            try
-            {
-                while (!_cts.Token.IsCancellationRequested)
-                {
-                    Render();
-                    _counter++;
-                    await Task.Delay(500, _cts.Token);
-                }
-            }
-            catch (TaskCanceledException) { }
-        }
-
-        private void Render()
-        {
-            if (_rtb.IsDisposed) return;
-            if (_rtb.InvokeRequired)
-            {
-                _rtb.BeginInvoke(new Action(Render));
-                return;
-            }
-
-            string uptimeText = $"Uptime: {_uptime.Elapsed:dd\\.hh\\:mm\\:ss}";
-
-            _rtb.Clear();
-            _rtb.SelectionColor = Color.WhiteSmoke;
-            _rtb.AppendText("Status ");
-
-            _rtb.SelectionColor = (_counter % 2 == 0) ? Color.LimeGreen : Color.Black;
-            _rtb.AppendText("●");
-
-            _rtb.SelectionColor = Color.WhiteSmoke;
-            _rtb.AppendText($"  {uptimeText}");
-        }
-
-        public void Dispose()
-        {
-            _cts.Cancel();
-            _cts.Dispose();
+            _lblRur.Text = $"RUR: {_sql.GetBalance("RUR"),6}";
+            _lblUsd.Text = $"USD: {_sql.GetBalance("USD"),6}";
         }
     }
 }

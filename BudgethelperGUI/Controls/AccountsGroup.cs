@@ -1,43 +1,48 @@
 ﻿using System;
 using System.Windows.Forms;
-using BudgetHelper.Services;
-using Budgethelper.Models;
 
 namespace Budgethelper.Controls
 {
     public partial class AccountsGroup : UserControl
     {
-        private SqlService _sql;
+        public string Currency { get; set; }
 
-        public event Action<string> AccountChanged;
-
-        public string SelectedAccountId =>
-            cmbAccounts.SelectedItem is AccountItem a ? a.Id : null;
+        public event Action<int> AccountSelected;
 
         public AccountsGroup()
         {
             InitializeComponent();
         }
 
-        public void Bind(SqlService sql)
+        private void AccountsGroup_Load(object sender, EventArgs e)
         {
-            _sql = sql;
-            Reload();
-        }
-
-        public void Reload()
-        {
-            cmbAccounts.Items.Clear();
-            foreach (var acc in _sql.GetAccounts())
-                cmbAccounts.Items.Add(acc);
-
-            if (cmbAccounts.Items.Count > 0)
-                cmbAccounts.SelectedIndex = 0;
+            cmbAccounts.Items.Add(new AccountItem(1, "Cash"));
+            cmbAccounts.Items.Add(new AccountItem(2, "Card"));
         }
 
         private void cmbAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AccountChanged?.Invoke(SelectedAccountId);
+            if (cmbAccounts.SelectedItem is AccountItem acc)
+                AccountSelected?.Invoke(acc.Id);
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Add account ({Currency})");
+        }
+
+        private class AccountItem
+        {
+            public int Id { get; }
+            public string Name { get; }
+
+            public AccountItem(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+
+            public override string ToString() => Name;
         }
     }
 }

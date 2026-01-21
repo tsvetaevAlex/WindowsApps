@@ -1,42 +1,43 @@
-﻿using System.Windows.Forms;
-
-namespace Budgethelper.Controls
+﻿namespace Budgethelper.Controls
 {
     partial class TransactionsGroup
     {
-        private TextBox txtAmount;
-        private ComboBox cmbType;
-        private TextBox txtDescription;
-        private DateTimePicker dtpDate;
-        private Button btnAdd;
+        private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.Label lblHint;
 
         private void InitializeComponent()
         {
-            txtAmount = new TextBox();
-            cmbType = new ComboBox();
-            txtDescription = new TextBox();
-            dtpDate = new DateTimePicker();
-            btnAdd = new Button();
-
-            cmbType.Items.AddRange(new object[]
-            {
-                Budgethelper.Models.TransactionType.Income,
-                Budgethelper.Models.TransactionType.Expense
-            });
-            cmbType.SelectedIndex = 0;
-
-            btnAdd.Text = "Add";
-            btnAdd.Click += btnAdd_Click;
-
-            FlowLayoutPanel panel = new FlowLayoutPanel();
-            panel.Dock = DockStyle.Fill;
-            panel.Controls.AddRange(new Control[]
-            {
-                txtAmount, cmbType, txtDescription, dtpDate, btnAdd
-            });
-
-            this.Controls.Add(panel);
-            this.Height = 45;
+            this.groupBox = new System.Windows.Forms.GroupBox();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.lblHint = new System.Windows.Forms.Label();
+            this.groupBox.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // groupBox
+            // 
+            this.groupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox.Text = "Transactions";
+            this.groupBox.Controls.Add(this.lblHint);
+            this.groupBox.Controls.Add(this.listBox);
+            // 
+            // listBox
+            // 
+            this.listBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // lblHint
+            // 
+            this.lblHint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblHint.Text = "Select an account";
+            this.lblHint.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TransactionsGroup
+            // 
+            this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.groupBox);
+            this.Size = new System.Drawing.Size(600, 250);
+            this.groupBox.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
     }
 }

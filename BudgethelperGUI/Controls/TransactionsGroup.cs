@@ -1,51 +1,30 @@
-﻿using System;
-using System.Windows.Forms;
-using BudgetHelper.Services;
-using Budgethelper.Models;
+﻿using System.Windows.Forms;
 
 namespace Budgethelper.Controls
 {
     public partial class TransactionsGroup : UserControl
     {
-        private SqlService _sql;
-        private Func<string> _getAccount;
-
-        public event Action TransactionAdded;
+        public string Currency { get; set; }
 
         public TransactionsGroup()
         {
             InitializeComponent();
+            SetDisabledState();
+        }
+
+        public void SetDisabledState()
+        {
             Enabled = false;
+            lblHint.Visible = true;
         }
 
-        public void Bind(SqlService sql, Func<string> selectedAccount)
+        public void EnableForAccount(int accountId)
         {
-            _sql = sql;
-            _getAccount = selectedAccount;
-        }
+            Enabled = true;
+            lblHint.Visible = false;
 
-        public void EnableForAccount(bool enabled)
-        {
-            Enabled = enabled;
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (!decimal.TryParse(txtAmount.Text, out var amount))
-                return;
-
-            _sql.AddTransaction(
-                _getAccount(),
-                amount,
-                (TransactionType)cmbType.SelectedItem,
-                txtDescription.Text,
-                dtpDate.Value
-            );
-
-            txtAmount.Clear();
-            txtDescription.Clear();
-
-            TransactionAdded?.Invoke();
+            listBox.Items.Clear();
+            listBox.Items.Add($"Transaction for account {accountId}");
         }
     }
 }
