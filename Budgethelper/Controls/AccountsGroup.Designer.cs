@@ -3,38 +3,53 @@
     partial class AccountsGroup
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.DataGridView accountsGrid;
+        private System.Windows.Forms.ListBox listBoxAccounts;
+        private System.Windows.Forms.Button btnAddAccount;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
+
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.accountsGrid = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.accountsGrid)).BeginInit();
+            this.listBoxAccounts = new System.Windows.Forms.ListBox();
+            this.btnAddAccount = new System.Windows.Forms.Button();
             this.SuspendLayout();
+
             // 
-            // accountsGrid
+            // listBoxAccounts
             // 
-            this.accountsGrid.AllowUserToAddRows = false;
-            this.accountsGrid.AllowUserToDeleteRows = false;
-            this.accountsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.accountsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accountsGrid.MultiSelect = false;
-            this.accountsGrid.ReadOnly = true;
-            this.accountsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.accountsGrid.SelectionChanged += new System.EventHandler(this.accountsGrid_SelectionChanged);
+            this.listBoxAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxAccounts.FormattingEnabled = true;
+            this.listBoxAccounts.ItemHeight = 15;
+            this.listBoxAccounts.Name = "listBoxAccounts";
+            this.listBoxAccounts.TabIndex = 0;
+            this.listBoxAccounts.SelectedIndexChanged +=
+                new System.EventHandler(this.listBoxAccounts_SelectedIndexChanged);
+
+            // 
+            // btnAddAccount
+            // 
+            this.btnAddAccount.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnAddAccount.Height = 36;
+            this.btnAddAccount.Text = "➕ Добавить аккаунт";
+            this.btnAddAccount.Name = "btnAddAccount";
+            this.btnAddAccount.TabIndex = 1;
+            this.btnAddAccount.UseVisualStyleBackColor = true;
+            // обработчик можно добавить позже:
+            // this.btnAddAccount.Click += new System.EventHandler(this.btnAddAccount_Click);
+
             // 
             // AccountsGroup
             // 
-            this.Controls.Add(this.accountsGrid);
+            this.Controls.Add(this.listBoxAccounts);
+            this.Controls.Add(this.btnAddAccount);
             this.Name = "AccountsGroup";
-            this.Size = new System.Drawing.Size(300, 400);
-            ((System.ComponentModel.ISupportInitialize)(this.accountsGrid)).EndInit();
+            this.Size = new System.Drawing.Size(400, 200);
             this.ResumeLayout(false);
         }
     }

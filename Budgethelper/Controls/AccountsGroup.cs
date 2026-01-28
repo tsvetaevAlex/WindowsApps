@@ -1,32 +1,38 @@
-﻿using System;
+﻿using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
 using System.Windows.Forms;
-using BudgetHelper.Services;
-using BudgetHelper.Models;
 
 namespace Budgethelper.Controls
 {
     public partial class AccountsGroup : UserControl
     {
-        private readonly AccountsService _accountsService;
+        /// <summary>
+        /// Срабатывает при выборе аккаунта.
+        /// string = Account.Uid
+        /// </summary>
+        public event Action<string> AccountSelected;
 
-        public event Action<long> AccountSelected;
-
-        public AccountsGroup(AccountsService accountsService)
+        public AccountsGroup()
         {
             InitializeComponent();
-            _accountsService = accountsService;
+            LoadAccounts();
         }
 
-        public void LoadAccounts()
+        private void LoadAccounts()
         {
-            var accounts = _accountsService.GetAccounts();
-            accountsGrid.DataSource = accounts;
+            listBoxAccounts.Items.Clear();
+
+            foreach (var acc in AccountsService.GetAll())
+                listBoxAccounts.Items.Add(acc);
         }
 
-        private void accountsGrid_SelectionChanged(object sender, EventArgs e)
+        private void listBoxAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (accountsGrid.CurrentRow?.DataBoundItem is Account account)
-                AccountSelected?.Invoke(account.Id);
+            if (listBoxAccounts.SelectedItem is Account acc)
+            {
+                AccountSelected?.Invoke(acc.Uid);
+            }
         }
     }
 }

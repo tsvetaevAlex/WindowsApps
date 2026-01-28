@@ -1,20 +1,13 @@
-﻿using System.Collections.Generic;
-using BudgetHelper.Models;
+﻿using Budgethelper.Models;
+using System.Collections.Generic;
 
-namespace BudgetHelper.Services
+namespace Budgethelper.Services
 {
-    public class AccountsService
+    public static class AccountsService
     {
-        private readonly SqlService _sql;
-
-        public AccountsService(SqlService sql)
+        public static List<Account> GetAll()
         {
-            _sql = sql;
-        }
-
-        public List<Account> GetAccounts()
-        {
-            return _sql.LoadAccounts();
+            return SqlService.LoadAccounts();
         }
     }
 }

@@ -7,12 +7,12 @@
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.CheckBox cbShowPassword;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
-
             base.Dispose(disposing);
         }
 
@@ -21,51 +21,65 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
-
+            this.cbShowPassword = new System.Windows.Forms.CheckBox();
+            this.SuspendLayout();
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(12, 15);
+            this.lblPassword.Location = new System.Drawing.Point(18, 20);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(92, 15);
-            this.lblPassword.Text = "Введите пароль:";
-
+            this.lblPassword.Size = new System.Drawing.Size(48, 13);
+            this.lblPassword.TabIndex = 0;
+            this.lblPassword.Text = "Пароль";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(12, 35);
+            this.txtPassword.Location = new System.Drawing.Point(21, 40);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(260, 23);
+            this.txtPassword.Size = new System.Drawing.Size(230, 20);
+            this.txtPassword.TabIndex = 1;
             this.txtPassword.UseSystemPasswordChar = true;
-            this.txtPassword.TabIndex = 0;
-
+            // 
+            // cbShowPassword
+            // 
+            this.cbShowPassword.AutoSize = true;
+            this.cbShowPassword.Location = new System.Drawing.Point(21, 66);
+            this.cbShowPassword.Name = "cbShowPassword";
+            this.cbShowPassword.Size = new System.Drawing.Size(114, 17);
+            this.cbShowPassword.TabIndex = 2;
+            this.cbShowPassword.Text = "Показать пароль";
+            this.cbShowPassword.UseVisualStyleBackColor = true;
+            this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(197, 70);
+            this.btnLogin.Location = new System.Drawing.Point(21, 95);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(75, 25);
+            this.btnLogin.Size = new System.Drawing.Size(230, 27);
+            this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "Войти";
             this.btnLogin.UseVisualStyleBackColor = true;
-            this.btnLogin.TabIndex = 1;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-
             // 
             // LoginForm
             // 
             this.AcceptButton = this.btnLogin;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 111);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.txtPassword);
+            this.ClientSize = new System.Drawing.Size(274, 145);
             this.Controls.Add(this.btnLogin);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Controls.Add(this.cbShowPassword);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.lblPassword);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Вход в систему";
+            this.Text = "Вход";
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
     }
 }

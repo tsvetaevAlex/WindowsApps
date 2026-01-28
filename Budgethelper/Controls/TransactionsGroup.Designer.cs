@@ -1,39 +1,57 @@
-﻿namespace Budgethelper.Controls
+﻿using System.Windows.Forms;
+
+namespace Budgethelper.Controls
 {
-    partial class TransactionsGroup
+    partial class TransactionsGroup : UserControl
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.DataGridView transactionsGrid;
+        private DataGridView dataGridViewTransactions;
 
+        /// <summary>
+        /// Освобождение ресурсов
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
+
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.transactionsGrid = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.transactionsGrid)).BeginInit();
+            this.components = new System.ComponentModel.Container();
+            this.dataGridViewTransactions = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).BeginInit();
             this.SuspendLayout();
+
             // 
-            // transactionsGrid
+            // dataGridViewTransactions
             // 
-            this.transactionsGrid.AllowUserToAddRows = false;
-            this.transactionsGrid.AllowUserToDeleteRows = false;
-            this.transactionsGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.transactionsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transactionsGrid.MultiSelect = false;
-            this.transactionsGrid.ReadOnly = true;
-            this.transactionsGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewTransactions.AllowUserToAddRows = false;
+            this.dataGridViewTransactions.AllowUserToDeleteRows = false;
+            this.dataGridViewTransactions.Dock = DockStyle.Fill;
+            this.dataGridViewTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTransactions.Name = "dataGridViewTransactions";
+            this.dataGridViewTransactions.ReadOnly = true;
+            this.dataGridViewTransactions.RowTemplate.Height = 25;
+            this.dataGridViewTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // колонки
+            this.dataGridViewTransactions.Columns.Add("Id", "ID");
+            this.dataGridViewTransactions.Columns.Add("Date", "Дата");
+            this.dataGridViewTransactions.Columns.Add("Amount", "Сумма");
+            this.dataGridViewTransactions.Columns.Add("Description", "Описание");
+
             // 
             // TransactionsGroup
             // 
-            this.Controls.Add(this.transactionsGrid);
+            this.Controls.Add(this.dataGridViewTransactions);
             this.Name = "TransactionsGroup";
-            this.Size = new System.Drawing.Size(400, 400);
-            ((System.ComponentModel.ISupportInitialize)(this.transactionsGrid)).EndInit();
+            this.Size = new System.Drawing.Size(500, 300);
+
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).EndInit();
             this.ResumeLayout(false);
         }
     }

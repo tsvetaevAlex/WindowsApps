@@ -1,10 +1,13 @@
-﻿namespace BudgetHelper.Models
+﻿namespace Budgethelper.Models
 {
     public class Account
     {
-        public long Id { get; set; }
+        public string Uid { get; set; } // md5 хэш для UID
         public string Name { get; set; }
-        public decimal Balance { get; set; } // добавлено
-        public string Currency { get; set; } // если нужно для SQL
+        public string SureName { get; set; }
+        public string LastName { get; set; }
+        public string PasswordHash { get; set; }
+
+        public override string ToString() => $"{SureName} {Name} {LastName}";
     }
 }

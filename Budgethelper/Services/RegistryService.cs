@@ -1,15 +1,20 @@
-﻿namespace Budgethelper.Services
-{
-    /// <summary>
-    /// mocked class for dev time   
-    /// </summary>
+﻿using Microsoft.Win32;
+using Budgethelper.Models;
 
-    internal class RegistryService
+namespace Budgethelper.Services
+{
+    public static class RegistryService
     {
-        public bool CheckPassword(string password)
+        public static void SaveUid(string uid)
         {
-            return password == "1234";
+            var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath);
+            key.SetValue("Uid", uid);
+        }
+
+        public static string LoadUid()
+        {
+            var key = Registry.CurrentUser.OpenSubKey(Session.RegistryKeyPath);
+            return key?.GetValue("Uid") as string;
         }
     }
-
 }

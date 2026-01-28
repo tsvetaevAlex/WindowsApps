@@ -1,35 +1,43 @@
-﻿using BudgetHelper.Models;
-using BudgetHelper.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Budgethelper.Models;
 
 namespace Budgethelper.Services
 {
-    public class TransactionsService
+    /// <summary>
+    /// Тонкий слой над SqlService для работы с транзакциями
+    /// </summary>
+    public static class TransactionsService
     {
-        private readonly SqlService _sql;
-
-        public TransactionsService(SqlService sql)
+        /// <summary>
+        /// Добавить транзакцию и получить объект с Id
+        /// </summary>
+        public static Transaction Add(Transaction t)
         {
-            _sql = sql;
+            return SqlService.AddTransaction(t);
         }
 
-        // UI ожидает List<Transaction>
-        public List<Transaction> GetByAccount(long accountId)
+        /// <summary>
+        /// Все транзакции
+        /// </summary>
+        public static List<Transaction> GetAll()
         {
-            // 🔧 ВРЕМЕННО: заглушка
-            return new List<Transaction>();
+            return SqlService.LoadTransactions();
         }
 
-        // UI ожидает decimal
-        public decimal GetBalance(long accountId)
+        /// <summary>
+        /// Все транзакции конкретного аккаунта
+        /// </summary>
+        public static List<Transaction> GetByAccount(string accountId)
         {
-            // 🔧 ВРЕМЕННО: заглушка
-            return 0m;
+            return SqlService.LoadTransactionsByAccount(accountId);
         }
 
-        public void InsertTransaction(Transaction transaction)
+        /// <summary>
+        /// Баланс аккаунта
+        /// </summary>
+        public static decimal GetBalance(string accountId)
         {
-            // 🔧 позже подключим SQLite
+            return SqlService.CalculateBalance(accountId);
         }
     }
 }

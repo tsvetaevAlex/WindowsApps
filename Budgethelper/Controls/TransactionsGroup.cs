@@ -1,40 +1,43 @@
-﻿using System;
-using System.Windows.Forms;
-using BudgetHelper.Services;
-using BudgetHelper.Models;
-using System.Collections.Generic;
-using Budgethelper.Services;
+﻿using System.Collections.Generic;
+using Budgethelper.Models;
 
-namespace Budgethelper.Controls
+namespace Budgethelper.Services
 {
-    public partial class TransactionsGroup : UserControl
+    /// <summary>
+    /// Тонкий слой над SqlService для работы с транзакциями
+    /// </summary>
+    public static class TransactionsService
     {
-        private readonly TransactionsService _transactionsService;
-        private long _accountId;
-
-        public event Action<decimal> BalanceChanged;
-
-        public TransactionsGroup(TransactionsService service)
+        /// <summary>
+        /// Добавить транзакцию и получить объект с Id
+        /// </summary>
+        public static Transaction Add(Transaction t)
         {
-            InitializeComponent();
-            _transactionsService = service;
+            return SqlService.AddTransaction(t);
         }
 
-        public void SetAccount(long accountId)
+        /// <summary>
+        /// Все транзакции
+        /// </summary>
+        public static List<Transaction> GetAll()
         {
-            _accountId = accountId;
-            RefreshTransactions();
+            return SqlService.LoadTransactions();
         }
 
-        private void RefreshTransactions()
+        /// <summary>
+        /// Все транзакции конкретного аккаунта
+        /// </summary>
+        public static List<Transaction> GetByAccount(string accountId)
         {
-            if (_accountId == 0) return;
+            return SqlService.LoadTransactionsByAccount(accountId);
+        }
 
-            List<Transaction> transactions = _transactionsService.GetByAccount(_accountId);
-            transactionsGrid.DataSource = transactions;
-
-            decimal balance = _transactionsService.GetBalance(_accountId);
-            BalanceChanged?.Invoke(balance);
+        /// <summary>
+        /// Баланс аккаунта
+        /// </summary>
+        public static decimal GetBalance(string accountId)
+        {
+            return SqlService.CalculateBalance(accountId);
         }
     }
 }

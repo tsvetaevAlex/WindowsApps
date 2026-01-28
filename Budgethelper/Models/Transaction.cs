@@ -1,20 +1,13 @@
 ﻿using System;
 
-namespace BudgetHelper.Models
+namespace Budgethelper.Models
 {
-    public enum TransactionType
-    {
-        Income,
-        Expense
-    }
-
     public class Transaction
     {
-        public long Id { get; set; }
-        public long AccountId { get; set; }
-        public decimal Amount { get; set; }
-        public TransactionType Operation { get; set; }
+        public int Id { get; set; }                 // AUTOINCREMENT
+        public string AccountId { get; set; }       // string
         public DateTime Date { get; set; }
-        public string Comment { get; set; }
+        public decimal Amount { get; set; }
+        public string Description { get; set; }
     }
 }

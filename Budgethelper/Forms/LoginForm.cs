@@ -1,23 +1,44 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using Budgethelper.Services;
+using Budgethelper.Models;
 
 namespace Budgethelper.Forms
 {
     public partial class LoginForm : Form
     {
-        private void btnLogin_Click(object sender, System.EventArgs e)
+        public LoginForm()
         {
-            var registry = new RegistryService();
+            InitializeComponent();
+        }
 
-            if (registry.CheckPassword(txtPassword.Text))
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                Program.Logger?.LogInfo("Authorized");
-                Close();
+                MessageBox.Show("Введите пароль");
+                return;
             }
-            else
+
+            string uid = RegistryService.LoadUid();
+            if (uid == null)
             {
-                MessageBox.Show("Неверный пароль");
+                MessageBox.Show("Пользователь не зарегистрирован");
+                return;
             }
+
+            string hash = HashService.GetMd5(txtPassword.Text);
+
+            Session.Uid = uid;
+            Session.CurrentUser = SqlService.LoadUser();
+
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassword.UseSystemPasswordChar = !cbShowPassword.Checked;
         }
     }
 }
