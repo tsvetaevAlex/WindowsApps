@@ -3,17 +3,15 @@ using Budgethelper.Models;
 
 namespace Budgethelper.Services
 {
-    /// <summary>
-    /// Тонкий слой над SqlService для работы с транзакциями
-    /// </summary>
     public static class TransactionsService
     {
         /// <summary>
-        /// Добавить транзакцию и получить объект с Id
+        /// Добавление транзакции.
+        /// Возвращает объект уже с заполненным Id (AUTOINCREMENT).
         /// </summary>
-        public static Transaction Add(Transaction t)
+        public static Transaction Add(Transaction transaction)
         {
-            return SqlService.AddTransaction(t);
+            return SqlService.InsertTransaction(transaction);
         }
 
         /// <summary>
@@ -21,23 +19,23 @@ namespace Budgethelper.Services
         /// </summary>
         public static List<Transaction> GetAll()
         {
-            return SqlService.LoadTransactions();
+            return SqlService.LoadAllTransactions();
         }
 
         /// <summary>
-        /// Все транзакции конкретного аккаунта
+        /// Транзакции по конкретному счету
         /// </summary>
-        public static List<Transaction> GetByAccount(string accountId)
+        public static List<Transaction> GetByAccount(string accountName)
         {
-            return SqlService.LoadTransactionsByAccount(accountId);
+            return SqlService.LoadTransactionsByAccount(accountName);
         }
 
         /// <summary>
-        /// Баланс аккаунта
+        /// Баланс счета (Income - Expense)
         /// </summary>
-        public static decimal GetBalance(string accountId)
+        public static decimal GetBalance(string accountName)
         {
-            return SqlService.CalculateBalance(accountId);
+            return SqlService.CalculateBalance(accountName);
         }
     }
 }

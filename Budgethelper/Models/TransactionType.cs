@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Budgethelper.Models
+﻿namespace Budgethelper.Models
 {
     public enum TransactionType
     {
-        Income = 1,
-        Expense = -1
+        Income,
+        Expense
     }
 }

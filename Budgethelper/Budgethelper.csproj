@@ -91,7 +91,9 @@
     <Compile Include="Controls\StatusBarControl.Designer.cs">
       <DependentUpon>StatusBarControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TransactionsGroup.cs" />
+    <Compile Include="Controls\TransactionsGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Services\TransactionsService.cs" />
     <EmbeddedResource Include="Controls\StatusBarControl.resx">
       <DependentUpon>StatusBarControl.cs</DependentUpon>

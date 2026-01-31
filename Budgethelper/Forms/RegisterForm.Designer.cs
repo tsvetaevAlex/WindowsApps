@@ -1,86 +1,117 @@
-﻿using System.Windows.Forms;
-
-namespace Budgethelper.Forms
+﻿namespace Budgethelper.Forms
 {
     partial class RegisterForm
     {
         private System.ComponentModel.IContainer components = null;
-        private TextBox txtName;
-        private TextBox txtSureName;
-        private TextBox txtLastName;
-        private TextBox txtPassword;
-        private Button btnRegister;
-        private CheckBox cbShowPassword;
+
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblSureName;
+        private System.Windows.Forms.Label lblLastName;
+        private System.Windows.Forms.Label lblPassword;
+
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtSureName;
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox txtPassword;
+
+        private System.Windows.Forms.Button btnRegister;
+        private System.Windows.Forms.CheckBox cbShowPassword;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
                 components.Dispose();
-
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.txtName = new TextBox();
-            this.txtSureName = new TextBox();
-            this.txtLastName = new TextBox();
-            this.txtPassword = new TextBox();
-            this.btnRegister = new Button();
-            this.cbShowPassword = new CheckBox();
+
+            this.lblName = new System.Windows.Forms.Label();
+            this.lblSureName = new System.Windows.Forms.Label();
+            this.lblLastName = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
+
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.txtSureName = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+
+            this.btnRegister = new System.Windows.Forms.Button();
+            this.cbShowPassword = new System.Windows.Forms.CheckBox();
+
             this.SuspendLayout();
 
-            // txtName
-            this.txtName.Location = new System.Drawing.Point(20, 20);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(200, 23);
+            // 
+            // Labels
+            // 
+            this.lblSureName.Text = "Фамилия*";
+            this.lblSureName.ForeColor = System.Drawing.Color.Red;
+            this.lblSureName.Location = new System.Drawing.Point(10, 10);
+            this.lblSureName.AutoSize = true;
 
-            // txtSureName
-            this.txtSureName.Location = new System.Drawing.Point(20, 50);
-            this.txtSureName.Name = "txtSureName";
-            this.txtSureName.Size = new System.Drawing.Size(200, 23);
+            this.txtSureName.Location = new System.Drawing.Point(10, 30);
+            this.txtSureName.Width = 300;
 
-            // txtLastName
-            this.txtLastName.Location = new System.Drawing.Point(20, 80);
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(200, 23);
+            this.lblName.Text = "Имя*";
+            this.lblName.ForeColor = System.Drawing.Color.Red;
+            this.lblName.Location = new System.Drawing.Point(10, 60);
+            this.lblName.AutoSize = true;
 
-            // txtPassword
-            this.txtPassword.Location = new System.Drawing.Point(20, 110);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(200, 23);
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtName.Location = new System.Drawing.Point(10, 80);
+            this.txtName.Width = 300;
 
-            // cbShowPassword
-            this.cbShowPassword.Location = new System.Drawing.Point(230, 110);
-            this.cbShowPassword.Name = "cbShowPassword";
-            this.cbShowPassword.Size = new System.Drawing.Size(120, 23);
-            this.cbShowPassword.Text = "Показать пароль";
+            this.lblLastName.Text = "Отчество";
+            this.lblLastName.ForeColor = System.Drawing.Color.Black;
+            this.lblLastName.Location = new System.Drawing.Point(10, 110);
+            this.lblLastName.AutoSize = true;
+
+            this.txtLastName.Location = new System.Drawing.Point(10, 130);
+            this.txtLastName.Width = 300;
+
+            this.lblPassword.Text = "Пароль*";
+            this.lblPassword.ForeColor = System.Drawing.Color.Red;
+            this.lblPassword.Location = new System.Drawing.Point(10, 160);
+            this.lblPassword.AutoSize = true;
+
+            this.txtPassword.Location = new System.Drawing.Point(10, 180);
+            this.txtPassword.Width = 300;
+            this.txtPassword.PasswordChar = '●';
+
+            // 
+            // Button и CheckBox (нижний ряд)
+            // 
+            this.btnRegister.Text = "Регистрация";
+            this.btnRegister.Location = new System.Drawing.Point(10, 220);
+            this.btnRegister.Width = 200;
+
+            this.cbShowPassword.Text = "Показать";
+            this.cbShowPassword.Location = new System.Drawing.Point(220, 220);
+            this.cbShowPassword.AutoSize = true;
             this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
 
-            // btnRegister
-            this.btnRegister.Location = new System.Drawing.Point(20, 150);
-            this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(100, 30);
-            this.btnRegister.Text = "Регистрация";
-            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
-
+            // 
             // RegisterForm
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Controls.Add(this.txtName);
+            // 
+            this.ClientSize = new System.Drawing.Size(330, 260);
+            this.Controls.Add(this.lblSureName);
             this.Controls.Add(this.txtSureName);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.lblLastName);
             this.Controls.Add(this.txtLastName);
+            this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.btnRegister);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.Controls.Add(this.cbShowPassword);
+
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация";
+
             this.ResumeLayout(false);
             this.PerformLayout();
         }

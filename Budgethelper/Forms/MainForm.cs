@@ -36,12 +36,12 @@ namespace Budgethelper.Forms
         {
             accountsGroupRur.AccountSelected += account =>
             {
-                transactionsGroupRur.LoadAccount(account.Id);
+                transactionsGroupRur.LoadAccount(Session.Uid);
             };
 
             accountsGroupUsd.AccountSelected += account =>
             {
-                transactionsGroupUsd.LoadAccount(account.Id);
+                transactionsGroupUsd.LoadAccount(Session.Uid);
             };
         }
     }

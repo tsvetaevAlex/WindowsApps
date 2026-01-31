@@ -37,7 +37,7 @@ namespace Budgethelper.Forms
             HashService.InitSessionUid(account);
 
             // Сохраняем пользователя в БД
-            SqlService.SaveUser(account, passwordHash);
+            SqlService.SaveUser(account);
 
             DialogResult = DialogResult.OK;
             Close();
