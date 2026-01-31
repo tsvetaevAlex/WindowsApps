@@ -2,11 +2,10 @@
 using Budgethelper.Services;
 using System;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Budgethelper.Forms
 {
-    public partial class RegisterForm : Form // <-- наследуемся от Form
+    public partial class RegisterForm : Form
     {
         public RegisterForm()
         {
@@ -16,31 +15,34 @@ namespace Budgethelper.Forms
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text) ||
-                string.IsNullOrWhiteSpace(txtSureName.Text) ||
-                string.IsNullOrWhiteSpace(txtLastName.Text) ||
+                string.IsNullOrWhiteSpace(txtSurename.Text) ||
+                string.IsNullOrWhiteSpace(txtLastname.Text) ||
                 string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("Заполните все поля");
+                MessageBox.Show("Все поля обязательны для заполнения!");
                 return;
             }
 
-            var account = new Account
+            var user = new Account
             {
+                Uid = Guid.NewGuid().ToString(),
                 Name = txtName.Text.Trim(),
-                SureName = txtSureName.Text.Trim(),
-                LastName = txtLastName.Text.Trim()
+                SureName = txtSurename.Text.Trim(),
+                LastName = txtLastname.Text.Trim(),
+                PasswordHash = txtPassword.Text
             };
 
-            string passwordHash = HashService.GetMd5(txtPassword.Text);
+            RegistryService.SaveUser(user); // сохраняем пользователя
 
-            // Инициализируем сессию
-            HashService.InitSessionUid(account);
+            Session.Uid = user.Uid; // сразу сохраняем в сессию
 
-            // Сохраняем пользователя в БД
-            SqlService.SaveUser(account);
+            MessageBox.Show("Пользователь успешно зарегистрирован!");
 
-            DialogResult = DialogResult.OK;
-            Close();
+            // После регистрации открываем MainForm
+            MainForm mainForm = new MainForm();
+            mainForm.Show();
+
+            this.Hide(); // скрываем RegisterForm
         }
 
         private void cbShowPassword_CheckedChanged(object sender, EventArgs e)

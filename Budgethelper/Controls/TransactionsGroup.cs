@@ -15,8 +15,7 @@ namespace Budgethelper.Controls
         {
             InitializeComponent();
 
-            comboType.DataSource =
-                Enum.GetValues(typeof(TransactionType));
+            comboType.DataSource = Enum.GetValues(typeof(TransactionType));
 
             SetInactive();
         }
@@ -30,11 +29,10 @@ namespace Budgethelper.Controls
         public void LoadAccount(string accountName)
         {
             _currentAccount = accountName;
+            txtAccountName.Text = accountName;
             Enabled = true;
 
-            var list =
-                TransactionsService.GetByAccount(accountName);
-
+            var list = TransactionsService.GetByAccount(accountName);
             FillGrid(list);
         }
 
@@ -54,12 +52,10 @@ namespace Budgethelper.Controls
 
                 var row = grid.Rows[rowIndex];
 
-                if (t.OperationType == TransactionType.Income)
-                    row.DefaultCellStyle.BackColor =
-                        Color.FromArgb(220, 245, 220);
-                else
-                    row.DefaultCellStyle.BackColor =
-                        Color.FromArgb(255, 228, 228);
+                row.DefaultCellStyle.BackColor =
+                    t.OperationType == TransactionType.Income ?
+                    Color.FromArgb(220, 245, 220) :
+                    Color.FromArgb(255, 228, 228);
             }
         }
 
@@ -68,22 +64,28 @@ namespace Budgethelper.Controls
             if (string.IsNullOrWhiteSpace(_currentAccount))
                 return;
 
-            decimal amount;
-            if (!decimal.TryParse(txtAmount.Text, out amount))
+            if (!decimal.TryParse(txtAmount.Text, out decimal amount))
                 return;
 
             var transaction = new Transaction
             {
                 AccountName = _currentAccount,
                 Amount = amount,
-                OperationType =
-                    (TransactionType)comboType.SelectedItem,
+                OperationType = (TransactionType)comboType.SelectedItem,
                 Date = datePicker.Value,
                 Description = txtDescription.Text
             };
 
-            transaction =
-                TransactionsService.Add(transaction);
+            transaction = TransactionsService.Add(transaction);
+
+            // Обновляем счетчики сессии
+            Session.TransactionQTY++;
+            if (transaction.OperationType == TransactionType.Income)
+                Session.TotalIncomeAmount += transaction.Amount;
+            else
+                Session.TotalExpenseAmount += transaction.Amount;
+
+            UpdateSessionStats();
 
             LoadAccount(_currentAccount);
         }
@@ -96,6 +98,28 @@ namespace Budgethelper.Controls
         private void btnYesterday_Click(object sender, EventArgs e)
         {
             datePicker.Value = DateTime.Today.AddDays(-1);
+        }
+
+        private void UpdateSessionStats()
+        {
+            rtb_transactions_QTY.Text = Session.TransactionQTY.ToString();
+
+            rtb_SessionStats.Clear();
+
+            rtb_SessionStats.SelectionColor = Color.White;
+            rtb_SessionStats.AppendText(
+                $"Всего транзакций: {Session.TransactionQTY} на сумму {Session.TotalIncomeAmount - Session.TotalExpenseAmount}\n"
+            );
+
+            rtb_SessionStats.SelectionColor = Color.Lime;
+            rtb_SessionStats.AppendText(
+                $"Транзакции поступления: {Session.TotalIncomeAmount}\n"
+            );
+
+            rtb_SessionStats.SelectionColor = Color.Red;
+            rtb_SessionStats.AppendText(
+                $"Транзакции расхода: {Session.TotalExpenseAmount}\n"
+            );
         }
     }
 }

@@ -1,24 +1,17 @@
-﻿using System;
-using System.IO;
-
-namespace Budgethelper.Models
+﻿namespace Budgethelper.Models
 {
     public static class Session
     {
-        public static string Uid { get; set; }
-        public static Account CurrentUser { get; set; }
+        // Пользователь
+        public static string Uid { get; set; } // текущий UID пользователя
 
-        public static string RegistryKeyPath => @"Software\Budgethelper";
+        // Пути
+        public static string DbPath { get; set; } = "budgethelper.db";
+        public static string RegistryKeyPath { get; set; } = @"Software\BudgetHelper";
 
-        public static string DbFolder =>
-            Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Budgethelper",
-                "SqlService");
-
-        public static string DbPath =>
-            string.IsNullOrWhiteSpace(Uid)
-                ? null
-                : Path.Combine(DbFolder, $"{Uid}.sqlite");
+        // Счетчики сессии
+        public static int TransactionQTY { get; set; } = 0;
+        public static decimal TotalIncomeAmount { get; set; } = 0;
+        public static decimal TotalExpenseAmount { get; set; } = 0;
     }
 }
