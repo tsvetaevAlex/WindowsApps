@@ -108,5 +108,11 @@
       <Version>1.0.119</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Budgethelper\Budgethelper.csproj">
+      <Project>{5868B03E-0C4A-4C74-A68A-2425FA876D04}</Project>
+      <Name>Budgethelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,37 +5,14 @@ namespace Budgethelper.Services
 {
     public static class TransactionsService
     {
-        /// <summary>
-        /// Добавление транзакции.
-        /// Возвращает объект уже с заполненным Id (AUTOINCREMENT).
-        /// </summary>
-        public static Transaction Add(Transaction transaction)
+        public static List<Transaction> LoadTransactions(string accountName)
         {
-            return SqlService.InsertTransaction(transaction);
+            return SqlService.GetTransactions(accountName);
         }
 
-        /// <summary>
-        /// Все транзакции
-        /// </summary>
-        public static List<Transaction> GetAll()
+        public static void Create(Transaction transaction)
         {
-            return SqlService.LoadAllTransactions();
-        }
-
-        /// <summary>
-        /// Транзакции по конкретному счету
-        /// </summary>
-        public static List<Transaction> GetByAccount(string accountName)
-        {
-            return SqlService.LoadTransactionsByAccount(accountName);
-        }
-
-        /// <summary>
-        /// Баланс счета (Income - Expense)
-        /// </summary>
-        public static decimal GetBalance(string accountName)
-        {
-            return SqlService.CalculateBalance(accountName);
+            SqlService.CreateTransaction(transaction);
         }
     }
 }

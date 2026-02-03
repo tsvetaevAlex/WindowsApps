@@ -11,26 +11,37 @@ namespace Visual.Logger.Forms
             InitializeComponent();
         }
 
-        public void LogInfo(string message) =>
-            Append(message, Color.LightGreen);
+        public void LogInfo(string message)
+        {
+            AppendText("[INFO]  " + message + Environment.NewLine, Color.LightGreen);
+        }
 
-        public void LogWarning(string message) =>
-            Append(message, Color.Yellow);
+        public void LogWarning(string message)
+        {
+            AppendText("[WARN]  " + message + Environment.NewLine, Color.Yellow);
+        }
 
-        public void LogError(string message) =>
-            Append(message, Color.IndianRed);
+        public void LogError(string message)
+        {
+            AppendText("[ERROR] " + message + Environment.NewLine, Color.IndianRed);
+        }
 
-        private void Append(string message, Color color)
+        private void AppendText(string text, Color color)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => Append(message, color)));
+                Invoke(new Action<string, Color>(AppendText), text, color);
                 return;
             }
 
-            richTextBox.SelectionColor = color;
-            richTextBox.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}\n");
-            richTextBox.ScrollToCaret();
+            txtLog.SelectionStart = txtLog.TextLength;
+            txtLog.SelectionLength = 0;
+
+            txtLog.SelectionColor = color;
+            txtLog.AppendText(text);
+            txtLog.SelectionColor = txtLog.ForeColor;
+
+            txtLog.ScrollToCaret();
         }
     }
 }

@@ -5,128 +5,100 @@
         private System.ComponentModel.IContainer components = null;
 
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblSurename;
-        private System.Windows.Forms.Label lblLastname;
+        private System.Windows.Forms.Label lblSureName;
+        private System.Windows.Forms.Label lblLastName;
         private System.Windows.Forms.Label lblPassword;
 
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.TextBox txtSurename;
-        private System.Windows.Forms.TextBox txtLastname;
+        private System.Windows.Forms.TextBox txtSureName;
+        private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.TextBox txtPassword;
 
-        private System.Windows.Forms.CheckBox cbShowPassword;
         private System.Windows.Forms.Button btnRegister;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null)) components.Dispose();
+            if (disposing && (components != null))
+                components.Dispose();
+
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-
             this.lblName = new System.Windows.Forms.Label();
-            this.lblSurename = new System.Windows.Forms.Label();
-            this.lblLastname = new System.Windows.Forms.Label();
+            this.lblSureName = new System.Windows.Forms.Label();
+            this.lblLastName = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
 
             this.txtName = new System.Windows.Forms.TextBox();
-            this.txtSurename = new System.Windows.Forms.TextBox();
-            this.txtLastname = new System.Windows.Forms.TextBox();
+            this.txtSureName = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
 
-            this.cbShowPassword = new System.Windows.Forms.CheckBox();
             this.btnRegister = new System.Windows.Forms.Button();
 
             this.SuspendLayout();
 
-            // 
             // lblName
-            // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(30, 20);
-            this.lblName.Text = "Имя *";
+            this.lblName.Location = new System.Drawing.Point(30, 30);
+            this.lblName.Text = "Имя";
 
-            // 
             // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(150, 17);
-            this.txtName.Size = new System.Drawing.Size(200, 23);
+            this.txtName.Location = new System.Drawing.Point(30, 50);
+            this.txtName.Size = new System.Drawing.Size(240, 23);
 
-            // 
-            // lblSurename
-            // 
-            this.lblSurename.AutoSize = true;
-            this.lblSurename.Location = new System.Drawing.Point(30, 60);
-            this.lblSurename.Text = "Фамилия *";
+            // lblSureName
+            this.lblSureName.AutoSize = true;
+            this.lblSureName.Location = new System.Drawing.Point(30, 85);
+            this.lblSureName.Text = "Фамилия";
 
-            // 
-            // txtSurename
-            // 
-            this.txtSurename.Location = new System.Drawing.Point(150, 57);
-            this.txtSurename.Size = new System.Drawing.Size(200, 23);
+            // txtSureName
+            this.txtSureName.Location = new System.Drawing.Point(30, 105);
+            this.txtSureName.Size = new System.Drawing.Size(240, 23);
 
-            // 
-            // lblLastname
-            // 
-            this.lblLastname.AutoSize = true;
-            this.lblLastname.Location = new System.Drawing.Point(30, 100);
-            this.lblLastname.Text = "Отчество *";
+            // lblLastName
+            this.lblLastName.AutoSize = true;
+            this.lblLastName.Location = new System.Drawing.Point(30, 140);
+            this.lblLastName.Text = "Отчество";
 
-            // 
-            // txtLastname
-            // 
-            this.txtLastname.Location = new System.Drawing.Point(150, 97);
-            this.txtLastname.Size = new System.Drawing.Size(200, 23);
+            // txtLastName
+            this.txtLastName.Location = new System.Drawing.Point(30, 160);
+            this.txtLastName.Size = new System.Drawing.Size(240, 23);
 
-            // 
             // lblPassword
-            // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(30, 140);
-            this.lblPassword.Text = "Пароль *";
+            this.lblPassword.Location = new System.Drawing.Point(30, 195);
+            this.lblPassword.Text = "Пароль";
 
-            // 
             // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(150, 137);
-            this.txtPassword.Size = new System.Drawing.Size(200, 23);
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.Location = new System.Drawing.Point(30, 215);
+            this.txtPassword.Size = new System.Drawing.Size(240, 23);
+            this.txtPassword.PasswordChar = '*';
 
-            // 
-            // cbShowPassword
-            // 
-            this.cbShowPassword.Location = new System.Drawing.Point(150, 170);
-            this.cbShowPassword.Text = "Показать пароль";
-            this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
-
-            // 
             // btnRegister
-            // 
-            this.btnRegister.Location = new System.Drawing.Point(150, 210);
-            this.btnRegister.Size = new System.Drawing.Size(100, 30);
-            this.btnRegister.Text = "Регистрация";
+            this.btnRegister.Location = new System.Drawing.Point(30, 260);
+            this.btnRegister.Size = new System.Drawing.Size(240, 35);
+            this.btnRegister.Text = "Зарегистрироваться";
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
 
-            // 
             // RegisterForm
-            // 
-            this.ClientSize = new System.Drawing.Size(400, 260);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(310, 330);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtName);
-            this.Controls.Add(this.lblSurename);
-            this.Controls.Add(this.txtSurename);
-            this.Controls.Add(this.lblLastname);
-            this.Controls.Add(this.txtLastname);
+            this.Controls.Add(this.lblSureName);
+            this.Controls.Add(this.txtSureName);
+            this.Controls.Add(this.lblLastName);
+            this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.btnRegister);
+
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация";
 

@@ -1,4 +1,5 @@
-﻿namespace Budgethelper.Forms
+﻿using Budgethelper.Controls;
+namespace Budgethelper.Forms
 {
     partial class MainForm
     {

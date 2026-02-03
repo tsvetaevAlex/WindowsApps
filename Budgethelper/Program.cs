@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Budgethelper.Forms;
 using Budgethelper.Models;
 using Budgethelper.Services;
-using Budgethelper.Forms;
 
 namespace Budgethelper
 {
@@ -14,31 +14,24 @@ namespace Budgethelper
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // 1️⃣ Загружаем UID из реестра (может быть null)
-            Session.Uid = RegistryService.LoadUid();
+            var savedUid = RegistryService.LoadUid();
 
-            // 2️⃣ Если UID нет — пользователь не зарегистрирован
-            if (string.IsNullOrWhiteSpace(Session.Uid))
+            if (!string.IsNullOrEmpty(savedUid))
             {
-                using (var registerForm = new RegisterForm())
+                Session.Uid = savedUid;
+                Session.DbPath = $"{savedUid}.sqlite";
+
+                var user = SqlService.LoadUserByUid(savedUid);
+                if (user != null)
                 {
-                    if (registerForm.ShowDialog() != DialogResult.OK)
-                        return; // пользователь закрыл регистрацию
+                    Session.CurrentUser = user;
+                    Session.IsAuthorized = true;
+                    Application.Run(new MainForm());
+                    return;
                 }
-
-                // UID должен быть сохранён RegistryService внутри RegisterForm
-                Session.Uid = RegistryService.LoadUid();
-
-                if (string.IsNullOrWhiteSpace(Session.Uid))
-                    throw new InvalidOperationException("UID не был создан при регистрации.");
             }
 
-            // 3️⃣ DbPath НИГДЕ НЕ ПРИСВАИВАЕТСЯ
-            // он вычисляется автоматически из Session.Uid
-            // string dbPath = Session.DbPath;
-
-            // 4️⃣ Запуск главной формы
-            Application.Run(new MainForm());
+            Application.Run(new RegisterForm());
         }
     }
 }

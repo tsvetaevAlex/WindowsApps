@@ -18,7 +18,8 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null)) components.Dispose();
+            if (disposing && (components != null))
+                components.Dispose();
             base.Dispose(disposing);
         }
 
@@ -36,54 +37,64 @@
             this.rtb_transactions_QTY = new System.Windows.Forms.RichTextBox();
             this.label_transaction_QTY = new System.Windows.Forms.Label();
             this.rtb_SessionStats = new System.Windows.Forms.RichTextBox();
-            this.rtb_SessionStats.Multiline = true;
 
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
 
+            // txtAccountName
             this.txtAccountName.Location = new System.Drawing.Point(10, 10);
             this.txtAccountName.Size = new System.Drawing.Size(140, 23);
             this.txtAccountName.ReadOnly = true;
 
+            // txtAmount
             this.txtAmount.Location = new System.Drawing.Point(160, 10);
             this.txtAmount.Size = new System.Drawing.Size(90, 23);
 
+            // datePicker
             this.datePicker.Location = new System.Drawing.Point(260, 10);
             this.datePicker.Size = new System.Drawing.Size(140, 23);
 
+            // comboType
             this.comboType.Location = new System.Drawing.Point(410, 10);
             this.comboType.Size = new System.Drawing.Size(100, 23);
 
+            // txtDescription
             this.txtDescription.Location = new System.Drawing.Point(520, 10);
             this.txtDescription.Size = new System.Drawing.Size(140, 23);
 
+            // btnAdd
             this.btnAdd.Location = new System.Drawing.Point(670, 10);
             this.btnAdd.Size = new System.Drawing.Size(90, 23);
             this.btnAdd.Text = "Добавить";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 
+            // btnYesterday
             this.btnYesterday.Location = new System.Drawing.Point(260, 40);
             this.btnYesterday.Size = new System.Drawing.Size(70, 23);
             this.btnYesterday.Text = "Вчера";
             this.btnYesterday.Click += new System.EventHandler(this.btnYesterday_Click);
 
+            // btnToday
             this.btnToday.Location = new System.Drawing.Point(340, 40);
-            this.btnToday.Size = new System.Drawing.Size(60, 23);
+            this.btnToday.Size = new System.Drawing.Size(70, 23);
             this.btnToday.Text = "Сегодня";
             this.btnToday.Click += new System.EventHandler(this.btnToday_Click);
 
+            // grid
             this.grid.Location = new System.Drawing.Point(10, 75);
             this.grid.Size = new System.Drawing.Size(750, 260);
             this.grid.ReadOnly = true;
             this.grid.AllowUserToAddRows = false;
             this.grid.AllowUserToDeleteRows = false;
             this.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
             this.grid.Columns.Add("Account", "Счет");
             this.grid.Columns.Add("Date", "Дата");
             this.grid.Columns.Add("Amount", "Сумма");
             this.grid.Columns.Add("Type", "Тип");
             this.grid.Columns.Add("Description", "Описание");
 
+            // rtb_transactions_QTY
             this.rtb_transactions_QTY.BackColor = System.Drawing.Color.SteelBlue;
             this.rtb_transactions_QTY.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.rtb_transactions_QTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F);
@@ -93,15 +104,18 @@
             this.rtb_transactions_QTY.WordWrap = false;
             this.rtb_transactions_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
 
+            // label
             this.label_transaction_QTY.AutoSize = true;
             this.label_transaction_QTY.Location = new System.Drawing.Point(406, 45);
             this.label_transaction_QTY.Text = "транзакций за сессию";
 
+            // rtb_SessionStats
             this.rtb_SessionStats.BackColor = System.Drawing.Color.Black;
             this.rtb_SessionStats.ForeColor = System.Drawing.Color.White;
             this.rtb_SessionStats.Location = new System.Drawing.Point(547, 45);
             this.rtb_SessionStats.Size = new System.Drawing.Size(213, 64);
 
+            // add controls
             this.Controls.Add(this.txtAccountName);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.datePicker);

@@ -1,28 +1,56 @@
-﻿using System;
+﻿using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Budgethelper.Controls
 {
     public partial class AccountsGroup : UserControl
     {
-        public event Action<string> AccountSelected;
+        public event Action<Account> AccountSelected;
 
         public AccountsGroup()
         {
             InitializeComponent();
-            grid.SelectionChanged += Grid_SelectionChanged;
         }
 
-        private void Grid_SelectionChanged(object sender, EventArgs e)
+        public void LoadAccounts()
         {
-            if (grid.CurrentRow == null)
-                return;
+            listAccounts.Items.Clear();
+            if (!Session.IsAuthorized) return;
 
-            var accountName = grid.CurrentRow.Cells["Name"].Value?.ToString();
-            if (string.IsNullOrEmpty(accountName))
-                return;
+            var accounts = SqlService.GetAccounts(Session.Uid);
+            foreach (var acc in accounts)
+                listAccounts.Items.Add(acc);
+        }
 
-            AccountSelected?.Invoke(accountName);
+        private void listAccounts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listAccounts.SelectedItem is Account acc)
+                AccountSelected?.Invoke(acc);
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text)) return;
+
+            string currency = tabControl1.SelectedTab == tabRur ? "RUR" : "USD";
+
+            var account = new Account
+            {
+                Uid = Session.Uid,
+                Name = txtName.Text.Trim(),
+                Currency = currency,
+                Description = txtDescription.Text.Trim(),
+                Balance = 0
+            };
+
+            SqlService.CreateAccount(account);
+            txtName.Clear();
+            txtDescription.Clear();
+            LoadAccounts();
         }
     }
 }
+        

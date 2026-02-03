@@ -1,11 +1,14 @@
-﻿internal static class AuthService
+﻿namespace Budgethelper.Services
 {
-    public static bool IsAuthorized { get; private set; }
-    public static string UserName { get; private set; }
-
-    public static void Authorize(int userId, string userName)
+    internal static class AuthService
     {
-        IsAuthorized = true;
-        UserName = userName;
+        public static bool IsAuthorized { get; private set; }
+        public static string UserName { get; private set; }
+
+        public static void Authorize(int userId, string userName)
+        {
+            IsAuthorized = true;
+            UserName = userName;
+        }
     }
 }

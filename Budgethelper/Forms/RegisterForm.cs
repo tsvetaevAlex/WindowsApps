@@ -1,7 +1,11 @@
 ﻿using Budgethelper.Models;
 using Budgethelper.Services;
+using Microsoft.Win32;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Budgethelper.Forms
 {
@@ -15,39 +19,54 @@ namespace Budgethelper.Forms
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text) ||
-                string.IsNullOrWhiteSpace(txtSurename.Text) ||
-                string.IsNullOrWhiteSpace(txtLastname.Text) ||
+                string.IsNullOrWhiteSpace(txtSureName.Text) ||
+                string.IsNullOrWhiteSpace(txtLastName.Text) ||
                 string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("Все поля обязательны для заполнения!");
+                MessageBox.Show("Заполните все поля");
                 return;
             }
 
-            var user = new Account
+            string uid = Guid.NewGuid().ToString();
+            string passwordHash = ComputeHash(txtPassword.Text);
+
+            // Устанавливаем путь к БД пользователя
+            Session.Uid = uid;
+            Session.DbPath = $"{uid}.sqlite";
+
+            var user = new User
             {
-                Uid = Guid.NewGuid().ToString(),
+                Uid = uid,
                 Name = txtName.Text.Trim(),
-                SureName = txtSurename.Text.Trim(),
-                LastName = txtLastname.Text.Trim(),
-                PasswordHash = txtPassword.Text
+                SureName = txtSureName.Text.Trim(),
+                LastName = txtLastName.Text.Trim(),
+                PasswordHash = passwordHash
             };
 
-            RegistryService.SaveUser(user); // сохраняем пользователя
+            SqlService.CreateUser(user);
 
-            Session.Uid = user.Uid; // сразу сохраняем в сессию
+            // Заполняем Session
+            Session.CurrentUser = user;
+            Session.IsAuthorized = true;
 
-            MessageBox.Show("Пользователь успешно зарегистрирован!");
+            // Сохраняем UID в реестр
+            var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath);
+            key.SetValue("Uid", uid);
 
-            // После регистрации открываем MainForm
-            MainForm mainForm = new MainForm();
-            mainForm.Show();
+            MessageBox.Show("Регистрация завершена");
 
-            this.Hide(); // скрываем RegisterForm
+            Hide();
+            new MainForm().Show();
         }
 
-        private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
+        private string ComputeHash(string input)
         {
-            txtPassword.UseSystemPasswordChar = !cbShowPassword.Checked;
+            using (var sha = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(input);
+                var hash = sha.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
-    }
-}
+    }//End of class RegisterForm
+} // end of namespace

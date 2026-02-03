@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Budgethelper.Services;
 using Budgethelper.Models;
+using Budgethelper.Services;
 
 namespace Budgethelper.Forms
 {
@@ -14,31 +14,26 @@ namespace Budgethelper.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPassword.Text))
+            var user = SqlService.LoadUserByUid(Session.Uid);
+
+            if (user == null)
             {
-                MessageBox.Show("Введите пароль");
+                MessageBox.Show("Пользователь не найден");
                 return;
             }
 
-            string uid = RegistryService.LoadUid();
-            if (uid == null)
+            if (!HashService.Verify(tbPassword.Text, user.PasswordHash))
             {
-                MessageBox.Show("Пользователь не зарегистрирован");
+                MessageBox.Show("Неверный пароль");
                 return;
             }
 
-            string hash = HashService.GetMd5(txtPassword.Text);
-
-            Session.Uid = uid;
-            Session.CurrentUser = SqlService.LoadUser();
+            Session.Uid = user.Uid;
+            Session.CurrentUser = user;
+            Session.IsAuthorized = true;
 
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
-        {
-            txtPassword.UseSystemPasswordChar = !cbShowPassword.Checked;
         }
     }
 }
