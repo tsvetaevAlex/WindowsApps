@@ -30,7 +30,6 @@ namespace Budgethelper.Forms
             string uid = Guid.NewGuid().ToString();
             string passwordHash = ComputeHash(txtPassword.Text);
 
-            // Устанавливаем путь к БД пользователя
             Session.Uid = uid;
             Session.DbPath = $"{uid}.sqlite";
 
@@ -45,11 +44,9 @@ namespace Budgethelper.Forms
 
             SqlService.CreateUser(user);
 
-            // Заполняем Session
             Session.CurrentUser = user;
             Session.IsAuthorized = true;
 
-            // Сохраняем UID в реестр
             var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath);
             key.SetValue("Uid", uid);
 
@@ -57,6 +54,11 @@ namespace Budgethelper.Forms
 
             Hide();
             new MainForm().Show();
+        }
+
+        private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = chkShowPassword.Checked ? '\0' : '*';
         }
 
         private string ComputeHash(string input)
@@ -68,5 +70,5 @@ namespace Budgethelper.Forms
                 return Convert.ToBase64String(hash);
             }
         }
-    }//End of class RegisterForm
-} // end of namespace
+    }
+}

@@ -14,6 +14,7 @@
         private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.TextBox txtPassword;
 
+        private System.Windows.Forms.CheckBox chkShowPassword;
         private System.Windows.Forms.Button btnRegister;
 
         protected override void Dispose(bool disposing)
@@ -36,6 +37,7 @@
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
 
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.btnRegister = new System.Windows.Forms.Button();
 
             this.SuspendLayout();
@@ -77,10 +79,16 @@
             this.txtPassword.Size = new System.Drawing.Size(240, 23);
             this.txtPassword.PasswordChar = '*';
 
+            // chkShowPassword
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Location = new System.Drawing.Point(30, 270);
+            this.chkShowPassword.Text = "Показать пароль";
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
+
             // btnRegister
-            this.btnRegister.Location = new System.Drawing.Point(30, 260);
-            this.btnRegister.Size = new System.Drawing.Size(240, 35);
-            this.btnRegister.Text = "Зарегистрироваться";
+            this.btnRegister.Location = new System.Drawing.Point(165, 260);
+            this.btnRegister.Size = new System.Drawing.Size(105, 35);
+            this.btnRegister.Text = "Регистрация";
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
 
             // RegisterForm
@@ -95,6 +103,7 @@
             this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.btnRegister);
 
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

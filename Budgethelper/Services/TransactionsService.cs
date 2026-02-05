@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
-using Budgethelper.Models;
+﻿using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
+using System.Collections.Generic;
 
 namespace Budgethelper.Services
 {
     public static class TransactionsService
     {
-        public static List<Transaction> LoadTransactions(string accountName)
+        public static List<Transaction> GetTransactions(int accountId)
         {
-            return SqlService.GetTransactions(accountName);
+            return SqlService.GetTransactions(accountId);
         }
 
-        public static void Create(Transaction transaction)
+        public static void CreateTransaction(int accountId, DateTime date, decimal amount, TransactionType operationType, string description = "")
         {
-            SqlService.CreateTransaction(transaction);
+            SqlService.CreateTransaction(accountId, date, amount, (int)operationType, description);
         }
     }
 }

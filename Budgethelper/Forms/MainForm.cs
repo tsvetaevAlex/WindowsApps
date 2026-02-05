@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using Budgethelper.Controls;
+using Budgethelper.Models;
 
 namespace Budgethelper.Forms
 {
@@ -8,6 +8,7 @@ namespace Budgethelper.Forms
         public MainForm()
         {
             InitializeComponent();
+            lblUser.Text = "User: " + Session.UserName;
         }
     }
 }

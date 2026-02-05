@@ -1,56 +1,59 @@
 ﻿using Budgethelper.Models;
 using Budgethelper.Services;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Budgethelper.Controls
 {
     public partial class AccountsGroup : UserControl
     {
-        public event Action<Account> AccountSelected;
+        public event Action<int> AccountSelected;
+
+        private List<Account> _accounts = new List<Account>();
 
         public AccountsGroup()
         {
             InitializeComponent();
+            LoadAccounts();
         }
 
-        public void LoadAccounts()
+        private void LoadAccounts()
         {
-            listAccounts.Items.Clear();
-            if (!Session.IsAuthorized) return;
+            if (!Session.IsAuthorized)
+                return;
 
-            var accounts = SqlService.GetAccounts(Session.Uid);
-            foreach (var acc in accounts)
-                listAccounts.Items.Add(acc);
+            _accounts = SqlService.GetAccounts(Session.Uid);
+
+            listAccounts.Items.Clear();
+
+            foreach (var acc in _accounts)
+            {
+                listAccounts.Items.Add($"{acc.AccountName} ({acc.Balance})");
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtAccountName.Text))
+                return;
+
+            SqlService.CreateAccount(Session.Uid, txtAccountName.Text.Trim(), 0);
+
+            txtAccountName.Clear();
+            LoadAccounts();
         }
 
         private void listAccounts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listAccounts.SelectedItem is Account acc)
-                AccountSelected?.Invoke(acc);
-        }
-
-        private void btnCreate_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtName.Text)) return;
-
-            string currency = tabControl1.SelectedTab == tabRur ? "RUR" : "USD";
-
-            var account = new Account
+            if (listAccounts.SelectedIndex < 0)
             {
-                Uid = Session.Uid,
-                Name = txtName.Text.Trim(),
-                Currency = currency,
-                Description = txtDescription.Text.Trim(),
-                Balance = 0
-            };
+                AccountSelected?.Invoke(0);
+                return;
+            }
 
-            SqlService.CreateAccount(account);
-            txtName.Clear();
-            txtDescription.Clear();
-            LoadAccounts();
+            var selected = _accounts[listAccounts.SelectedIndex];
+            AccountSelected?.Invoke(selected.Id);
         }
     }
 }
-        

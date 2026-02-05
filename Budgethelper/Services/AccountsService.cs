@@ -1,25 +1,19 @@
-﻿using System.Collections.Generic;
-using Budgethelper.Models;
+﻿using Budgethelper.Models;
+using Budgethelper.Services;
+using System.Collections.Generic;
 
 namespace Budgethelper.Services
 {
     public static class AccountsService
     {
-        public static List<Account> LoadAccounts()
+        public static List<Account> GetAccounts()
         {
-            if (!Session.IsAuthorized)
-                return new List<Account>();
-
-            return SqlService.GetAccounts(Session.Uid);
+            return SqlService.GetAccounts(Session.CurrentUser.Uid);
         }
 
-        public static void Create(Account account)
+        public static void CreateAccount(string accountName, decimal initialBalance = 0)
         {
-            SqlService.CreateAccount(account);
+            SqlService.CreateAccount(Session.CurrentUser.Uid, accountName, initialBalance);
         }
-
-        // TODO:
-        // Пока Update/Delete можно не реализовывать
-        // Добавим позже при необходимости
     }
 }

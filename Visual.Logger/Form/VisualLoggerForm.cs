@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Visual.Logger.Services;
 
 namespace Visual.Logger.Forms
 {
@@ -9,24 +10,28 @@ namespace Visual.Logger.Forms
         public VisualLoggerForm()
         {
             InitializeComponent();
+
+            LoggerServer.MessageReceived += OnMessageReceived;
         }
 
-        public void LogInfo(string message)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            AppendText("[INFO]  " + message + Environment.NewLine, Color.LightGreen);
+            LoggerServer.Stop();
+            base.OnFormClosing(e);
         }
 
-        public void LogWarning(string message)
+        private void OnMessageReceived(string message)
         {
-            AppendText("[WARN]  " + message + Environment.NewLine, Color.Yellow);
+            if (InvokeRequired)
+            {
+                Invoke(new Action<string>(OnMessageReceived), message);
+                return;
+            }
+
+            AppendText(message + Environment.NewLine, Color.WhiteSmoke);
         }
 
-        public void LogError(string message)
-        {
-            AppendText("[ERROR] " + message + Environment.NewLine, Color.IndianRed);
-        }
-
-        private void AppendText(string text, Color color)
+        public void AppendText(string text, Color color)
         {
             if (InvokeRequired)
             {
@@ -42,6 +47,22 @@ namespace Visual.Logger.Forms
             txtLog.SelectionColor = txtLog.ForeColor;
 
             txtLog.ScrollToCaret();
+        }
+
+        // Если захочешь локально логировать внутри самого логгера
+        public void LogInfo(string message)
+        {
+            AppendText("[INFO]  " + message + Environment.NewLine, Color.LightGreen);
+        }
+
+        public void LogWarning(string message)
+        {
+            AppendText("[WARN]  " + message + Environment.NewLine, Color.Yellow);
+        }
+
+        public void LogError(string message)
+        {
+            AppendText("[ERROR] " + message + Environment.NewLine, Color.IndianRed);
         }
     }
 }

@@ -32,6 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ч64|AnyCPU'">
+    <OutputPath>bin\ч64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,6 +85,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BalanceResult.cs" />
+    <Compile Include="Models\MessageType.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
@@ -83,6 +94,7 @@
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\Logger.cs" />
     <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Services\SqlService.cs" />
@@ -152,6 +164,12 @@
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.119</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Visual.Logger\Visual.Logger.csproj">
+      <Project>{ed8d65c5-7c84-4a84-8d42-9186ed5c6702}</Project>
+      <Name>Visual.Logger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

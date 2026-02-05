@@ -1,52 +1,47 @@
-﻿using Budgethelper.Forms;
-using Budgethelper.Models;
-using Budgethelper.Services;
-using System;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using Visual.Logger.Forms;
+using Visual.Logger.Services;
 
-namespace Budgethelper
+namespace Visual.Logger
 {
-    internal static class Program
+    static class Program
     {
+        private const string RegistryKeyPath = @"Software\BudgetHelper";
+        private const string RegistryPortName = "LoggerPort";
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            try
+            // Получаем свободный порт
+            int port = GetFreePort();
+
+            // Сохраняем порт в реестр для Budgethelper
+            using (var key = Registry.CurrentUser.CreateSubKey(RegistryKeyPath))
             {
-                // Читаем Uid из реестра
-                var savedUid = RegistryService.LoadUid();
-
-                if (!string.IsNullOrEmpty(savedUid))
-                {
-                    // Пытаемся загрузить пользователя из БД
-                    var user = SqlService.LoadUserByUid(savedUid);
-
-                    if (user != null)
-                    {
-                        // Инициализируем сессию
-                        Session.CurrentUser = user;
-                        Session.Uid = user.Uid;
-                        Session.IsAuthorized = true;
-
-                        Application.Run(new MainForm());
-                        return;
-                    }
-                }
-
-                // Если Uid нет или пользователь не найден
-                Application.Run(new RegisterForm());
+                key.SetValue(RegistryPortName, port);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    $"Ошибка запуска приложения:\n{ex.Message}",
-                    "BudgetHelper",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+
+            // Старт TCP сервера логгера
+            LoggerServer.Start(port);
+
+            // Запускаем форму логгера
+            Application.Run(new VisualLoggerForm());
+        }
+
+        private static int GetFreePort()
+        {
+            TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+            int port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            listener.Stop();
+            return port;
         }
     }
 }
