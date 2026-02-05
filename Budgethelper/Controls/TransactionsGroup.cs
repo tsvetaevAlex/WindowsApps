@@ -14,14 +14,14 @@ namespace Budgethelper.Controls
             InitializeComponent();
 
             comboType.DataSource = Enum.GetValues(typeof(TransactionType));
-            SetInactive();
+            //SetInactive();
         }
 
-        public void SetInactive()
-        {
-            Enabled = false;
-            grid.Rows.Clear();
-        }
+        //public void SetInactive()
+        //{
+        //    Enabled = false;
+        //    grid.Rows.Clear();
+        //}
 
         public void SetActive(string accountName, int accountId)
         {
