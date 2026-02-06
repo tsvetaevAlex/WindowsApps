@@ -108,6 +108,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Services\TransactionsService.cs" />
+    <EmbeddedResource Include="Controls\AccountsGroup.resx">
+      <DependentUpon>AccountsGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StatusBarControl.resx">
       <DependentUpon>StatusBarControl.cs</DependentUpon>
     </EmbeddedResource>

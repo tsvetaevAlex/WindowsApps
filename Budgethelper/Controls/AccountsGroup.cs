@@ -15,9 +15,9 @@ namespace Budgethelper.Controls
         public AccountsGroup()
         {
             InitializeComponent();
-            LoadAccounts();
+//            LoadAccounts();
         }
-
+        /*
         private void LoadAccounts()
         {
             if (!Session.IsAuthorized)
@@ -55,5 +55,6 @@ namespace Budgethelper.Controls
             var selected = _accounts[listAccounts.SelectedIndex];
             AccountSelected?.Invoke(selected.Id);
         }
+        */
     }
 }
