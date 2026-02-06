@@ -8,7 +8,6 @@ namespace Budgethelper.Forms
         public MainForm()
         {
             InitializeComponent();
-            lblUser.Text = "User: " + Session.UserName;
         }
     }
 }

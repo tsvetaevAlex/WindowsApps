@@ -155,11 +155,11 @@ namespace Budgethelper.Controls
             this.rtbTransact_QTY.BackColor = System.Drawing.Color.Black;
             this.rtbTransact_QTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbTransact_QTY.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.rtbTransact_QTY.Location = new System.Drawing.Point(8, 92);
+            this.rtbTransact_QTY.Location = new System.Drawing.Point(20, 70);
             this.rtbTransact_QTY.Margin = new System.Windows.Forms.Padding(5);
             this.rtbTransact_QTY.Name = "rtbTransact_QTY";
             this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbTransact_QTY.Size = new System.Drawing.Size(183, 64);
+            this.rtbTransact_QTY.Size = new System.Drawing.Size(183, 60);
             this.rtbTransact_QTY.TabIndex = 14;
             this.rtbTransact_QTY.Text = "123456";
             // 
@@ -189,9 +189,9 @@ namespace Budgethelper.Controls
             this.GB_Stats.Controls.Add(this.rtbTransact_QTY);
             this.GB_Stats.Controls.Add(this.rtbSessionStats);
             this.GB_Stats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GB_Stats.Location = new System.Drawing.Point(20, 110);
+            this.GB_Stats.Location = new System.Drawing.Point(20, 113);
             this.GB_Stats.Name = "GB_Stats";
-            this.GB_Stats.Size = new System.Drawing.Size(760, 340);
+            this.GB_Stats.Size = new System.Drawing.Size(760, 260);
             this.GB_Stats.TabIndex = 19;
             this.GB_Stats.TabStop = false;
             this.GB_Stats.Text = "Краткая Ствтистика Сессии:";
@@ -200,7 +200,7 @@ namespace Budgethelper.Controls
             // 
             this.TransactStats.BackColor = System.Drawing.Color.Black;
             this.TransactStats.ForeColor = System.Drawing.Color.Snow;
-            this.TransactStats.Location = new System.Drawing.Point(7, 152);
+            this.TransactStats.Location = new System.Drawing.Point(20, 140);
             this.TransactStats.Name = "TransactStats";
             this.TransactStats.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.TransactStats.Size = new System.Drawing.Size(600, 100);
@@ -211,7 +211,7 @@ namespace Budgethelper.Controls
             // tbTransactQTY
             // 
             this.tbTransactQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.tbTransactQTY.Location = new System.Drawing.Point(6, 44);
+            this.tbTransactQTY.Location = new System.Drawing.Point(20, 20);
             this.tbTransactQTY.Multiline = true;
             this.tbTransactQTY.Name = "tbTransactQTY";
             this.tbTransactQTY.ReadOnly = true;
@@ -236,7 +236,7 @@ namespace Budgethelper.Controls
             this.Controls.Add(this.btnYesterday);
             this.Controls.Add(this.btnToday);
             this.Name = "TransactionsGroup";
-            this.Size = new System.Drawing.Size(800, 600);
+            this.Size = new System.Drawing.Size(800, 393);
             this.GB_Stats.ResumeLayout(false);
             this.GB_Stats.PerformLayout();
             this.ResumeLayout(false);
