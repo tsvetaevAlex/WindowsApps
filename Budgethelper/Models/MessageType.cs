@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Budgethelper.Models
+﻿namespace Budgethelper.Models
 {
-   public enum MessageType
+    public enum MessageType
     {
         Info,
         Debug,
         Warn,
         DB,
+        UI,
+        User,
         Transaction,
         Account
     }

@@ -14,7 +14,6 @@ namespace Budgethelper.Controls
             InitializeComponent();
 
             comboType.DataSource = Enum.GetValues(typeof(TransactionType));
-            GB_Stats.Enabled = false;
             //SetInactive();
         }
 

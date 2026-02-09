@@ -1,13 +1,32 @@
-﻿using System.Windows.Forms;
 using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
+using System.Windows.Forms;
 
 namespace Budgethelper.Forms
 {
     public partial class MainForm : Form
     {
+        private StatusBarService _statusBar;
+
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Logger.Initialize();
+            Logger.SendMessage(MessageType.Info, "MainForm loaded", System.Drawing.Color.White);
+
+            _statusBar = new StatusBarService(rtbStatusBar);
+            _statusBar.Start();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _statusBar?.Dispose();
+            base.OnFormClosing(e);
         }
     }
 }

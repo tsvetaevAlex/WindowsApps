@@ -3,6 +3,7 @@ using Budgethelper.Services;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Budgethelper.Controls
 {
@@ -11,10 +12,10 @@ namespace Budgethelper.Controls
         public event Action<int> AccountSelected;
 
         private List<Account> _accounts = new List<Account>();
-
         public AccountsGroup()
         {
             InitializeComponent();
+            Logger.SendMessage(MessageType.UI, "AccountsGroup initialized.", Color.LightBlue);
 //            LoadAccounts();
         }
         /*

@@ -1,10 +1,14 @@
-﻿using Budgethelper.Controls;
+﻿using System.Windows.Forms;
 
 namespace Budgethelper.Forms
 {
     partial class MainForm
     {
         private System.ComponentModel.IContainer components = null;
+
+        private Budgethelper.Controls.AccountsGroup accountsGroup;
+        private Budgethelper.Controls.TransactionsGroup transactionsGroup;
+        private RichTextBox rtbStatusBar;
 
         protected override void Dispose(bool disposing)
         {
@@ -16,37 +20,55 @@ namespace Budgethelper.Forms
 
         private void InitializeComponent()
         {
-            this.accountsGroup1 = new Budgethelper.Controls.AccountsGroup();
-            this.transactionsGroup1 = new Budgethelper.Controls.TransactionsGroup();
+            this.accountsGroup = new Budgethelper.Controls.AccountsGroup();
+            this.transactionsGroup = new Budgethelper.Controls.TransactionsGroup();
+            this.rtbStatusBar = new System.Windows.Forms.RichTextBox();
+
             this.SuspendLayout();
-            // 
-            // accountsGroup1
-            // 
-            this.accountsGroup1.Location = new System.Drawing.Point(20, 20);
-            this.accountsGroup1.Name = "accountsGroup1";
-            this.accountsGroup1.Size = new System.Drawing.Size(760, 185);
-            this.accountsGroup1.TabIndex = 0;
-            // 
-            // transactionsGroup1
-            // 
-            this.transactionsGroup1.Location = new System.Drawing.Point(0, 0);
-            this.transactionsGroup1.Name = "transactionsGroup1";
-            this.transactionsGroup1.Size = new System.Drawing.Size(800, 600);
-            this.transactionsGroup1.TabIndex = 1;
-            // 
-            // MainForm
-            // 
-            this.ClientSize = new System.Drawing.Size(884, 661);
-            this.Controls.Add(this.transactionsGroup1);
-            this.Controls.Add(this.accountsGroup1);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+
+            // -------------------------------------------------
+            // MainForm (фиксированный размер)
+            // -------------------------------------------------
+            this.ClientSize = new System.Drawing.Size(1000, 700);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "BudgetHelper";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+
+            // -------------------------------------------------
+            // accountsGroup
+            // -------------------------------------------------
+            this.accountsGroup.Location = new System.Drawing.Point(20, 20);
+            this.accountsGroup.Size = new System.Drawing.Size(960, 200);
+
+            // -------------------------------------------------
+            // transactionsGroup
+            // -------------------------------------------------
+            this.transactionsGroup.Location = new System.Drawing.Point(20, 240);
+            this.transactionsGroup.Size = new System.Drawing.Size(960, 370);
+
+            // -------------------------------------------------
+            // rtbStatusBar
+            // -------------------------------------------------
+            this.rtbStatusBar.Dock = DockStyle.Bottom;
+            this.rtbStatusBar.Height = 40;
+            this.rtbStatusBar.ReadOnly = true;
+            this.rtbStatusBar.BorderStyle = BorderStyle.FixedSingle;
+            this.rtbStatusBar.BackColor = System.Drawing.Color.FromArgb(25, 25, 25);
+            this.rtbStatusBar.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.rtbStatusBar.ScrollBars = RichTextBoxScrollBars.None;
+            this.rtbStatusBar.TabStop = false;
+            this.rtbStatusBar.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular);
+
+            // -------------------------------------------------
+            // Add Controls
+            // -------------------------------------------------
+            this.Controls.Add(this.accountsGroup);
+            this.Controls.Add(this.transactionsGroup);
+            this.Controls.Add(this.rtbStatusBar);
+
             this.ResumeLayout(false);
-
         }
-
-        private AccountsGroup accountsGroup1;
-        private TransactionsGroup transactionsGroup1;
     }
 }

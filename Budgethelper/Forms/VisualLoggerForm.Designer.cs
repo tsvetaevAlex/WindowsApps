@@ -1,0 +1,1 @@
+// VisualLoggerForm.Designer.cs

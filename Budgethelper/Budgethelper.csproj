@@ -42,6 +42,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Budgethelper.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -83,6 +86,12 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\VisualLoggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VisualLoggerForm.Designer.cs">
+      <DependentUpon>VisualLoggerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BalanceResult.cs" />
     <Compile Include="Models\MessageType.cs" />
@@ -94,7 +103,9 @@
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\HashService.cs" />
-    <Compile Include="Services\Logger.cs" />
+    <Compile Include="Services\Logger.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Services\SqlService.cs" />
@@ -107,6 +118,7 @@
     <Compile Include="Controls\TransactionsGroup.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Services\StatusBarService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <EmbeddedResource Include="Controls\AccountsGroup.resx">
       <DependentUpon>AccountsGroup.cs</DependentUpon>
@@ -167,12 +179,6 @@
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.119</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Visual.Logger\Visual.Logger.csproj">
-      <Project>{ed8d65c5-7c84-4a84-8d42-9186ed5c6702}</Project>
-      <Name>Visual.Logger</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

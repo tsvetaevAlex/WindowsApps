@@ -28,11 +28,11 @@
             this.gbaccounGroup.SuspendLayout();
             this.SuspendLayout();
             // 
-            // ACcountsListSelector
+            // cbACcountsListSelector
             // 
             this.cbACcountsListSelector.FormattingEnabled = true;
             this.cbACcountsListSelector.Location = new System.Drawing.Point(20, 71);
-            this.cbACcountsListSelector.Name = "ACcountsListSelector";
+            this.cbACcountsListSelector.Name = "cbACcountsListSelector";
             this.cbACcountsListSelector.Size = new System.Drawing.Size(550, 21);
             this.cbACcountsListSelector.TabIndex = 0;
             this.cbACcountsListSelector.TabStop = false;
@@ -76,16 +76,16 @@
             this.tbAccbalanse.TabIndex = 4;
             this.tbAccbalanse.Text = "999 000 000 000";
             // 
-            // accName
+            // tbAccName
             // 
             this.tbAccName.Location = new System.Drawing.Point(20, 126);
-            this.tbAccName.Name = "accName";
+            this.tbAccName.Name = "tbAccName";
             this.tbAccName.ReadOnly = true;
             this.tbAccName.Size = new System.Drawing.Size(150, 20);
             this.tbAccName.TabIndex = 8;
             this.tbAccName.Text = "accName";
             // 
-            // tbAccDescription
+            // tbAccComent
             // 
             this.tbAccComent.Location = new System.Drawing.Point(290, 126);
             this.tbAccComent.Name = "tbAccComent";
@@ -94,20 +94,11 @@
             this.tbAccComent.TabIndex = 7;
             this.tbAccComent.Text = "AccDrscrition";
             // 
-            // lbAccComent
-            // 
-            this.lbAccComent.AutoSize = true;
-            this.lbAccComent.Location = new System.Drawing.Point(290, 108);
-            this.lbAccComent.Name = "lbAccComent";
-            this.lbAccComent.Size = new System.Drawing.Size(133, 13);
-            this.lbAccComent.TabIndex = 12;
-            this.lbAccComent.Text = "комментарий к аккаунту";
-            // 
-            // lnAccName
+            // lbAccName
             // 
             this.lbAccName.AutoSize = true;
             this.lbAccName.Location = new System.Drawing.Point(20, 108);
-            this.lbAccName.Name = "lnAccName";
+            this.lbAccName.Name = "lbAccName";
             this.lbAccName.Size = new System.Drawing.Size(78, 13);
             this.lbAccName.TabIndex = 9;
             this.lbAccName.Text = "Account Name";
@@ -120,9 +111,17 @@
             this.lbAccBalance.Size = new System.Drawing.Size(89, 13);
             this.lbAccBalance.TabIndex = 11;
             this.lbAccBalance.Text = "текущий баланс";
-
             // 
-            // accounGroup
+            // lbAccComent
+            // 
+            this.lbAccComent.AutoSize = true;
+            this.lbAccComent.Location = new System.Drawing.Point(290, 108);
+            this.lbAccComent.Name = "lbAccComent";
+            this.lbAccComent.Size = new System.Drawing.Size(133, 13);
+            this.lbAccComent.TabIndex = 12;
+            this.lbAccComent.Text = "комментарий к аккаунту";
+            // 
+            // gbaccounGroup
             // 
             this.gbaccounGroup.Controls.Add(this.tbHeader);
             this.gbaccounGroup.Controls.Add(this.lbAccComent);
@@ -135,8 +134,8 @@
             this.gbaccounGroup.Controls.Add(this.tbAccbalanse);
             this.gbaccounGroup.Controls.Add(this.tbAccComent);
             this.gbaccounGroup.Location = new System.Drawing.Point(10, 10);
-            this.gbaccounGroup.Name = "accounGroup";
-            this.gbaccounGroup.Size = new System.Drawing.Size(740, 165);
+            this.gbaccounGroup.Name = "gbaccounGroup";
+            this.gbaccounGroup.Size = new System.Drawing.Size(740, 180);
             this.gbaccounGroup.TabIndex = 13;
             this.gbaccounGroup.TabStop = false;
             this.gbaccounGroup.Text = "выбор Аккаунта для работы с транзакциями";
@@ -145,7 +144,7 @@
             // 
             this.Controls.Add(this.gbaccounGroup);
             this.Name = "AccountsGroup";
-            this.Size = new System.Drawing.Size(760, 185);
+            this.Size = new System.Drawing.Size(760, 200);
             this.gbaccounGroup.ResumeLayout(false);
             this.gbaccounGroup.PerformLayout();
             this.ResumeLayout(false);

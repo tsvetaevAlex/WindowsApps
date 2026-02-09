@@ -160,8 +160,9 @@ namespace Budgethelper.Controls
             this.rtbTransact_QTY.Name = "rtbTransact_QTY";
             this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbTransact_QTY.Size = new System.Drawing.Size(183, 60);
-            this.rtbTransact_QTY.TabIndex = 14;
+            this.rtbTransact_QTY.TabStop = false;
             this.rtbTransact_QTY.Text = "123456";
+            this.rtbTransact_QTY.ReadOnly = true;
             // 
             // rtbSessionStats
             // 
@@ -189,7 +190,7 @@ namespace Budgethelper.Controls
             this.GB_Stats.Controls.Add(this.rtbTransact_QTY);
             this.GB_Stats.Controls.Add(this.rtbSessionStats);
             this.GB_Stats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GB_Stats.Location = new System.Drawing.Point(20, 113);
+            this.GB_Stats.Location = new System.Drawing.Point(20, 110);
             this.GB_Stats.Name = "GB_Stats";
             this.GB_Stats.Size = new System.Drawing.Size(760, 260);
             this.GB_Stats.TabIndex = 19;
@@ -236,7 +237,7 @@ namespace Budgethelper.Controls
             this.Controls.Add(this.btnYesterday);
             this.Controls.Add(this.btnToday);
             this.Name = "TransactionsGroup";
-            this.Size = new System.Drawing.Size(800, 393);
+            this.Size = new System.Drawing.Size(800, 380);
             this.GB_Stats.ResumeLayout(false);
             this.GB_Stats.PerformLayout();
             this.ResumeLayout(false);
