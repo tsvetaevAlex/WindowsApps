@@ -33,14 +33,13 @@ namespace Budgethelper.Forms
             Session.Uid = uid;
             Session.DbPath = $"{uid}.sqlite";
 
-            var user = new User
-            {
-                Uid = uid,
-                Name = txtName.Text.Trim(),
-                SureName = txtSureName.Text.Trim(),
-                LastName = txtLastName.Text.Trim(),
-                PasswordHash = passwordHash
-            };
+            var user = new User(
+                uid,
+                txtName.Text,
+                txtSureName.Text,
+                txtLastName.Text,
+                "123"
+            );
 
             SqlService.CreateUser(user);
 

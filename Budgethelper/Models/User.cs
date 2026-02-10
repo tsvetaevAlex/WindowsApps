@@ -7,5 +7,15 @@
         public string SureName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
+
+        public User(string _id, string _Name, string _SureName, string _LastName, string _PasswordHash)
+        {
+            Uid = _id;
+            Name = _Name;
+            SureName = _SureName;
+            LastName = _LastName;
+            PasswordHash = _PasswordHash;
+
+        }
     }
 }
