@@ -117,7 +117,7 @@
             // lbAccBalance
             // 
             this.lbAccBalance.AutoSize = true;
-            this.lbAccBalance.Location = new System.Drawing.Point(180, 111);
+            this.lbAccBalance.Location = new System.Drawing.Point(126, 21);
             this.lbAccBalance.Name = "lbAccBalance";
             this.lbAccBalance.Size = new System.Drawing.Size(89, 13);
             this.lbAccBalance.TabIndex = 13;
@@ -224,7 +224,7 @@
             // 
             // tbAccBalance
             // 
-            this.tbAccBalance.Location = new System.Drawing.Point(143, 39);
+            this.tbAccBalance.Location = new System.Drawing.Point(126, 39);
             this.tbAccBalance.Name = "tbAccBalance";
             this.tbAccBalance.Size = new System.Drawing.Size(100, 20);
             this.tbAccBalance.TabIndex = 1;
