@@ -194,7 +194,8 @@
             this.accountCeator.Size = new System.Drawing.Size(712, 164);
             this.accountCeator.TabIndex = 1;
             this.accountCeator.Text = "Создать Аккаунт";
-            this.accountCeator.UseVisualStyleBackColor = true;
+            this.accountCeator.BackColor = System.Drawing.SystemColors.Control;
+            //this.accountCeator.UseVisualStyleBackColor = true;
             // 
             // bAddAccount
             // 
