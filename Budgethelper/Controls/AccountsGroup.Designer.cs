@@ -181,7 +181,7 @@
             this.accountPicker.Padding = new System.Windows.Forms.Padding(3);
             this.accountPicker.Size = new System.Drawing.Size(712, 164);
             this.accountPicker.TabIndex = 0;
-            this.accountPicker.Text = "Выбор Аккаунта";
+            this.accountPicker.Text = "1. Выбор Аккаунта";
             // 
             // accountCeator
             // 
@@ -198,7 +198,7 @@
             this.accountCeator.Padding = new System.Windows.Forms.Padding(3);
             this.accountCeator.Size = new System.Drawing.Size(712, 164);
             this.accountCeator.TabIndex = 1;
-            this.accountCeator.Text = "Создать Аккаунт";
+            this.accountCeator.Text = "2. Создать Аккаунт";
             // 
             // bAddAccount
             // 

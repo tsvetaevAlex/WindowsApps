@@ -28,70 +28,120 @@ public partial class Logger : Form
         if (_instance == null)
             Initialize();
 
-        _instance.Append(type, message);
+        _instance.Append_ByMessageType(type, message);
     }
-
-    public static void SendMessage(MessageType type, string message, Color color)
+    public static void SendMessage(string message,Color color)
     {
         if (_instance == null)
             Initialize();
 
-        _instance.Append(type, message);
+        _instance.Append_ColorMessage(message, color);
     }
-
-    private void Append(MessageType _ьуыыфпуЕype, string message)
+    private void Append_ByMessageType(MessageType MessageType, string message)
     {
         if (InvokeRequired)
         {
-            Invoke(new Action(() => Append(_ьуыыфпуЕype, message)));
+            Color textColor = GetColor(MessageType);
+            Invoke(new Action(() => Append_ColorMessage(message,textColor)));
             return;
         }
 
-        Color color = GetColor(_ьуыыфпуЕype);
+        Color color = GetColor(MessageType);
 
         _output.SelectionStart = _output.TextLength;
         _output.SelectionLength = 0;
         _output.SelectionColor = color;
 
-        _output.AppendText($"[{DateTime.Now:HH:mm:ss}] {_ьуыыфпуЕype}: {message}\n");
+        _output.AppendText($"[{DateTime.Now:HH:mm:ss}] {MessageType}: {message}\n");
 
         _output.SelectionColor = _output.ForeColor;
         _output.ScrollToCaret();
     }
 
-    private Color GetColor(MessageType type)
+    private void Append_ColorMessage(string message, Color color)
     {
-        switch (type)
+        if (InvokeRequired)
+        {
+            Invoke(new Action(() => Append_ColorMessage(message, color)));
+            return;
+        }
+
+
+        _output.SelectionStart = _output.TextLength;
+        _output.SelectionLength = 0;
+        _output.SelectionColor = color;
+
+        _output.AppendText($"[{DateTime.Now:HH:mm:ss}] : {message}\n");
+
+        _output.SelectionColor = _output.ForeColor;
+        _output.ScrollToCaret();
+    }
+
+    #region colorring with own prompt message for each type of message
+    private Color GetColor(MessageType _MessageType)
+    {
+        string prompt = string.Empty;
+        switch (_MessageType)
         {
             case MessageType.Info:
-                return Color.WhiteSmoke;
+                {
+                    prompt = "информационное Сообщение:";
+                    SendMessage(prompt +"\r\n", Color.GhostWhite);
+                    return Color.WhiteSmoke;
+                }
 
             case MessageType.Warn:
-                return Color.Orange;
+                {
+                    prompt = "Сообщение Предупреждение:";
+                    SendMessage(prompt + "\r\n", Color.DarkOrange);
+                    return Color.Orange;
+                }
 
             case MessageType.Debug:
-                return Color.Gray;
+                {
+                    prompt = "отладочное сообщение:";
+                    SendMessage(prompt + "\r\n", Color.DarkGray);
+                    return Color.Gray;
+                }
+
 
             case MessageType.DB:
-                return Color.MediumBlue;
+                {
+                    prompt = "Сообщение от Базы Жанных о проведенных операциях:";
+                    SendMessage(prompt + "\r\n", Color.DarkBlue);
+                    return Color.Blue;
+                }
 
             case MessageType.UI:
-                return Color.LightBlue;
+                {
+                    prompt = "Сообщение от Пользовательсткого интерфейса:";
+                    SendMessage(prompt + "\r\n", Color.CadetBlue);
+                    return Color.LightBlue;
+                }
 
             case MessageType.Account:
-                return Color.Lime;
+                {
+                    prompt = "Сообщение от системы работы с счетами создание и использовние имеющихся:";
+                    SendMessage(prompt + "\r\n", Color.DarkSeaGreen);
+                    return Color.Lime;
+                }
 
             case MessageType.User:
-                return Color.Yellow;
+                {
+                    prompt = "Сообщение от системы работы с учетной записью пользоватля приложения:";
+                    return Color.Yellow;
+                }
             
             case MessageType.undefined:
-                return Color.White;
-
+                {
+                    prompt = "Сообщение ОБщего характера:";
+                    return Color.White;
+                }
             default:
                 return Color.White;
         }
     }
-
+    #endregion
 
     private void InitializeUI()
     {

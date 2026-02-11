@@ -37,8 +37,7 @@ namespace Budgethelper.Forms
             base.OnShown(e);
 
             Logger.SendMessage(MessageType.Info,
-                "logger successfully initiated.",
-                Color.WhiteSmoke);
+                "logger successfully initiated.");
         }
 
     }// end of class VisualLoggerForm : Form

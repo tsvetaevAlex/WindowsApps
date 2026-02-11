@@ -15,7 +15,7 @@ namespace Budgethelper.Forms
 
 
             Logger.Initialize();
-            Logger.SendMessage(MessageType.Info, "MainForm loaded", System.Drawing.Color.Lime);
+            Logger.SendMessage(MessageType.Info, "MainForm loaded");
         }
 
         private void MainForm_Load(object sender, EventArgs e)

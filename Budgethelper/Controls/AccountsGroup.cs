@@ -16,7 +16,7 @@ namespace Budgethelper.Controls
         public AccountsGroup()
         {
             InitializeComponent();
-            Logger.SendMessage(MessageType.UI, "AccountsGroup initialized.", Color.LightBlue);
+            Logger.SendMessage(MessageType.UI, "AccountsGroup initialized.");
             //            LoadAccounts();
         }
 
@@ -75,7 +75,7 @@ private void listAccounts_SelectedIndexChanged(object sender, EventArgs e)
             var selectedTab = AccountsGroupControlTabs.SelectedTab;
 
             Logger.SendMessage(MessageType.UI,
-                $"Switched to tab{selectedTab.TabIndex}: {selectedTab.Text}\r\n");
+                $"ПЕреход на закладку[{selectedTab.TabIndex+1}]: {selectedTab.Text}\r\n");
             if (selectedTab.TabIndex == 0)
             {
                 Logger.SendMessage(MessageType.UI,
