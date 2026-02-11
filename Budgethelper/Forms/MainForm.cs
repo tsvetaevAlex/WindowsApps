@@ -12,12 +12,15 @@ namespace Budgethelper.Forms
         public MainForm()
         {
             InitializeComponent();
+
+
+            Logger.Initialize();
+            Logger.SendMessage(MessageType.Info, "MainForm loaded", System.Drawing.Color.Lime);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             Logger.Initialize();
-            Logger.SendMessage(MessageType.Info, "MainForm loaded", System.Drawing.Color.White);
 
             _statusBar = new StatusBarService(rtbStatusBar);
             _statusBar.Start();

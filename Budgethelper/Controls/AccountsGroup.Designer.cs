@@ -38,6 +38,12 @@
             this.accountPicker.SuspendLayout();
             this.accountCeator.SuspendLayout();
             this.SuspendLayout();
+
+            ///
+            ///Events
+            ///
+            this.AccountsGroupControlTabs.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
+
             // 
             // AcSelTab_cbACcountsListSelector
             // 
@@ -73,7 +79,6 @@
             // 
             this.AcSelTab_tbHeader.Location = new System.Drawing.Point(20, 20);
             this.AcSelTab_tbHeader.Name = "AcSelTab_tbHeader";
-            this.AcSelTab_tbHeader.ReadOnly = true;
             this.AcSelTab_tbHeader.Size = new System.Drawing.Size(630, 20);
             this.AcSelTab_tbHeader.TabIndex = 3;
             this.AcSelTab_tbHeader.Text = "Цветаева Ольга Александровна UID: ";
@@ -82,7 +87,6 @@
             // 
             this.AcSelTab_tbAccbalanse.Location = new System.Drawing.Point(180, 126);
             this.AcSelTab_tbAccbalanse.Name = "AcSelTab_tbAccbalanse";
-            this.AcSelTab_tbAccbalanse.ReadOnly = true;
             this.AcSelTab_tbAccbalanse.Size = new System.Drawing.Size(100, 20);
             this.AcSelTab_tbAccbalanse.TabIndex = 4;
             this.AcSelTab_tbAccbalanse.Text = "999 000 000 000";
@@ -91,7 +95,6 @@
             // 
             this.tbAccName.Location = new System.Drawing.Point(16, 39);
             this.tbAccName.Name = "tbAccName";
-            this.tbAccName.ReadOnly = true;
             this.tbAccName.Size = new System.Drawing.Size(100, 20);
             this.tbAccName.TabIndex = 0;
             this.tbAccName.Text = "Name";
@@ -167,6 +170,7 @@
             this.AccountsGroupControlTabs.SelectedIndex = 0;
             this.AccountsGroupControlTabs.Size = new System.Drawing.Size(720, 190);
             this.AccountsGroupControlTabs.TabIndex = 14;
+            this.AccountsGroupControlTabs.Enter += new System.EventHandler(this.bAddAccount_Click);
             // 
             // accountPicker
             // 
@@ -181,6 +185,7 @@
             // 
             // accountCeator
             // 
+            this.accountCeator.BackColor = System.Drawing.SystemColors.Control;
             this.accountCeator.Controls.Add(this.bAddAccount);
             this.accountCeator.Controls.Add(this.lbAccDescription);
             this.accountCeator.Controls.Add(this.lbAccBalance);
@@ -194,8 +199,6 @@
             this.accountCeator.Size = new System.Drawing.Size(712, 164);
             this.accountCeator.TabIndex = 1;
             this.accountCeator.Text = "Создать Аккаунт";
-            this.accountCeator.BackColor = System.Drawing.SystemColors.Control;
-            //this.accountCeator.UseVisualStyleBackColor = true;
             // 
             // bAddAccount
             // 
@@ -205,6 +208,7 @@
             this.bAddAccount.TabIndex = 6;
             this.bAddAccount.Text = "Добавить аккаунт";
             this.bAddAccount.UseVisualStyleBackColor = true;
+            this.bAddAccount.Click += new System.EventHandler(this.bAddAccount_Click);
             // 
             // lbAccDescription
             // 

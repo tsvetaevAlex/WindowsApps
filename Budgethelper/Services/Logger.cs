@@ -1,168 +1,115 @@
 ﻿using Budgethelper.Models;
-using Microsoft.Win32;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Net.Sockets;
-using System.Text;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace Budgethelper.Services
+public partial class Logger : Form
 {
-    public partial class Logger : Form
+    private static Logger _instance;
+    private RichTextBox _output;
+
+    private Logger()
     {
-        private static Logger _instance;
+        InitializeUI();
+    }
 
-        private RichTextBox _output;
-
-        private Logger()
+    public static void Initialize()
+    {
+        if (_instance == null)
         {
-            InitializeUI();
+            _instance = new Logger();
+            _instance.Show();
+        }
+    }
+
+    public static void SendMessage(MessageType type, string message)
+    {
+        if (_instance == null)
+            Initialize();
+
+        _instance.Append(type, message);
+    }
+
+    public static void SendMessage(MessageType type, string message, Color color)
+    {
+        if (_instance == null)
+            Initialize();
+
+        _instance.Append(type, message);
+    }
+
+    private void Append(MessageType _ьуыыфпуЕype, string message)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(new Action(() => Append(_ьуыыфпуЕype, message)));
+            return;
         }
 
-        // 🔹 Инициализация (вызывается один раз)
-        public static void Initialize()
+        Color color = GetColor(_ьуыыфпуЕype);
+
+        _output.SelectionStart = _output.TextLength;
+        _output.SelectionLength = 0;
+        _output.SelectionColor = color;
+
+        _output.AppendText($"[{DateTime.Now:HH:mm:ss}] {_ьуыыфпуЕype}: {message}\n");
+
+        _output.SelectionColor = _output.ForeColor;
+        _output.ScrollToCaret();
+    }
+
+    private Color GetColor(MessageType type)
+    {
+        switch (type)
         {
-            if (_instance == null)
-            {
-                _instance = new Logger();
-                _instance.Show();
-            }
+            case MessageType.Info:
+                return Color.WhiteSmoke;
+
+            case MessageType.Warn:
+                return Color.Orange;
+
+            case MessageType.Debug:
+                return Color.Gray;
+
+            case MessageType.DB:
+                return Color.MediumBlue;
+
+            case MessageType.UI:
+                return Color.LightBlue;
+
+            case MessageType.Account:
+                return Color.Lime;
+
+            case MessageType.User:
+                return Color.Yellow;
+            
+            case MessageType.undefined:
+                return Color.White;
+
+            default:
+                return Color.White;
         }
+    }
 
-        // 🔹 Доступ к экземпляру
-        public static Logger Instance
+
+    private void InitializeUI()
+    {
+        Text = "Visual Logger";
+        Size = new Size(700, 400);
+        BackColor = Color.Black;
+        FormBorderStyle = FormBorderStyle.SizableToolWindow;
+
+        _output = new RichTextBox
         {
-            get
-            {
-                if (_instance == null)
-                    Initialize();
+            Dock = DockStyle.Fill,
+            BackColor = Color.Black,
+            ForeColor = Color.LightGreen,
+            BorderStyle = BorderStyle.None,
+            Font = new Font("Consolas", 10),
+            ReadOnly = true
+        };
 
-                return _instance;
-            }
-        }
-
-        // 🔹 Метод логирования
-        public static void Log(string message, Color? color = null)
-        {
-            if (_instance == null)
-                return;
-
-            _instance.Append(message, color ?? Color.LightGreen);
-        }
-
-        private void Append(string message, Color color)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => Append(message, color)));
-                return;
-            }
-
-            _output.SelectionStart = _output.TextLength;
-            _output.SelectionLength = 0;
-            _output.SelectionColor = color;
-
-            _output.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}\n");
-            _output.SelectionColor = _output.ForeColor;
-            _output.ScrollToCaret();
-        }
-
-        private void InitializeUI()
-        {
-            Text = "Visual Logger";
-            Size = new Size(700, 400);
-            StartPosition = FormStartPosition.Manual;
-            BackColor = Color.Black;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            _output = new RichTextBox
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Color.Black,
-                ForeColor = Color.LightGreen,
-                BorderStyle = BorderStyle.None,
-                Font = new Font("Consolas", 10),
-                ReadOnly = true
-            };
-
-            Controls.Add(_output);
-        }
-        public static void SendMessage(MessageType prefix, string message, Color textColor)
-        {
-            string loggerPrefix = string.Empty;
-            switch (prefix)
-            {
-                case MessageType.Info:
-                    loggerPrefix = "Info:";
-                    textColor = Color.WhiteSmoke;
-                    break;
-                case MessageType.Warn:
-                    loggerPrefix = "Warning:";
-                    textColor = Color.White;
-                    break;
-                case MessageType.Debug:
-                    loggerPrefix = "Debug:";
-                    textColor = Color.Gray;
-                    break;
-                case MessageType.DB:
-                    loggerPrefix = "DataBase:";
-                    textColor = Color.MediumBlue;
-                    break;
-                case MessageType.UI:
-                    loggerPrefix = "DataBase:";
-                    textColor = Color.LightBlue;
-                    break;
-                case MessageType.Account:
-                    loggerPrefix = "Account:";
-                    textColor = Color.Lime;
-                    break;
-                case MessageType.User:
-                    loggerPrefix = "User:";
-                    textColor = Color.Yellow;
-                    break;
-                default:
-                    loggerPrefix = "message:";
-                    textColor = Color.GhostWhite;
-                    break;
-            }
-
-            try
-            {
-                int port = GetLoggerPort();
-                if (port == 0)
-                    return;
-
-                string timeStamp = DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss.fff");
-                using (var client = new TcpClient("127.0.0.1", port))
-                using (var stream = client.GetStream())
-                using (var writer = new StreamWriter(stream, Encoding.UTF8))
-                {
-                    // Формат:
-                    // R|G|B|prefix|message
-                    writer.WriteLine($"{timeStamp}=>{textColor.R}|{textColor.G}|{textColor.B}|{loggerPrefix}|{message}");
-                    writer.Flush();
-                }
-            }
-            catch
-            {
-                // если логгер не доступен — просто игнорируем
-            }
-        }// end of SendMessage
-        private static int GetLoggerPort()
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey(Session.RegistryKeyPath))
-            {
-                if (key == null)
-                    return 0;
-
-                object value = key.GetValue("loggerPort");
-                if (value == null)
-                    return 0;
-
-                return Convert.ToInt32(value);
-            }
-        }
-
-    } // end of public partial class Logger : Form
-}// enf of namespace Budgethelper.Services
+        Controls.Add(_output);
+    }
+}

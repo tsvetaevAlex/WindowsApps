@@ -2,6 +2,7 @@
 {
     public enum MessageType
     {
+        undefined,
         Info,
         Debug,
         Warn,

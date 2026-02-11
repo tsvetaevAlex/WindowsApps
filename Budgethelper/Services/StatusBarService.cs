@@ -54,8 +54,8 @@ namespace Budgethelper.Services
             string uptimeText = $"Session Uptime: {_uptime.Elapsed:dd\\.hh\\:mm\\:ss}";
 
             _rtb.Clear();
-            _rtb.SelectionColor = Color.WhiteSmoke;
-            _rtb.AppendText("Status ");
+            _rtb.SelectionColor = Color.Gray;
+            _rtb.AppendText("Heartbeat ");
 
             _rtb.SelectionColor = (_counter % 2 == 0) ? Color.LimeGreen : Color.Black;
             _rtb.AppendText("●");

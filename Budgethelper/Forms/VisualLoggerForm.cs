@@ -1,7 +1,9 @@
 
+using Budgethelper.Models;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Budgethelper.Services;
 
 namespace Budgethelper.Forms
 {
@@ -20,7 +22,7 @@ namespace Budgethelper.Forms
             this.SuspendLayout();
             this.rtbLog.BackColor = Color.Black;
             this.rtbLog.ForeColor = Color.White;
-            this.rtbLog.Font = new Font("Consolas", 10);
+            this.rtbLog.Font = new Font("Consolas", 12);
             this.rtbLog.ReadOnly = true;
             this.Controls.Add(this.rtbLog);
             this.Text = "Visual Logger";
@@ -30,35 +32,14 @@ namespace Budgethelper.Forms
             this.ResumeLayout(false);
         }
 
-        public void Append(string message, Color color)
+        protected override void OnShown(EventArgs e)
         {
-            rtbLog.Invoke((Action)(() =>
-            {
-                rtbLog.SelectionStart = rtbLog.TextLength;
-                rtbLog.SelectionColor = color;
-                rtbLog.AppendText(message + Environment.NewLine);
-                rtbLog.SelectionColor = rtbLog.ForeColor;
-                rtbLog.ScrollToCaret();
-            }));
+            base.OnShown(e);
+
+            Logger.SendMessage(MessageType.Info,
+                "logger successfully initiated.",
+                Color.WhiteSmoke);
         }
-    }
 
-    //public static class Logger
-    //{
-    //    private static VisualLoggerForm _instance;
-
-    //    public static void Initialize()
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            _instance = new VisualLoggerForm();
-    //            _instance.Show();
-    //        }
-    //    }
-
-        //public static void SendMessage(string message, Color color)
-        //{
-        //    _instance?.Append(message, color);
-        //}
-    //}
-}
+    }// end of class VisualLoggerForm : Form
+} // end of namespace Budgethelper.Forms
