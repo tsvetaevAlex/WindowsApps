@@ -1,9 +1,9 @@
-﻿using Budgethelper.Forms;
-using Budgethelper.Models;
-using Budgethelper.Services;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Budgethelper.Services;
+using Budgethelper.Forms;
+using Budgethelper.Models;
 
 namespace Budgethelper
 {
@@ -12,15 +12,23 @@ namespace Budgethelper
         [STAThread]
         static void Main()
         {
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new MainForm());
+            // 1. Инициализация логгера
             Logger.Initialize();
+
+            // 2. Путь к БД
+            Session.DbPath = "budgethelper.db";
+
+            // 3. Инициализация базы
+            SqlService.Initialize_Database();
+
+            // 4. Сообщение о запуске
+            Logger.SendMessage("Application started",Color.Lime);
+
+            // 5. Запуск главной формы
             Application.Run(new MainForm());
-            Logger.SendMessage(MessageType.Info, "Logger started.");
-            //Logger.SendMessage(Models.MessageType.Debug, "App,Loaded,", Color.Lime);
         }
     }
 }

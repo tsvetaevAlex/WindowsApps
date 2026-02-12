@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 
+
 namespace Budgethelper.Services
 {
     public static class SqlService
@@ -15,8 +16,11 @@ namespace Budgethelper.Services
 
         #region Initialization
 
-        public static void InitializeDatabase()
+        public static void Initialize_Database()
         {
+
+
+            Logger.SendMessage(MessageType.traceroute, "SqlService/InitializeDatabase");
             if (string.IsNullOrWhiteSpace(Session.DbPath))
                 throw new Exception("Session.DbPath is not set.");
 
@@ -28,7 +32,7 @@ namespace Budgethelper.Services
                 conn.Open();
 
                 string sqlUsers = @"
-                CREATE TABLE IF NOT EXISTS Users (
+                CREATE TABLE IF NOT EXISTS TUser (
                     Uid TEXT PRIMARY KEY,
                     Name TEXT NOT NULL,
                     SureName TEXT NOT NULL,
@@ -57,11 +61,36 @@ namespace Budgethelper.Services
                     FOREIGN KEY(AccountId) REFERENCES Accounts(AccountID)
                 );";
 
-                using (var cmd = new SQLiteCommand(sqlUsers, conn)) cmd.ExecuteNonQuery();
-                using (var cmd = new SQLiteCommand(sqlAccounts, conn)) cmd.ExecuteNonQuery();
-                using (var cmd = new SQLiteCommand(sqlTransactions, conn)) cmd.ExecuteNonQuery();
-            }
-        }
+                using (var cmd = new SQLiteCommand(sqlUsers, conn))
+                {
+
+                    int result = 0;
+                    result = cmd.ExecuteNonQuery();
+                    Logger.SendMessage(MessageType.Info, "Attempt to create DB Table: [Tuser]");
+                    Logger.SendMessage(MessageType.DB, $"affected rows number: {result}");
+                }
+
+
+
+                using (var cmd = new SQLiteCommand(sqlUsers, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                    VerifyTableCreation("TUser");
+                }
+                using (var cmd = new SQLiteCommand(sqlAccounts, conn))
+                {
+                cmd.ExecuteNonQuery();
+                    VerifyTableCreation("Accounts");
+                }
+                using (var cmd = new SQLiteCommand(sqlTransactions, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                    VerifyTableCreation("Transactions");
+                }
+
+                SeedTestData();
+            }// end of using (var conn = new SQLiteConnection(GetConnectionString())){ conn.Open(); }
+        }// end of public static void Initialize_Database()
 
         #endregion
 
@@ -69,6 +98,8 @@ namespace Budgethelper.Services
 
         public static void CreateUser(User user)
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/CreateUser");
+
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
@@ -84,13 +115,44 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@SureName", user.SureName);
                     cmd.Parameters.AddWithValue("@LastName", user.LastName);
                     cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-                    cmd.ExecuteNonQuery();
+                    int result = 0;
+                    result = cmd.ExecuteNonQuery();
+                    if (result > 0)
+                        Logger.SendMessage(MessageType.DB_success, "record successfully inserted into DB");
+                    else
+                        Logger.SendMessage(MessageType.DB_fail, "failed to insert recordinto DB");
                 }
             }
         }
 
+
+        private static void  VerifyTableCreation(string tableName)
+        {
+
+            #region Actual Veify Tuser table creation
+            using (var conn = new SQLiteConnection(GetConnectionString()))
+            {
+                conn.Open();
+
+                string checkSql =$"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+                using (var checkCmd = new SQLiteCommand(checkSql, conn))
+                {
+                    var resultCheck = checkCmd.ExecuteScalar();
+
+                    if (resultCheck == null)
+                        Logger.SendMessage(MessageType.DB_fail, $"{tableName} table NOT found after creation.");
+                    else
+                        Logger.SendMessage(MessageType.DB_success, $"{tableName} table confirmed.");
+                }
+            }
+            #endregion
+        }
+
+
         public static User LoadUserByUid(string uid)
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/LoadUserByUid");
+
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
@@ -126,6 +188,8 @@ namespace Budgethelper.Services
 
         public static void CreateAccount(Account account)
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/CreateAccount");
+
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
@@ -140,13 +204,23 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@AccountName", account.AccountName);
                     cmd.Parameters.AddWithValue("@Description", account.Description);
                     cmd.Parameters.AddWithValue("@Balance", account.Balance);
-                    cmd.ExecuteNonQuery();
+                    
+                    int result = 0;
+                    result = cmd.ExecuteNonQuery(); 
+                    Logger.SendMessage(MessageType.DB, $"affected rows number: {result}");
+                    if (result >0)
+                        Logger.SendMessage(MessageType.DB_success, "record successfully inserted into DB");
+                    else
+                        Logger.SendMessage(MessageType.DB_fail, "failed to insert recordinto DB");
+
                 }
             }
         }
 
         public static List<Account> GetAccounts(string userUid)
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/GetAccounts");
+
             var list = new List<Account>();
 
             using (var conn = new SQLiteConnection(GetConnectionString()))
@@ -184,6 +258,8 @@ namespace Budgethelper.Services
         public static void CreateTransaction(int accountId, DateTime date,
             decimal amount, int operationType, string description = "")
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/CreateTransaction");
+
             using (var conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
@@ -200,12 +276,18 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@OperationType", operationType);
                     cmd.Parameters.AddWithValue("@Description", description);
                     cmd.ExecuteNonQuery();
+                    int result = 0;
+                    result = cmd.ExecuteNonQuery();
+                    Logger.SendMessage(MessageType.DB, $"affected rows number: {result}");
+
                 }
             }
         }
 
         public static List<Transaction> GetTransactions(int accountId)
         {
+            Logger.SendMessage(MessageType.traceroute, "SqlService/GetTransactions");
+
             var list = new List<Transaction>();
 
             using (var conn = new SQLiteConnection(GetConnectionString()))
@@ -248,7 +330,9 @@ namespace Budgethelper.Services
 
         public static void SeedTestData()
         {
-            var user = new User(
+            Logger.SendMessage(MessageType.traceroute, "SqlService/SeedTestData");
+
+            User user = new User(
                 "test-user-001",
                 "Test",
                 "User",

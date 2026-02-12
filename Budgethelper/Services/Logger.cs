@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 public partial class Logger : Form
 {
@@ -96,6 +95,13 @@ public partial class Logger : Form
                     SendMessage(prompt + "\r\n", Color.DarkOrange);
                     return Color.Orange;
                 }
+            
+            case MessageType.traceroute:
+                {
+                    prompt = "traceroute:";
+                    SendMessage(prompt, Color.LightGray);
+                    return Color.LightSlateGray;
+                }
 
             case MessageType.Debug:
                 {
@@ -107,9 +113,22 @@ public partial class Logger : Form
 
             case MessageType.DB:
                 {
-                    prompt = "Сообщение от Базы Жанных о проведенных операциях:";
-                    SendMessage(prompt + "\r\n", Color.DarkBlue);
-                    return Color.Blue;
+                    prompt = "Сообщение от Базы Данных о проведенных операциях:";
+                    SendMessage(prompt + "\r\n", Color.AliceBlue);
+                    return Color.AliceBlue;
+                }
+            case MessageType.DB_success:
+                {
+
+                    prompt = "Сообщение оТ Базы Данных;,успешно проведенна проведенныя Базе данных:";
+                    SendMessage(prompt + "\r\n", Color.LightGreen);
+                    return Color.LightGreen;
+                }
+            case MessageType.DB_fail:
+                {
+                    prompt = "Сообщение о, неудачном проведении операции в Базе данных:";
+                    SendMessage(prompt + "\r\n", Color.Red);
+                    return Color.OrangeRed;
                 }
 
             case MessageType.UI:
@@ -131,14 +150,25 @@ public partial class Logger : Form
                     prompt = "Сообщение от системы работы с учетной записью пользоватля приложения:";
                     return Color.Yellow;
                 }
-            
+
             case MessageType.undefined:
                 {
                     prompt = "Сообщение ОБщего характера:";
                     return Color.White;
                 }
+            case MessageType.Success:
+                {
+                    prompt = "Сообщение ОБщего характера:";
+                    return Color.LimeGreen;
+                }
+            case MessageType.Failure:
+                {
+                    prompt = "Сообщение ОБщего характера:";
+                    return Color.Red;
+                }
             default:
-                return Color.White;
+                prompt = "Сообщение ОБщего характера:";
+                return Color.GhostWhite;
         }
     }
     #endregion
