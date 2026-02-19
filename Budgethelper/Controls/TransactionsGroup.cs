@@ -6,14 +6,19 @@ namespace Budgethelper.Controls
 {
     public partial class TransactionsGroup : UserControl
     {
-        private string _currentAccountName;
-        private int _currentAccountId;
+        private static int _AccCounter = 0;
+        private static int _currentAccountId = 0;
 
         public TransactionsGroup()
         {
-            InitializeComponent();
 
+            // очищаем список при старте
+            InitializeComponent();
+            rtbTransact_QTY.Text = 0.ToString();
             comboType.DataSource = Enum.GetValues(typeof(TransactionType));
+            rtbTransact_QTY.SelectAll();
+            rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
+            rtbTransact_QTY.DeselectAll();
             //SetInactive();
         }
 
@@ -25,15 +30,15 @@ namespace Budgethelper.Controls
         public void SetActive(string accountName, int accountId)
         {
             Enabled = true;
-            _currentAccountName = accountName;
+            Session.CurrentAccount.AccountName = accountName;
             _currentAccountId = accountId;
             lblAccountName.Text = accountName;
         }
 
-        public void SetAccountName(string name)
+        public void SetAccount()
         {
-            _currentAccountName = name;
-            lblAccountName.Text = name;
+            _currentAccountId = Session.CurrentAccount.AccountID;
+            lblAccountName.Text = Session.CurrentAccount.AccountName;
         }
 
         public Transaction GetTransactionFromInputs()
@@ -64,6 +69,12 @@ namespace Budgethelper.Controls
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void bAddTransact_Click(object sender, EventArgs e)
+        {
+            _AccCounter++;
+            rtbTransact_QTY.Text = _AccCounter.ToString();
         }
     }
 }

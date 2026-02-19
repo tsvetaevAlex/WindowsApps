@@ -9,6 +9,7 @@
         Info,
         Debug,
         Warn,
+        Error,
         DB,
         DB_success,
         DB_fail,

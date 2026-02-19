@@ -29,7 +29,7 @@ public partial class Logger : Form
 
         _instance.Append_ByMessageType(type, message);
     }
-    public static void SendMessage(string message,Color color)
+    public static void SendMessage(string message, Color color)
     {
         if (_instance == null)
             Initialize();
@@ -41,7 +41,7 @@ public partial class Logger : Form
         if (InvokeRequired)
         {
             Color textColor = GetColor(MessageType);
-            Invoke(new Action(() => Append_ColorMessage(message,textColor)));
+            Invoke(new Action(() => Append_ColorMessage(message, textColor)));
             return;
         }
 
@@ -85,7 +85,7 @@ public partial class Logger : Form
             case MessageType.Info:
                 {
                     prompt = "информационное Сообщение:";
-                    SendMessage(prompt +"\r\n", Color.GhostWhite);
+                    SendMessage(prompt + "\r\n", Color.GhostWhite);
                     return Color.WhiteSmoke;
                 }
 
@@ -95,7 +95,7 @@ public partial class Logger : Form
                     SendMessage(prompt + "\r\n", Color.DarkOrange);
                     return Color.Orange;
                 }
-            
+
             case MessageType.traceroute:
                 {
                     prompt = "traceroute:";
@@ -106,11 +106,15 @@ public partial class Logger : Form
             case MessageType.Debug:
                 {
                     prompt = "отладочное сообщение:";
-                    SendMessage(prompt + "\r\n", Color.DarkGray);
+                    SendMessage(prompt + "\r\n", Color.Yellow);
                     return Color.Gray;
                 }
-
-
+            case MessageType.Error:
+                {
+                    prompt = "Системное Сообщение об ОШибке:";
+                    SendMessage(prompt + "\r\n", Color.Red);
+                    return Color.Red;
+                }
             case MessageType.DB:
                 {
                     prompt = "Сообщение от Базы Данных о проведенных операциях:";
@@ -120,13 +124,13 @@ public partial class Logger : Form
             case MessageType.DB_success:
                 {
 
-                    prompt = "Сообщение оТ Базы Данных;,успешно проведенна проведенныя Базе данных:";
+                    prompt = "Сообщение от Базы Данных:,обрабботка запроса прошла успешно:";
                     SendMessage(prompt + "\r\n", Color.LightGreen);
                     return Color.LightGreen;
                 }
             case MessageType.DB_fail:
                 {
-                    prompt = "Сообщение о, неудачном проведении операции в Базе данных:";
+                    prompt = "Сообщение от Базы Данных: о неудачной проведении операции.";
                     SendMessage(prompt + "\r\n", Color.Red);
                     return Color.OrangeRed;
                 }
@@ -140,7 +144,7 @@ public partial class Logger : Form
 
             case MessageType.Account:
                 {
-                    prompt = "Сообщение от системы работы с счетами создание и использовние имеющихся:";
+                    prompt = "Сообщение от системы работы со счетами создание и использовние имеющихся:";
                     SendMessage(prompt + "\r\n", Color.DarkSeaGreen);
                     return Color.Lime;
                 }
@@ -167,10 +171,12 @@ public partial class Logger : Form
                     return Color.Red;
                 }
             default:
-                prompt = "Сообщение ОБщего характера:";
-                return Color.GhostWhite;
-        }
-    }
+                {
+                    prompt = "Сообщение ОБщего характера:";
+                    return Color.GhostWhite;
+                }
+        } // end of switch.
+    } // end of     private Color GetColor(MessageType _MessageType)
     #endregion
 
     private void InitializeUI()

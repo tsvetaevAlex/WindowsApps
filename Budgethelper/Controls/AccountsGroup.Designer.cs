@@ -1,4 +1,6 @@
-﻿namespace Budgethelper.Controls
+﻿using System.Windows.Forms;
+
+namespace Budgethelper.Controls
 {
     partial class AccountsGroup
     {
@@ -16,7 +18,6 @@
         {
             this.AcSelTab_cbACcountsListSelector = new System.Windows.Forms.ComboBox();
             this.AcSelTab_lbTitle = new System.Windows.Forms.Label();
-            this.AcSelTab_bSelAccSubmit = new System.Windows.Forms.Button();
             this.AcSelTab_tbHeader = new System.Windows.Forms.TextBox();
             this.AcSelTab_tbAccbalanse = new System.Windows.Forms.TextBox();
             this.tbAccName = new System.Windows.Forms.TextBox();
@@ -38,22 +39,17 @@
             this.accountPicker.SuspendLayout();
             this.accountCeator.SuspendLayout();
             this.SuspendLayout();
-
-            ///
-            ///Events
-            ///
-            this.AccountsGroupControlTabs.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
-
             // 
             // AcSelTab_cbACcountsListSelector
             // 
+            this.AcSelTab_cbACcountsListSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AcSelTab_cbACcountsListSelector.FormattingEnabled = true;
             this.AcSelTab_cbACcountsListSelector.Location = new System.Drawing.Point(20, 71);
             this.AcSelTab_cbACcountsListSelector.Name = "AcSelTab_cbACcountsListSelector";
             this.AcSelTab_cbACcountsListSelector.Size = new System.Drawing.Size(550, 21);
             this.AcSelTab_cbACcountsListSelector.TabIndex = 0;
             this.AcSelTab_cbACcountsListSelector.TabStop = false;
-            this.AcSelTab_cbACcountsListSelector.Text = "choose account to work with";
+            this.AcSelTab_cbACcountsListSelector.SelectedValueChanged += new System.EventHandler(this.listAccounts_SelectedIndexChanged);
             // 
             // AcSelTab_lbTitle
             // 
@@ -65,23 +61,12 @@
             this.AcSelTab_lbTitle.TabIndex = 1;
             this.AcSelTab_lbTitle.Text = "select account to add transactions into";
             // 
-            // AcSelTab_bSelAccSubmit
-            // 
-            this.AcSelTab_bSelAccSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AcSelTab_bSelAccSubmit.Location = new System.Drawing.Point(580, 71);
-            this.AcSelTab_bSelAccSubmit.Name = "AcSelTab_bSelAccSubmit";
-            this.AcSelTab_bSelAccSubmit.Size = new System.Drawing.Size(80, 23);
-            this.AcSelTab_bSelAccSubmit.TabIndex = 2;
-            this.AcSelTab_bSelAccSubmit.Text = "Выбрать";
-            this.AcSelTab_bSelAccSubmit.UseVisualStyleBackColor = true;
-            // 
             // AcSelTab_tbHeader
             // 
             this.AcSelTab_tbHeader.Location = new System.Drawing.Point(20, 20);
             this.AcSelTab_tbHeader.Name = "AcSelTab_tbHeader";
             this.AcSelTab_tbHeader.Size = new System.Drawing.Size(630, 20);
             this.AcSelTab_tbHeader.TabIndex = 3;
-            this.AcSelTab_tbHeader.Text = "Цветаева Ольга Александровна UID: ";
             // 
             // AcSelTab_tbAccbalanse
             // 
@@ -89,7 +74,7 @@
             this.AcSelTab_tbAccbalanse.Name = "AcSelTab_tbAccbalanse";
             this.AcSelTab_tbAccbalanse.Size = new System.Drawing.Size(100, 20);
             this.AcSelTab_tbAccbalanse.TabIndex = 4;
-            this.AcSelTab_tbAccbalanse.Text = "999 000 000 000";
+            this.AcSelTab_tbAccbalanse.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // tbAccName
             // 
@@ -142,7 +127,6 @@
             this.gbaccounGroup.Controls.Add(this.AcSelTab_lbAccComent);
             this.gbaccounGroup.Controls.Add(this.AcSelTab_cbACcountsListSelector);
             this.gbaccounGroup.Controls.Add(this.AcSelTab_lbTitle);
-            this.gbaccounGroup.Controls.Add(this.AcSelTab_bSelAccSubmit);
             this.gbaccounGroup.Controls.Add(this.AcSelTab_tbAccbalanse);
             this.gbaccounGroup.Controls.Add(this.AcSelTab_tbAccComent);
             this.gbaccounGroup.Location = new System.Drawing.Point(10, 10);
@@ -170,7 +154,6 @@
             this.AccountsGroupControlTabs.SelectedIndex = 0;
             this.AccountsGroupControlTabs.Size = new System.Drawing.Size(720, 190);
             this.AccountsGroupControlTabs.TabIndex = 14;
-            this.AccountsGroupControlTabs.Enter += new System.EventHandler(this.bAddAccount_Click);
             // 
             // accountPicker
             // 
@@ -257,7 +240,6 @@
         private System.Windows.Forms.Label lbAccBalance;
         private System.Windows.Forms.Label AcSelTab_lbAccComent;
         private System.Windows.Forms.Label lbAccDescription;
-        private System.Windows.Forms.Button AcSelTab_bSelAccSubmit;
         private System.Windows.Forms.TextBox AcSelTab_tbHeader;
         private System.Windows.Forms.TextBox AcSelTab_tbAccbalanse;
         private System.Windows.Forms.TextBox tbAccName;
@@ -270,7 +252,7 @@
         private System.Windows.Forms.TabPage accountCeator;
         private System.Windows.Forms.Button bAddAccount;
         private System.Windows.Forms.Label AcSelTab_lbAccBalance;
-        //private System.Windows.Forms.Label lbAccBalance;
+        //private System.Windows.Forms.Label lbAccBalance;  
         //private System.Windows.Forms.Label lbAccBalance;
         //private System.Windows.Forms.Label lbAccName;
         //private System.Windows.Forms.TextBox tbAccName;

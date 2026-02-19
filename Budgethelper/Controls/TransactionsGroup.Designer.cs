@@ -158,11 +158,12 @@ namespace Budgethelper.Controls
             this.rtbTransact_QTY.Location = new System.Drawing.Point(20, 70);
             this.rtbTransact_QTY.Margin = new System.Windows.Forms.Padding(5);
             this.rtbTransact_QTY.Name = "rtbTransact_QTY";
+            this.rtbTransact_QTY.ReadOnly = true;
             this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbTransact_QTY.Size = new System.Drawing.Size(183, 60);
+            this.rtbTransact_QTY.TabIndex = 24;
             this.rtbTransact_QTY.TabStop = false;
             this.rtbTransact_QTY.Text = "123456";
-            this.rtbTransact_QTY.ReadOnly = true;
             // 
             // rtbSessionStats
             // 
@@ -182,6 +183,7 @@ namespace Budgethelper.Controls
             this.bAddTransact.TabIndex = 18;
             this.bAddTransact.Text = "Добавить Транзакцию";
             this.bAddTransact.UseVisualStyleBackColor = true;
+            this.bAddTransact.Click += new System.EventHandler(this.bAddTransact_Click);
             // 
             // GB_Stats
             // 

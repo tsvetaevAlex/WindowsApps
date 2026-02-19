@@ -1,4 +1,7 @@
 ﻿using Budgethelper.Models;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Budgethelper.Models
 {
@@ -6,8 +9,9 @@ namespace Budgethelper.Models
     {
         public static string Uid { get; set; }
         public static User CurrentUser { get; set; }
+        public static Account  CurrentAccount { get; set; }
 
-        public static string DbPath { get; set; } = $"{Uid}.db";
+        public static string DbPath { get; set; } = "budgethelper.db";
         public static string RegistryKeyPath { get; set; } = @"Software\BudgetHelper";
 
         public static bool IsAuthorized { get; set; }
@@ -16,5 +20,19 @@ namespace Budgethelper.Models
         {
             get { return CurrentUser != null ? CurrentUser.Name : ""; }
         }
+        // Кэш аккаунтов
+        public static List<Account> AccountsList { get; set; } = new List<Account>();
+
+
+
+        public static void dropAccounts()
+        {
+            AccountsList.Clear();
+        }
+        public static  string User_ToString()
+        { 
+            return $"{CurrentUser.SureName} {CurrentUser.Name} {CurrentUser.LastName}: uid: {CurrentUser.Uid}";
+        }
+
     }
 }

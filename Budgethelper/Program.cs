@@ -17,12 +17,14 @@ namespace Budgethelper
 
             // 1. Инициализация логгера
             Logger.Initialize();
+            Session.IsAuthorized = true;
 
             // 2. Путь к БД
             Session.DbPath = "budgethelper.db";
-
+            Session.dropAccounts();
             // 3. Инициализация базы
             SqlService.Initialize_Database();
+            SqlService.LoadAccountsToSession(); // Session.AccountsList = GetAccounts();
 
             // 4. Сообщение о запуске
             Logger.SendMessage("Application started",Color.Lime);
