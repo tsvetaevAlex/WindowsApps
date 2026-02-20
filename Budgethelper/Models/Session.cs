@@ -26,10 +26,11 @@ namespace Budgethelper.Models
 
         //Session Stats
         public static int TransactQTY = 0;
-        public static int overallbalance = 0; //= Income_TOtalbalance - Expense_Totalbalance
         public static int Income_TransactQTY = 0;
-        public static int Income_Totalbalance = 0;
-        public static int Expense_Totalbalance = 0;
+        public static int Expense_TransactQTY = 0;
+        public static decimal Income_Totalbalance { get; set; }
+        public static decimal Expense_Totalbalance { get; set; }
+        public static decimal overallbalance { get; set; } //= Income_TOtalbalance - Expense_Totalbalance
 
         public static void dropAccounts()
         {

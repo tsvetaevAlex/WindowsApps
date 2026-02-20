@@ -44,7 +44,7 @@ namespace Budgethelper.Controls
             this.rtbSessionStats = new System.Windows.Forms.Label();
             this.bAddTransact = new System.Windows.Forms.Button();
             this.GB_Stats = new System.Windows.Forms.GroupBox();
-            this.TransactStats = new System.Windows.Forms.RichTextBox();
+            this.rtbTransactStats = new System.Windows.Forms.RichTextBox();
             this.tbTransactQTY = new System.Windows.Forms.TextBox();
             this.GB_Stats.SuspendLayout();
             this.SuspendLayout();
@@ -187,7 +187,7 @@ namespace Budgethelper.Controls
             // 
             // GB_Stats
             // 
-            this.GB_Stats.Controls.Add(this.TransactStats);
+            this.GB_Stats.Controls.Add(this.rtbTransactStats);
             this.GB_Stats.Controls.Add(this.tbTransactQTY);
             this.GB_Stats.Controls.Add(this.rtbTransact_QTY);
             this.GB_Stats.Controls.Add(this.rtbSessionStats);
@@ -199,17 +199,17 @@ namespace Budgethelper.Controls
             this.GB_Stats.TabStop = false;
             this.GB_Stats.Text = "Краткая Ствтистика Сессии:";
             // 
-            // TransactStats
+            // rtbTransactStats
             // 
-            this.TransactStats.BackColor = System.Drawing.Color.Black;
-            this.TransactStats.ForeColor = System.Drawing.Color.Snow;
-            this.TransactStats.Location = new System.Drawing.Point(20, 140);
-            this.TransactStats.Name = "TransactStats";
-            this.TransactStats.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.TransactStats.Size = new System.Drawing.Size(600, 100);
-            this.TransactStats.TabIndex = 23;
-            this.TransactStats.TabStop = false;
-            this.TransactStats.Text = "";
+            this.rtbTransactStats.BackColor = System.Drawing.Color.Black;
+            this.rtbTransactStats.ForeColor = System.Drawing.Color.Snow;
+            this.rtbTransactStats.Location = new System.Drawing.Point(20, 140);
+            this.rtbTransactStats.Name = "rtbTransactStats";
+            this.rtbTransactStats.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbTransactStats.Size = new System.Drawing.Size(600, 100);
+            this.rtbTransactStats.TabIndex = 23;
+            this.rtbTransactStats.TabStop = false;
+            this.rtbTransactStats.Text = "";
             // 
             // tbTransactQTY
             // 
@@ -260,6 +260,6 @@ namespace Budgethelper.Controls
         private System.Windows.Forms.Button bAddTransact;
         private System.Windows.Forms.GroupBox GB_Stats;
         private System.Windows.Forms.TextBox tbTransactQTY;
-        private System.Windows.Forms.RichTextBox TransactStats;
+        private System.Windows.Forms.RichTextBox rtbTransactStats;
     }
 }
