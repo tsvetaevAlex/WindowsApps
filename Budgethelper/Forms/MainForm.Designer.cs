@@ -1,9 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Budgethelper.Forms
 {
     partial class MainForm
     {
+        public event Action<int> AccountSelected;
+
         private System.ComponentModel.IContainer components = null;
 
         private Budgethelper.Controls.AccountsGroup accountsGroup;
@@ -68,6 +71,9 @@ namespace Budgethelper.Forms
             this.Text = "BudgetHelper";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
+
+
+
 
         }
     }

@@ -49,7 +49,7 @@ namespace Budgethelper.Controls
             this.AcSelTab_cbACcountsListSelector.Size = new System.Drawing.Size(550, 21);
             this.AcSelTab_cbACcountsListSelector.TabIndex = 0;
             this.AcSelTab_cbACcountsListSelector.TabStop = false;
-            this.AcSelTab_cbACcountsListSelector.SelectedValueChanged += new System.EventHandler(this.listAccounts_SelectedIndexChanged);
+            this.AcSelTab_cbACcountsListSelector.SelectedValueChanged += new System.EventHandler(this.AcSelTab_cbACcountsListSelector_SelectedIndexChanged);
             // 
             // AcSelTab_lbTitle
             // 
@@ -257,4 +257,5 @@ namespace Budgethelper.Controls
         //private System.Windows.Forms.Label lbAccName;
         //private System.Windows.Forms.TextBox tbAccName;
     }
+
 }

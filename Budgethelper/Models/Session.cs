@@ -24,6 +24,12 @@ namespace Budgethelper.Models
         public static List<Account> AccountsList { get; set; } = new List<Account>();
 
 
+        //Session Stats
+        public static int TransactQTY = 0;
+        public static int overallbalance = 0; //= Income_TOtalbalance - Expense_Totalbalance
+        public static int Income_TransactQTY = 0;
+        public static int Income_Totalbalance = 0;
+        public static int Expense_Totalbalance = 0;
 
         public static void dropAccounts()
         {

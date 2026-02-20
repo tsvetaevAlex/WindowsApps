@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace Budgethelper.Controls
 {
@@ -10,7 +11,7 @@ namespace Budgethelper.Controls
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.ComboBox comboType;
+        private System.Windows.Forms.ComboBox cbOperationType;
         private System.Windows.Forms.Button btnYesterday;
         private System.Windows.Forms.Button btnToday;
 
@@ -31,10 +32,10 @@ namespace Budgethelper.Controls
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.txtDescription = new System.Windows.Forms.TextBox();
-            this.comboType = new System.Windows.Forms.ComboBox();
+            this.cbOperationType = new System.Windows.Forms.ComboBox();
             this.btnYesterday = new System.Windows.Forms.Button();
             this.btnToday = new System.Windows.Forms.Button();
-            this.accountName = new System.Windows.Forms.TextBox();
+            this.TranzactGroup_tbAccountName = new System.Windows.Forms.TextBox();
             this.lbTransactDate = new System.Windows.Forms.Label();
             this.lbTransactAmount = new System.Windows.Forms.Label();
             this.TransactType = new System.Windows.Forms.Label();
@@ -78,14 +79,14 @@ namespace Budgethelper.Controls
             this.txtDescription.Size = new System.Drawing.Size(150, 20);
             this.txtDescription.TabIndex = 3;
             // 
-            // comboType
+            // cbOperationType
             // 
-            this.comboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboType.FormattingEnabled = true;
-            this.comboType.Location = new System.Drawing.Point(350, 55);
-            this.comboType.Name = "comboType";
-            this.comboType.Size = new System.Drawing.Size(100, 21);
-            this.comboType.TabIndex = 4;
+            this.cbOperationType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOperationType.FormattingEnabled = true;
+            this.cbOperationType.Location = new System.Drawing.Point(350, 55);
+            this.cbOperationType.Name = "cbOperationType";
+            this.cbOperationType.Size = new System.Drawing.Size(100, 21);
+            this.cbOperationType.TabIndex = 4;
             // 
             // btnYesterday
             // 
@@ -107,13 +108,12 @@ namespace Budgethelper.Controls
             this.btnToday.UseVisualStyleBackColor = true;
             this.btnToday.Click += new System.EventHandler(this.BtnToday_Click);
             // 
-            // accountName
+            // TranzactGroup_tbAccountName
             // 
-            this.accountName.Location = new System.Drawing.Point(20, 55);
-            this.accountName.Name = "accountName";
-            this.accountName.Size = new System.Drawing.Size(80, 20);
-            this.accountName.TabIndex = 8;
-            this.accountName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.TranzactGroup_tbAccountName.Location = new System.Drawing.Point(20, 55);
+            this.TranzactGroup_tbAccountName.Name = "TranzactGroup_tbAccountName";
+            this.TranzactGroup_tbAccountName.Size = new System.Drawing.Size(80, 20);
+            this.TranzactGroup_tbAccountName.TabIndex = 8;
             // 
             // lbTransactDate
             // 
@@ -163,7 +163,7 @@ namespace Budgethelper.Controls
             this.rtbTransact_QTY.Size = new System.Drawing.Size(183, 60);
             this.rtbTransact_QTY.TabIndex = 24;
             this.rtbTransact_QTY.TabStop = false;
-            this.rtbTransact_QTY.Text = "123456";
+            this.rtbTransact_QTY.Text = "";
             // 
             // rtbSessionStats
             // 
@@ -221,6 +221,7 @@ namespace Budgethelper.Controls
             this.tbTransactQTY.Size = new System.Drawing.Size(140, 40);
             this.tbTransactQTY.TabIndex = 19;
             this.tbTransactQTY.Text = "количество транзакций\r\nза текущую сессию:";
+            this.tbTransactQTY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // TransactionsGroup
             // 
@@ -230,12 +231,12 @@ namespace Budgethelper.Controls
             this.Controls.Add(this.TransactType);
             this.Controls.Add(this.lbTransactAmount);
             this.Controls.Add(this.lbTransactDate);
-            this.Controls.Add(this.accountName);
+            this.Controls.Add(this.TranzactGroup_tbAccountName);
             this.Controls.Add(this.lblAccountName);
             this.Controls.Add(this.datePicker);
             this.Controls.Add(this.txtAmount);
             this.Controls.Add(this.txtDescription);
-            this.Controls.Add(this.comboType);
+            this.Controls.Add(this.cbOperationType);
             this.Controls.Add(this.btnYesterday);
             this.Controls.Add(this.btnToday);
             this.Name = "TransactionsGroup";
@@ -249,7 +250,7 @@ namespace Budgethelper.Controls
 
         #endregion
 
-        private System.Windows.Forms.TextBox accountName;
+        private System.Windows.Forms.TextBox TranzactGroup_tbAccountName;
         private System.Windows.Forms.Label lbTransactDate;
         private System.Windows.Forms.Label lbTransactAmount;
         private System.Windows.Forms.Label TransactType;

@@ -6,75 +6,97 @@ namespace Budgethelper.Controls
 {
     public partial class TransactionsGroup : UserControl
     {
-        private static int _AccCounter = 0;
-        private static int _currentAccountId = 0;
+        private Account _currentAccount;
 
         public TransactionsGroup()
         {
-
-            // очищаем список при старте
             InitializeComponent();
-            rtbTransact_QTY.Text = 0.ToString();
-            comboType.DataSource = Enum.GetValues(typeof(TransactionType));
+
+            // Настройка UI
+            rtbTransact_QTY.Text = "0";
+            cbOperationType.DataSource = Enum.GetValues(typeof(TransactionType));
             rtbTransact_QTY.SelectAll();
             rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
+            tbTransactQTY.TextAlign = HorizontalAlignment.Right;
             rtbTransact_QTY.DeselectAll();
-            //SetInactive();
+        }
+        
+        #region Utils
+        public void SetAccount(Account account)
+        {
+            if (account == null)
+                return;
+
+            _currentAccount = account;
+            TranzactGroup_tbAccountName.Text = account.AccountName;
         }
 
-        public void Activate()
-        {
-            GB_Stats.Enabled = true;
-        }
 
-        public void SetActive(string accountName, int accountId)
-        {
-            Enabled = true;
-            Session.CurrentAccount.AccountName = accountName;
-            _currentAccountId = accountId;
-            lblAccountName.Text = accountName;
-        }
-
-        public void SetAccount()
-        {
-            _currentAccountId = Session.CurrentAccount.AccountID;
-            lblAccountName.Text = Session.CurrentAccount.AccountName;
-        }
 
         public Transaction GetTransactionFromInputs()
         {
             if (!decimal.TryParse(txtAmount.Text, out decimal amount))
                 throw new Exception("Сумма введена неверно.");
 
+            if (_currentAccount == null)
+                throw new Exception("Аккаунт не выбран.");
+
             return new Transaction
             {
-                AccountId = _currentAccountId,
-                Date = datePicker.Value,
-                Amount = amount,
-                OperationType = (TransactionType)comboType.SelectedItem,
-                Description = txtDescription.Text
+                AccountId = _currentAccount.AccountID,     // используем текущий аккаунт
+                Date = datePicker.Value,                  // выбранная дата
+                Amount = amount,                          // сумма из формы
+                OperationType = (TransactionType)cbOperationType.SelectedItem, // операция
+                Description = txtDescription.Text        // описание
             };
         }
+        #endregion
 
-        private void BtnYesterday_Click(object sender, EventArgs e)
-        {
-            datePicker.Value = DateTime.Today.AddDays(-1);
-        }
-
-        private void BtnToday_Click(object sender, EventArgs e)
-        {
-            datePicker.Value = DateTime.Today;
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        #region Event handlers
+        private void BtnToday_Click(object sender, EventArgs e) => datePicker.Value = DateTime.Today;
+        private void BtnYesterday_Click(object sender, EventArgs e) => datePicker.Value = DateTime.Today.AddDays(-1);
         private void bAddTransact_Click(object sender, EventArgs e)
         {
-            _AccCounter++;
-            rtbTransact_QTY.Text = _AccCounter.ToString();
+            // Заполняем тестовые данные перед добавлением
+            TransactionsGroup_RandomDataFiller();
+
+            // Создаём транзакцию
+            Transaction transaction = GetTransactionFromInputs();
+
+            Session.TransactQTY++;
+            rtbTransact_QTY.Text = Session.TransactQTY.ToString();
+            rtbTransact_QTY.SelectAll();
+            rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
+            rtbTransact_QTY.DeselectAll();
         }
+
+        public void TransactionsGroup_RandomDataFiller()
+        {
+            if (_currentAccount == null)
+                return;
+
+            Random random = new Random();
+
+            // 1️⃣ Дата случайно: сегодня или вчера
+            if (random.Next(0, 2) == 0)
+                BtnYesterday_Click(this, EventArgs.Empty);
+            else
+                BtnToday_Click(this, EventArgs.Empty);
+
+            // 2️⃣ Сумма от 55 до 1750
+            txtAmount.Text = random.Next(55, 1751).ToString();
+
+            // 3️⃣ Тип операции 0 или 1
+            cbOperationType.SelectedIndex = random.Next(0, 2);
+
+            // 4️⃣ Случайное описание 25 символов
+            const string chars = " абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+            char[] text = new char[25];
+            for (int i = 0; i < 25; i++)
+                text[i] = chars[random.Next(chars.Length)];
+            txtDescription.Text = new string(text);
+        }
+
+        #endregion
     }
 }

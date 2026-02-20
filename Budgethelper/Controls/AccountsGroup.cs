@@ -7,25 +7,19 @@ namespace Budgethelper.Controls
 {
     public partial class AccountsGroup : UserControl
     {
-        public event Action<int> AccountSelected;
-        private static Account SlectedAccount = null;
+        #region public Events
+        public event Action<Account> AccountSelected;        // Возвращает выбранный Account
+        public event Action RequestRandomDataFill;           // Событие для генерации тестовых данных
+        #endregion
 
         public AccountsGroup()
         {
             InitializeComponent();
-
-            AcSelTab_tbHeader.Text = Session.User_ToString();
-            //Session.IsAuthorized = true;
-
-            // подписка на выбор аккаунта
-            AcSelTab_cbACcountsListSelector.SelectedIndexChanged
-                += listAccounts_SelectedIndexChanged;
-
             AcSelTab_tbHeader.Text = Session.User_ToString();
 
+            // Подписываемся на выбор аккаунта
             AcSelTab_cbACcountsListSelector.SelectedIndexChanged
-                += listAccounts_SelectedIndexChanged;
-
+                += AcSelTab_cbACcountsListSelector_SelectedIndexChanged;
 
             LoadAccounts();
         }
@@ -34,10 +28,7 @@ namespace Budgethelper.Controls
         {
             AcSelTab_cbACcountsListSelector.DataSource = null;
 
-            if (!Session.IsAuthorized)
-                return;
-
-            if (Session.AccountsList == null || Session.AccountsList.Count == 0)
+            if (!Session.IsAuthorized || Session.AccountsList == null || Session.AccountsList.Count == 0)
                 return;
 
             AcSelTab_cbACcountsListSelector.DataSource = Session.AccountsList;
@@ -47,44 +38,33 @@ namespace Budgethelper.Controls
             AcSelTab_cbACcountsListSelector.SelectedIndex = 0;
         }
 
-        // выбор аккаунта
-        private void listAccounts_SelectedIndexChanged(object sender, EventArgs e)
+        private void AcSelTab_cbACcountsListSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (AcSelTab_cbACcountsListSelector.SelectedItem == null)
-                return;
+            if (AcSelTab_cbACcountsListSelector.SelectedItem is Account account)
+            {
+                // 1️⃣ Обновляем баланс и комментарий
+                AcSelTab_tbAccbalanse.Text = account.Balance.ToString("0.00");
+                AcSelTab_tbAccComent.Text = account.Description;
 
-            var selected = AcSelTab_cbACcountsListSelector.SelectedItem as Account;
-            if (selected == null)
-                return;
+                // 2️⃣ Поднимаем событие наружу
+                AccountSelected?.Invoke(account);
 
-            // сохраняем в Session
-            Session.CurrentAccount = selected;
-                    SlectedAccount = selected;
-                    MessageBox.Show($"выбранный акканут: id: {selected.AccountID}| name:{selected.AccountName} " +
-                        $"{Environment.NewLine}комментарий: {selected.Description}","Selected Account"
-                        ,MessageBoxButtons.OK,MessageBoxIcon.Information );
-
-            // обновляем UI
-            AcSelTab_tbAccbalanse.ReadOnly = true;
-            AcSelTab_tbAccbalanse.Text = selected.Balance.ToString("0.00");
-            AcSelTab_tbAccComent.Text = selected.Description ?? string.Empty;
-            AcSelTab_tbAccComent.ReadOnly = true;
-
-            AccountSelected?.Invoke(selected.AccountID);
+                // 3️⃣ Сразу просим TransactionsGroup заполнить тестовые данные
+                RequestRandomDataFill?.Invoke();
+            }
         }
 
         private void bAddAccount_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbAccName.Text) ||
                 string.IsNullOrWhiteSpace(tbAccDescription.Text) ||
-                string.IsNullOrWhiteSpace(tbAccBalance.Text))   // ← ВАЖНО
+                string.IsNullOrWhiteSpace(tbAccBalance.Text))
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
 
-            decimal balance;
-            if (!decimal.TryParse(tbAccBalance.Text, out balance))  // ← ВАЖНО
+            if (!decimal.TryParse(tbAccBalance.Text, out decimal balance))
             {
                 MessageBox.Show("Некорректный баланс");
                 return;
@@ -98,62 +78,17 @@ namespace Budgethelper.Controls
 
             tbAccName.Clear();
             tbAccDescription.Clear();
-            tbAccBalance.Clear();   // ← правильное поле
+            tbAccBalance.Clear();
 
             LoadAccounts();
 
-            // если есть аккаунты — выбираем последний
-            if (Session.AccountsList != null &&
-                Session.AccountsList.Count > 0)
-            {
-                AcSelTab_cbACcountsListSelector.SelectedIndex =
-                    Session.AccountsList.Count - 1;
-            }
+            if (Session.AccountsList != null && Session.AccountsList.Count > 0)
+                AcSelTab_cbACcountsListSelector.SelectedIndex = Session.AccountsList.Count - 1;
         }
 
-        private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnRandomData_Click(object sender, EventArgs e)
         {
-            var selectedTab = AccountsGroupControlTabs.SelectedTab;
-
-            if (selectedTab == null)
-                return;
-
-            if (selectedTab.TabIndex == 0)
-            {
-                Logger.SendMessage(MessageType.UI,
-                    "Вы на вкладке выбора аккаунта.");
-            }
-            else if (selectedTab.TabIndex == 1)
-            {
-                Logger.SendMessage(MessageType.UI,
-                    "Вы на вкладке создания нового аккаунта.");
-            }
+            RequestRandomDataFill?.Invoke();  // генерируем тестовые данные по кнопке
         }
-
-        private void AcSelTab_bSelAccSubmit_Click(object sender, EventArgs e)
-        {
-            if (Session.CurrentAccount == null)
-                return;
-
-            AccountSelected?.Invoke(Session.CurrentAccount.AccountID);
-        }
-
-
-        //Utils
-        private void SetBalancePlaceholder()
-        {
-            tbAccBalance.ForeColor = System.Drawing.Color.Gray;
-            tbAccBalance.Text = "Введите баланс";
-
-        }
-
-        private void RemoveBalancePlaceholder(object sender, EventArgs e)
-        {
-            if (tbAccBalance.Text == "Введите баланс")
-            {
-                tbAccBalance.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
     }
 }

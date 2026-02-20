@@ -1,3 +1,4 @@
+﻿using Budgethelper.Controls;
 using Budgethelper.Models;
 using Budgethelper.Services;
 using System;
@@ -13,16 +14,23 @@ namespace Budgethelper.Forms
         {
             InitializeComponent();
 
-
+            // Logger
             Logger.Initialize();
             Logger.SendMessage(MessageType.Info, "MainForm loaded");
 
+            // -------------------------------
+            // Подписка на события AccountsGroup
+            // -------------------------------
+
+            // Когда выбран аккаунт — передаём его TransactionsGroup
+            accountsGroup.AccountSelected += AccountsGroup_AccountSelected;
+
+            // Когда AccountsGroup просит сгенерировать случайные данные — вызываем TransactionsGroup_RandomDataFiller
+            accountsGroup.RequestRandomDataFill += transactionsGroup.TransactionsGroup_RandomDataFiller;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Logger.Initialize();
-
             _statusBar = new StatusBarService(rtbStatusBar);
             _statusBar.Start();
         }
@@ -32,5 +40,18 @@ namespace Budgethelper.Forms
             _statusBar?.Dispose();
             base.OnFormClosing(e);
         }
+
+        // -------------------------------
+        // Обработчики событий
+        // -------------------------------
+        private void AccountsGroup_AccountSelected(Account account)
+        {
+            // Передаём выбранный аккаунт в TransactionsGroup
+            transactionsGroup.SetAccount(account);
+
+            // transactionsGroup автоматически заполняем тестовыми данными
+            transactionsGroup.TransactionsGroup_RandomDataFiller();
+        }
+
     }
 }
