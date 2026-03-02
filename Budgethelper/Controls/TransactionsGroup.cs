@@ -1,4 +1,5 @@
 ﻿using Budgethelper.Models;
+using Budgethelper.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -14,7 +15,6 @@ namespace Budgethelper.Controls
         {
             InitializeComponent();
 
-            // Настройка UI
             rtbTransact_QTY.Text = "0";
             cbOperationType.DataSource = Enum.GetValues(typeof(TransactionType));
 
@@ -22,42 +22,59 @@ namespace Budgethelper.Controls
             rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
             tbTransactQTY.TextAlign = HorizontalAlignment.Right;
             rtbTransact_QTY.DeselectAll();
+
+            InitializeGrid();
         }
 
-        #region Utils
+        #region Grid
 
-        public void SetAccount(Account account)
+        private void InitializeGrid()
         {
-            if (account == null)
+            dgvSessionStats.AutoGenerateColumns = false;
+            dgvSessionStats.Columns.Clear();
+
+            dgvSessionStats.Columns.Add("Id", "Id");
+            dgvSessionStats.Columns.Add("Date", "DateTime");
+            dgvSessionStats.Columns.Add("AccountName", "Account");
+            dgvSessionStats.Columns.Add("Amount", "Amount");
+            dgvSessionStats.Columns.Add("Type", "Type");
+            dgvSessionStats.Columns.Add("Description", "Comment");
+
+            dgvSessionStats.ReadOnly = true;
+            dgvSessionStats.BringToFront();
+            dgvSessionStats.AllowUserToAddRows = false;
+            dgvSessionStats.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void LoadTransactionsToGrid()
+        {
+            if (_currentAccount == null)
                 return;
 
-            _currentAccount = account;
-            Session.CurrentAccount = account;
+            dgvSessionStats.Rows.Clear();
 
-            TranzactGroup_tbAccountName.Text = account.AccountName;
+            var transactions = SqlService.GetTransactions(_currentAccount.AccountID);
 
-            UpdateSEssionStats();
-        }
-
-        public Transaction GetTransactionFromInputs()
-        {
-            if (!decimal.TryParse(txtAmount.Text, out decimal amount))
-                throw new Exception("Сумма введена неверно.");
-
-            if (_currentAccount == null)
-                throw new Exception("Аккаунт не выбран.");
-
-            return new Transaction
+            foreach (var t in transactions)
             {
-                AccountId = _currentAccount.AccountID,
-                Date = datePicker.Value,
-                Amount = amount,
-                OperationType = (TransactionType)cbOperationType.SelectedItem,
-                Description = txtDescription.Text
-            };
+                int rowIndex = dgvSessionStats.Rows.Add(
+                    t.Id,
+                    t.Date.ToString("yyyy-MM-dd HH:mm"),
+                    _currentAccount.AccountName,
+                    t.Amount,
+                    t.OperationType.ToString(),
+                    t.Description
+                );
+
+                if (t.OperationType == TransactionType.Income)
+                    dgvSessionStats.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Green;
+                else
+                    dgvSessionStats.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Red;
+            }
         }
 
         #endregion
+
 
         #region Event handlers
 
@@ -77,43 +94,57 @@ namespace Budgethelper.Controls
 
             try
             {
-                // Если нужен автоген тестовых данных
-                TransactionsGroup_RandomDataFiller();
-
                 CurrentTransaction = GetTransactionFromInputs();
-                decimal amount = CurrentTransaction.Amount;
 
-                // ---- ОБЩИЙ СЧЁТЧИК ----
+                int newId = SqlService.CreateTransaction(
+                    CurrentTransaction.AccountId,
+                    CurrentTransaction.Date,
+                    CurrentTransaction.Amount,
+                    (int)CurrentTransaction.OperationType,
+                    CurrentTransaction.Description);
+
+                // --- SESSION COUNTERS ---
+
                 Session.TransactQTY++;
-
-                // ---- INCOME / EXPENSE ----
+                string loggerMsg = $"Транзакция: $ID[{newId}]  | {CurrentTransaction.OperationType}, на сумму: {CurrentTransaction.Amount}, добавлена.";
                 if (CurrentTransaction.OperationType == TransactionType.Income)
                 {
                     Session.Income_TransactQTY++;
-                    Session.Income_Totalbalance += amount;
-                    Session.overallbalance += amount;
+                    Session.Income_Totalbalance += CurrentTransaction.Amount;
+                    Session.overallbalance += CurrentTransaction.Amount;
+                    Logger.SendMessage(MessageType.TransactionIncome, loggerMsg);
                 }
                 else
                 {
                     Session.Expense_TransactQTY++;
-                    Session.Expense_Totalbalance += amount;
-                    Session.overallbalance -= amount;
+                    Session.Expense_Totalbalance += CurrentTransaction.Amount;
+                    Session.overallbalance -= CurrentTransaction.Amount;
+                    Logger.SendMessage(MessageType.TransactionExpence, loggerMsg);
                 }
 
-                // ---- Обновление UI счётчика ----
                 rtbTransact_QTY.Text = Session.TransactQTY.ToString();
                 rtbTransact_QTY.SelectAll();
                 rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
                 rtbTransact_QTY.DeselectAll();
 
-                // ---- Обновляем статистику ----
                 UpdateSEssionStats();
+                if (CurrentTransaction.OperationType == TransactionType.Income)
+                    Logger.SendMessage(MessageType.TransactionIncome, loggerMsg);
+                else
+                    Logger.SendMessage(MessageType.TransactionExpence, loggerMsg);
+                LoadTransactionsToGrid();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+        #endregion
+
+        //Utils
+        #region Utils
 
         public void TransactionsGroup_RandomDataFiller()
         {
@@ -124,24 +155,26 @@ namespace Budgethelper.Controls
 
             // Дата
             if (random.Next(0, 2) == 0)
-                BtnYesterday_Click(this, EventArgs.Empty);
+                datePicker.Value = DateTime.Today.AddDays(-1);
             else
-                BtnToday_Click(this, EventArgs.Empty);
+                datePicker.Value = DateTime.Today;
 
             // Сумма
-            txtAmount.Text = random.Next(55, 1751).ToString();
+            tbAmount.Text = random.Next(55, 1751).ToString();
 
             // Тип операции
-            cbOperationType.SelectedIndex = random.Next(0, 2);
+            cbOperationType.SelectedIndex = random.Next(0, 1);
 
             // Описание
             const string chars = " абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
             char[] text = new char[25];
+
             for (int i = 0; i < 25; i++)
                 text[i] = chars[random.Next(chars.Length)];
 
             txtDescription.Text = new string(text);
         }
+
 
         private void UpdateSEssionStats()
         {
@@ -150,25 +183,58 @@ namespace Budgethelper.Controls
 
             rtbTransactStats.Clear();
 
-            // Общая статистика
             rtbTransactStats.SelectionColor = Color.White;
             rtbTransactStats.AppendText(
-                $"Общее число транзакций: {Session.TransactQTY}" +
+                $"Общее число транзакций: {Session.TransactQTY} " +
                 $"Общий баланс: {Session.overallbalance}{Environment.NewLine}");
 
-            // Доходы
             rtbTransactStats.SelectionColor = Color.Lime;
             rtbTransactStats.AppendText(
-                $"Income транзакции: {Session.Income_TransactQTY}" +
-                $"Income сумма: {Session.Income_Totalbalance}{Environment.NewLine}");
+                $"Income транзакции: {Session.Income_TransactQTY} " +
+                $"Income общая сумма: {Session.Income_Totalbalance}{Environment.NewLine}");
 
-            // Расходы
             rtbTransactStats.SelectionColor = Color.Red;
             rtbTransactStats.AppendText(
-                $"Expense транзакции: {Session.Expense_TransactQTY}" +
-                $"Expense сумма: {Session.Expense_Totalbalance}{Environment.NewLine}");
+                $"Expense транзакции: {Session.Expense_TransactQTY} " +
+                $"Expense общая сумма: {Session.Expense_Totalbalance}{Environment.NewLine}");
+        }
+
+
+        public void SetAccount(Account account)
+        {
+            if (account == null)
+                return;
+
+            _currentAccount = account;
+            Session.CurrentAccount = account;
+
+            TranzactGroup_tbAccountName.Text = account.AccountName;
+
+            UpdateSEssionStats();
+            LoadTransactionsToGrid();
+        }
+
+
+
+        public Transaction GetTransactionFromInputs()
+        {
+            if (!decimal.TryParse(tbAmount.Text, out decimal amount))
+                throw new Exception("Сумма введена неверно.");
+
+            if (_currentAccount == null)
+                throw new Exception("Аккаунт не выбран.");
+
+            return new Transaction
+            {
+                AccountId = _currentAccount.AccountID,
+                Date = datePicker.Value,
+                Amount = amount,
+                OperationType = (TransactionType)cbOperationType.SelectedItem,
+                Description = txtDescription.Text
+            };
         }
 
         #endregion
+
     }
 }

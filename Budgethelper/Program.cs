@@ -27,7 +27,7 @@ namespace Budgethelper
             SqlService.LoadAccountsToSession(); // Session.AccountsList = GetAccounts();
 
             // 4. Сообщение о запуске
-            Logger.SendMessage("Application started",Color.Lime);
+            Logger.SendMessage(MessageType.Info,"Application started");
 
             // 5. Запуск главной формы
             Application.Run(new MainForm());

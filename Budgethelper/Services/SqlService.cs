@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Budgethelper.Services
 {
@@ -31,9 +30,30 @@ namespace Budgethelper.Services
             {
                 conn.Open();
 
-                string sqlTUser = "CREATE TABLE IF NOT EXISTS TUser (Uid TEXT PRIMARY KEY, Name TEXT NOT NULL, SureName TEXT NOT NULL, LastName TEXT, PasswordHash TEXT NOT NULL);";
-                string sqlAccounts = "CREATE TABLE IF NOT EXISTS Accounts (AccountID INTEGER PRIMARY KEY AUTOINCREMENT, AccountName TEXT NOT NULL, Description TEXT NOT NULL, Balance REAL NOT NULL DEFAULT 0);";
-                string sqlTransactions = "CREATE TABLE IF NOT EXISTS Transactions (Id INTEGER PRIMARY KEY AUTOINCREMENT, AccountId INTEGER NOT NULL, Date TEXT NOT NULL, Amount REAL NOT NULL, OperationType TEXT NOT NULL, Description TEXT, FOREIGN KEY(AccountId) REFERENCES Accounts(AccountID));";
+                string sqlTUser =
+                    "CREATE TABLE IF NOT EXISTS TUser (" +
+                    "Uid TEXT PRIMARY KEY, " +
+                    "Name TEXT NOT NULL, " +
+                    "SureName TEXT NOT NULL, " +
+                    "LastName TEXT, " +
+                    "PasswordHash TEXT NOT NULL);";
+
+                string sqlAccounts =
+                    "CREATE TABLE IF NOT EXISTS Accounts (" +
+                    "AccountID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "AccountName TEXT NOT NULL, " +
+                    "Description TEXT NOT NULL, " +
+                    "Balance REAL NOT NULL DEFAULT 0);";
+
+                string sqlTransactions =
+                    "CREATE TABLE IF NOT EXISTS Transactions (" +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "AccountId INTEGER NOT NULL, " +
+                    "Date TEXT NOT NULL, " +
+                    "Amount REAL NOT NULL, " +
+                    "OperationType INTEGER NOT NULL, " +
+                    "Description TEXT, " +
+                    "FOREIGN KEY(AccountId) REFERENCES Accounts(AccountID));";
 
                 ExecuteNonQuery(conn, sqlTUser); VerifyTableCreation("TUser");
                 ExecuteNonQuery(conn, sqlAccounts); VerifyTableCreation("Accounts");
@@ -61,7 +81,13 @@ namespace Budgethelper.Services
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
-                string sql = @"INSERT OR IGNORE INTO TUser (Uid, Name, SureName, LastName, PasswordHash) VALUES (@Uid, @Name, @SureName, @LastName, @PasswordHash)";
+
+                string sql =
+                    @"INSERT OR IGNORE INTO TUser 
+                      (Uid, Name, SureName, LastName, PasswordHash)
+                      VALUES 
+                      (@Uid, @Name, @SureName, @LastName, @PasswordHash)";
+
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@Uid", user.Uid);
@@ -71,7 +97,9 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
 
                     int result = cmd.ExecuteNonQuery();
-                    Logger.SendMessage(result > 0 ? MessageType.DB_success : MessageType.DB_fail,
+
+                    Logger.SendMessage(
+                        result > 0 ? MessageType.DB_success : MessageType.DB_fail,
                         result > 0 ? "User inserted" : "User not inserted");
                 }
             }
@@ -86,21 +114,26 @@ namespace Budgethelper.Services
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
-                string sql = @"INSERT INTO Accounts (AccountName, Balance, Description) VALUES (@Name, @Balance, @Description)";
+
+                string sql =
+                    "INSERT INTO Accounts (AccountName, Description, Balance) " +
+                    "VALUES (@name, @description, @balance); " +
+                    "SELECT last_insert_rowid();";
+
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Name", account.AccountName);
-                    cmd.Parameters.AddWithValue("@Balance", account.Balance);
-                    cmd.Parameters.AddWithValue("@Description", account.Description);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@name", account.AccountName);
+                    cmd.Parameters.AddWithValue("@description", account.Description);
+                    cmd.Parameters.AddWithValue("@balance", account.Balance);
+
+                    long newId = (long)cmd.ExecuteScalar();
+
+                    // ✅ вот здесь мы заполняем AccountID
+                    account.AccountID = (int)newId;
                 }
             }
         }
 
-        public static void CreateAccount(string name, decimal balance, string description)
-        {
-            CreateAccount(new Account(0, name, balance, description));
-        }
 
         public static List<Account> GetAccounts()
         {
@@ -109,20 +142,20 @@ namespace Budgethelper.Services
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
+
                 string sql = "SELECT * FROM Accounts";
+
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            list.Add(new Account(
-                                Convert.ToInt32(reader["AccountID"]),
-                                reader["AccountName"].ToString(),
-                                Convert.ToDecimal(reader["Balance"]),
-                                reader["Description"].ToString()
-                            ));
-                        }
+                        list.Add(new Account(
+                            Convert.ToInt32(reader["AccountID"]),
+                            reader["AccountName"].ToString(),
+                            Convert.ToDecimal(reader["Balance"]),
+                            reader["Description"].ToString()
+                        ));
                     }
                 }
             }
@@ -134,30 +167,43 @@ namespace Budgethelper.Services
         {
             Logger.SendMessage(MessageType.traceroute, "SqlService/LoadAccountsToSession");
 
-            // возвращаем обычный List<Account>, чтобы совместимость с C# 7.3
             Session.AccountsList = GetAccounts();
 
-            Logger.SendMessage(MessageType.Debug, $"Accounts loaded: {Session.AccountsList.Count}");
+            Logger.SendMessage(MessageType.Account,
+                $"Accounts loaded: {Session.AccountsList.Count}");
         }
 
         #endregion
 
         #region Transactions
 
-        public static void CreateTransaction(int accountId, DateTime date, decimal amount, int operationType, string description = "")
+        public static int CreateTransaction(
+            int accountId,
+            DateTime date,
+            decimal amount,
+            int operationType,
+            string description)
         {
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
-                string sql = @"INSERT INTO Transactions (AccountId, Date, Amount, OperationType, Description) VALUES (@AccountId, @Date, @Amount, @OperationType, @Description)";
+
+                string sql =
+                    @"INSERT INTO Transactions
+                      (AccountId, Date, Amount, OperationType, Description)
+                      VALUES
+                      (@AccountId, @Date, @Amount, @OperationType, @Description);
+                      SELECT last_insert_rowid();";
+
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@AccountId", accountId);
                     cmd.Parameters.AddWithValue("@Date", date.ToString("yyyy-MM-dd HH:mm:ss"));
                     cmd.Parameters.AddWithValue("@Amount", amount);
                     cmd.Parameters.AddWithValue("@OperationType", operationType);
-                    cmd.Parameters.AddWithValue("@Description", description);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@Description", description ?? "");
+
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }
@@ -169,10 +215,16 @@ namespace Budgethelper.Services
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
-                string sql = @"SELECT * FROM Transactions WHERE AccountId = @AccountId ORDER BY Date DESC";
+
+                string sql =
+                    @"SELECT * FROM Transactions
+                      WHERE AccountId = @AccountId
+                      ORDER BY Date DESC";
+
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@AccountId", accountId);
+
                     using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -203,6 +255,7 @@ namespace Budgethelper.Services
             Logger.SendMessage(MessageType.traceroute, "SqlService/SeedTestData");
 
             var testUser = new User("1458569m", "Александр", "Цветаев", "Александрович", "123654");
+
             Session.CurrentUser = testUser;
             CreateUser(testUser);
 
@@ -218,8 +271,8 @@ namespace Budgethelper.Services
             foreach (Account acc in accounts)
             {
                 CreateAccount(acc);
-                Session.AccountsList.Add(acc);
-                Logger.SendMessage(MessageType.Account, $"Account Created: {acc.AccountName} | Balance: {acc.Balance}");
+                Logger.SendMessage(MessageType.Account,
+                    $"Account Created: {acc.AccountName} | Balance: {acc.Balance}");
             }
         }
 
@@ -229,7 +282,9 @@ namespace Budgethelper.Services
 
         private static string Normalize_SQL_Request(string sql)
         {
-            if (string.IsNullOrEmpty(sql)) throw new Exception("SQL is null");
+            if (string.IsNullOrEmpty(sql))
+                throw new Exception("SQL is null");
+
             return Regex.Replace(sql, @"\s+", " ").Trim();
         }
 
@@ -238,12 +293,19 @@ namespace Budgethelper.Services
             using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
             {
                 conn.Open();
-                string checkSql = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+
+                string checkSql =
+                    $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+
                 using (SQLiteCommand checkCmd = new SQLiteCommand(checkSql, conn))
                 {
                     object result = checkCmd.ExecuteScalar();
-                    Logger.SendMessage(result == null ? MessageType.DB_fail : MessageType.DB_success,
-                        result == null ? $"{tableName} table NOT found" : $"{tableName} table confirmed");
+
+                    Logger.SendMessage(
+                        result == null ? MessageType.DB_fail : MessageType.DB_success,
+                        result == null
+                            ? $"{tableName} table NOT found"
+                            : $"{tableName} table confirmed");
                 }
             }
         }
