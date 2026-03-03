@@ -9,6 +9,7 @@ namespace Budgethelper.Models
     {
         public static string Uid { get; set; }
         public static User CurrentUser { get; set; }
+        public static int CurrentWalletId { get; set; }
         public static Account  CurrentAccount { get; set; }
         public static Transaction currentTransaction { get; set; }
         public static string DbPath { get; set; } = "budgethelper.db";
