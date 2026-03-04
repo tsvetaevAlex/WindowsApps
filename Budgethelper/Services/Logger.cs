@@ -152,6 +152,9 @@ namespace Budgethelper.Services
                 case MessageType.UI:
                     return Color.LightBlue;
 
+                case MessageType.Info:
+                    return Color.White;
+
                 case MessageType.Account:
                     return Color.LightGreen;
 

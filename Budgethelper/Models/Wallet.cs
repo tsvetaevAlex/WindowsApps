@@ -9,7 +9,7 @@ namespace Budgethelper.Models
     {
         public string Owner { get; set; } // user Uid 
         public string Name { get; set; } // wallet name / to choose correct wallet in case of a few existing
-        public static List<Account> AccountsList { get; set; } = new List<Account>(); // money source list related to current wallet
+        public static List<Money_Source> AccountsList { get; set; } = new List<Money_Source>(); // money source list related to current wallet
                                                                                       // (e.g.cash, debit card1, card2)
     }
 }

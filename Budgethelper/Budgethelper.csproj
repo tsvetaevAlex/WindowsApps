@@ -68,6 +68,12 @@
     <Compile Include="Controls\TransactionsGroup.Designer.cs">
       <DependentUpon>TransactionsGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,9 +92,17 @@
     <Compile Include="Forms\VisualLoggerForm.Designer.cs">
       <DependentUpon>VisualLoggerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WalletForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WalletForm.Designer.cs">
+      <DependentUpon>WalletForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BalanceResult.cs" />
     <Compile Include="Models\MessageType.cs" />
+    <Compile Include="Models\money source.cs" />
+    <Compile Include="Models\moneySource.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
@@ -123,8 +137,14 @@
     <EmbeddedResource Include="Controls\TransactionsGroup.resx">
       <DependentUpon>TransactionsGroup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WalletForm.resx">
+      <DependentUpon>WalletForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -168,6 +188,9 @@
       <Version>1.9.172</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
+      <Version>1.0.119</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Linq">
       <Version>1.0.119</Version>
     </PackageReference>
   </ItemGroup>
