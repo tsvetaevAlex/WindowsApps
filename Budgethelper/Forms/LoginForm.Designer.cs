@@ -10,7 +10,6 @@ namespace Budgethelper.Forms
         private TextBox txtPassword;
         private CheckBox chkShowPassword;
         private Button btnLogin;
-        private Button btnCancel;
 
         protected override void Dispose(bool disposing)
         {
@@ -22,61 +21,64 @@ namespace Budgethelper.Forms
 
         private void InitializeComponent()
         {
-            this.lblPassword = new Label();
-            this.txtPassword = new TextBox();
-            this.chkShowPassword = new CheckBox();
-            this.btnLogin = new Button();
-            this.btnCancel = new Button();
-
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
+            this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
-
+            // 
             // lblPassword
+            // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Location = new System.Drawing.Point(25, 20);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(48, 13);
+            this.lblPassword.TabIndex = 0;
             this.lblPassword.Text = "Пароль:";
-
+            // 
             // txtPassword
+            // 
             this.txtPassword.Location = new System.Drawing.Point(28, 40);
-            this.txtPassword.Width = 240;
+            this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
-
+            this.txtPassword.Size = new System.Drawing.Size(240, 20);
+            this.txtPassword.TabIndex = 1;
+            // 
             // chkShowPassword
+            // 
             this.chkShowPassword.AutoSize = true;
             this.chkShowPassword.Location = new System.Drawing.Point(28, 70);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(114, 17);
+            this.chkShowPassword.TabIndex = 2;
             this.chkShowPassword.Text = "Показать пароль";
-            this.chkShowPassword.CheckedChanged +=
-                new System.EventHandler(this.chkShowPassword_CheckedChanged);
-
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
+            // 
             // btnLogin
-            this.btnLogin.Text = "Войти";
+            // 
             this.btnLogin.Location = new System.Drawing.Point(28, 105);
-            this.btnLogin.Width = 100;
-            this.btnLogin.Click +=
-                new System.EventHandler(this.btnLogin_Click);
-
-            // btnCancel
-            this.btnCancel.Text = "Выход";
-            this.btnCancel.Location = new System.Drawing.Point(168, 105);
-            this.btnCancel.Width = 100;
-            this.btnCancel.Click +=
-                new System.EventHandler(this.btnCancel_Click);
-
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(100, 23);
+            this.btnLogin.TabIndex = 3;
+            this.btnLogin.Text = "Войти";
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
             // LoginForm
+            // 
             this.AcceptButton = this.btnLogin;
-            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(300, 150);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.btnCancel);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Name = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Авторизация";
-
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
     }
 }

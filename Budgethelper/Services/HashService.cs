@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Budgethelper.Models;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -28,7 +29,9 @@ namespace Budgethelper.Services
 
         public static bool Verify(string password, string storedHash)
         {
-            return ComputePasswordHash(password) == storedHash;
+            bool result = ComputePasswordHash(password) == storedHash;
+            Session.IsAuthorized = result;
+            return result;
         }
     }
 }

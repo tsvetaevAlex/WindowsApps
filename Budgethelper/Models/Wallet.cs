@@ -5,6 +5,7 @@ namespace Budgethelper.Models
     /// <summary>
     /// Wallet class enhancement regarding to multi wallet logic
     /// </summary>
+
     public class Wallet
     {
         public string Owner { get; set; } // user Uid 

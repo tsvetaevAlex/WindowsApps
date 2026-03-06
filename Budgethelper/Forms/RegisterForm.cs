@@ -20,10 +20,9 @@ namespace Budgethelper.Forms
         {
             if (string.IsNullOrWhiteSpace(txtName.Text) ||
                 string.IsNullOrWhiteSpace(txtSureName.Text) ||
-                string.IsNullOrWhiteSpace(txtLastName.Text) ||
                 string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                MessageBox.Show("Заполните все поля");
+                MessageBox.Show("Заполните все Обязательнве поля: [Имя],[ФАмилия], [Пароль]");
                 return;
             }
 
@@ -38,7 +37,7 @@ namespace Budgethelper.Forms
                 txtName.Text,
                 txtSureName.Text,
                 txtLastName.Text,
-                "123"
+                passwordHash
             );
 
             SqlService.CreateUser(user);
@@ -52,6 +51,7 @@ namespace Budgethelper.Forms
             MessageBox.Show("Регистрация завершена");
 
             Hide();
+
             new MainForm().Show();
         }
 

@@ -13,7 +13,7 @@ namespace Budgethelper.Models
         public static Account  CurrentAccount { get; set; }
         public static Transaction currentTransaction { get; set; }
         public static string DbPath { get; set; } = "budgethelper.db";
-        public static string RegistryKeyPath { get; set; } = @"Software\BudgetHelper";
+        public static string RegistryKeyPath { get; set; } = @"Software\_BudgetHelper";
 
         public static bool IsAuthorized { get; set; }
 
@@ -29,6 +29,8 @@ namespace Budgethelper.Models
         public static int TransactQTY = 0;
         public static int Income_TransactQTY = 0;
         public static int Expense_TransactQTY = 0;
+        public static User currentUser { get; set; }
+        public static Account currentAccpuny { get; set; }
         public static decimal Income_Totalbalance { get; set; }
         public static decimal Expense_Totalbalance { get; set; }
         public static decimal overallbalance { get; set; } //= Income_TOtalbalance - Expense_Totalbalance
@@ -37,9 +39,13 @@ namespace Budgethelper.Models
         {
             AccountsList.Clear();
         }
-        public static  string User_ToString()
-        { 
+        public static string User_ToString()
+        {
             return $"{CurrentUser.SureName} {CurrentUser.Name} {CurrentUser.LastName}: uid: {CurrentUser.Uid}";
+        }
+        public static string UserGreeting()
+        {
+            return $"{CurrentUser.SureName} {CurrentUser.Name} {CurrentUser.LastName}";
         }
 
     }

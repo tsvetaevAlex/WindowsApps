@@ -46,11 +46,9 @@ namespace Budgethelper.Forms
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
+        // Utils
+        #region Utils
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.PasswordChar =
@@ -67,5 +65,12 @@ namespace Budgethelper.Forms
                 return Convert.ToBase64String(hashBytes);
             }
         }
+
+        private void VeridyPassswod()
+        {
+
+        }
+
+        #endregion
     }
 }

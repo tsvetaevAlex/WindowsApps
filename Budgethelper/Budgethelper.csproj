@@ -101,8 +101,7 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\BalanceResult.cs" />
     <Compile Include="Models\MessageType.cs" />
-    <Compile Include="Models\money source.cs" />
-    <Compile Include="Models\moneySource.cs" />
+    <Compile Include="Models\Money_Source.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
