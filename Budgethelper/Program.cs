@@ -1,9 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Budgethelper.Services;
+﻿using Budgethelper.Controls;
 using Budgethelper.Forms;
 using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Budgethelper
 {
@@ -25,9 +26,15 @@ namespace Budgethelper
                                                 // создаем пользователя пккпунты к которым будут привязаны транзкции (чеки), для составления отчетов в ближайшем будущем.,
             {
                 Logger.SendMessage(MessageType.User, "при запуске я не нашел артефактов работы приложения на данном компьютере\r\n" +
-                    "полагаю это первый запуск.");
-                Logger.SendMessage(MessageType.Info, "Первое, что мы сделаем это добавим  в приложение нового пользоваателя с Вашими данными.\\r\n" +
-                    "вторым этапом начала работы, будет создание ВАшего первого кошелька и добавление источников денежных средств доступных из кошелька. Наличные / карточки.");
+                    "полагаю, что это первый запуск.");
+                Logger.SendMessage(MessageType.Info, "Первое, что мы сделаем это добавим  в приложение нового пользоваателя с Вашими данными.\r\n" +
+                    "\r\nвторым этапом начала работы, будет создание ВАшего первого кошелька и добавление источников денежных средств доступных из кошелька. Наличные / карточки." +
+                    "\r\n - заполните пожалуйста поля формы регистрации:" +
+                    "\r\n - Имя Фамилия и пароль,поля обязательные для заполнения:" +
+                    "\r\n - если Отчество будт указано, будет приоритетно обращение по Имя Отчество, если нет, то по имени.:" +
+                    "\r\n - Используйте глоачку [x]Показать Пароль," +
+                    "\r\n   для проверки введенного ароля перепд нажатием кнопки  [Регистрация]."); 
+
                 // 5. Запуск  формы регистрации пользователя.
                 Application.Run(new RegisterForm());
 
@@ -37,7 +44,7 @@ namespace Budgethelper
 
                 if (Session.IsAuthorized)
                 {
-                    WalletForm wallet = new WalletForm();
+                    WalletGroup wallet = new WalletGroup();
                     wallet.ShowDialog();
 
                 }
@@ -49,7 +56,7 @@ namespace Budgethelper
             Session.dropAccounts();
             // 3. Инициализация базы
             SqlService.Initialize_Database();
-            SqlService.LoadAccountsToSession(); // Session.AccountsList = GetAccounts();
+            SqlService.LoadAccountsToSession(0); // Session.AccountsList = GetAccounts();
 
             // 4. Сообщение о запуске
             Logger.SendMessage(MessageType.Info,"Application started");

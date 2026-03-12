@@ -59,14 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\AccountsGroup.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\AccountsGroup.Designer.cs">
-      <DependentUpon>AccountsGroup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TransactionsGroup.Designer.cs">
       <DependentUpon>TransactionsGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WalletGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WalletGroup.Designer.cs">
+      <DependentUpon>WalletGroup.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -92,20 +92,14 @@
     <Compile Include="Forms\VisualLoggerForm.Designer.cs">
       <DependentUpon>VisualLoggerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\WalletForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\WalletForm.Designer.cs">
-      <DependentUpon>WalletForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\BalanceResult.cs" />
     <Compile Include="Models\MessageType.cs" />
-    <Compile Include="Models\Money_Source.cs" />
+    <Compile Include="Models\Money_SourceType.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Wallet.cs" />
+    <Compile Include="Models\WalletModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
@@ -126,24 +120,20 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Services\StatusBarService.cs" />
-    <Compile Include="Services\TransactionsService.cs" />
-    <EmbeddedResource Include="Controls\AccountsGroup.resx">
-      <DependentUpon>AccountsGroup.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StatusBarControl.resx">
       <DependentUpon>StatusBarControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TransactionsGroup.resx">
       <DependentUpon>TransactionsGroup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WalletGroup.resx">
+      <DependentUpon>WalletGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\WalletForm.resx">
-      <DependentUpon>WalletForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

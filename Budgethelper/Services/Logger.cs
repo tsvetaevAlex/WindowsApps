@@ -193,6 +193,9 @@ namespace Budgethelper.Services
                 case MessageType.Debug:
                     return Color.LightGray;
 
+                case MessageType.Hint:
+                    return Color.Yellow;
+                
                 default:
                     return Color.White;
             }

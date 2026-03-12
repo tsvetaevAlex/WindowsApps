@@ -10,6 +10,7 @@
         Debug,
         Warn,
         Error,
+        Hint,
         DB,
         DB_success,
         DB_fail,

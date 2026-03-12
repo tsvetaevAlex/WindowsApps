@@ -1,68 +1,44 @@
-﻿using Budgethelper.Controls;
+﻿using System;
+using System.Windows.Forms;
 using Budgethelper.Models;
 using Budgethelper.Services;
-using System;
-using System.Windows.Forms;
-using System.Drawing;
+using Budgethelper.Controls;
 
 namespace Budgethelper.Forms
 {
     public partial class MainForm : Form
     {
-        private StatusBarService _statusBar;
-
         public MainForm()
         {
             InitializeComponent();
 
-            // Logger
-            Logger.Initialize();
-
-            Logger.SendMessage(MessageType.Info, "MainForm loaded");
-
-            // -------------------------------
-            // Подписка на события AccountsGroup
-            // -------------------------------
-
-            // Когда выбран аккаунт — передаём его TransactionsGroup
-            accountsGroup.AccountSelected += AccountsGroup_AccountSelected;
-
-            // Когда AccountsGroup просит сгенерировать случайные данные — вызываем TransactionsGroup_RandomDataFiller
-            accountsGroup.RequestRandomDataFill += transactionsGroup.TransactionsGroup_RandomDataFiller;
+            // Загружаем Wallets и Accounts из Session
+            LoadInitialData();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void LoadInitialData()
         {
-            _statusBar = new StatusBarService(rtbStatusBar);
-            _statusBar.Start();
+            // Wallets уже в Session после SeedTestData
+            if (Session.WalletsList.Count > 0)
+            {
+                WalletControl firstWallet = Session.WalletsList[0];
+                txtCurrentWallet.Text = firstWallet.Name;
 
-            int requiredHeight =
-                accountsGroup.Bottom +
-                20 +
-                transactionsGroup.Height +
-                rtbStatusBar.Height +
-                40;
+                // Загружаем аккаунты выбранного кошелька
+                SqlService.LoadAccountsToSession(firstWallet.Id);
 
-            this.Height = requiredHeight;
+            }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        // Пример кнопки переключения Wallet
+        private void btnChangeWallet_Click(object sender, EventArgs e)
         {
-            _statusBar?.Dispose();
-            base.OnFormClosing(e);
+            if (Session.WalletsList.Count <= 1) return;
+
+            WalletControl nextWallet = Session.WalletsList[1]; // для примера берем второй кошелек
+            txtCurrentWallet.Text = nextWallet.Name;
+
+            SqlService.LoadAccountsToSession(nextWallet.Id);
         }
-
-        // -------------------------------
-        // Обработчики событий
-        // -------------------------------
-        private void AccountsGroup_AccountSelected(Account account)
-        {
-            // Передаём выбранный аккаунт в TransactionsGroup
-            transactionsGroup.SetAccount(account);
-
-            // transactionsGroup автоматически заполняем тестовыми данными
-            transactionsGroup.TransactionsGroup_RandomDataFiller();
-        }
-
     }
 }

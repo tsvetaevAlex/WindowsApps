@@ -5,7 +5,6 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Budgethelper.Forms
 {
@@ -13,6 +12,7 @@ namespace Budgethelper.Forms
     {
         public RegisterForm()
         {
+            SqlService.Initialize_Database();
             InitializeComponent();
         }
 
@@ -27,10 +27,11 @@ namespace Budgethelper.Forms
             }
 
             string uid = Guid.NewGuid().ToString();
-            string passwordHash = ComputeHash(txtPassword.Text);
+            string passwordHash = HashService.GetHash(txtPassword.Text);
 
             Session.Uid = uid;
             Session.DbPath = $"{uid}.sqlite";
+            SqlService.Initialize_Database(); //create TUser table
 
             var user = new User(
                 uid,
@@ -39,15 +40,17 @@ namespace Budgethelper.Forms
                 txtLastName.Text,
                 passwordHash
             );
-
-            SqlService.CreateUser(user);
-
             Session.CurrentUser = user;
+
+            SqlService.CreateUser(user); //save user data ti YUser table
+
+            Session.CurrentUser = user; //save user details to session 
+                                        //keep data closer reduce QTY of requests to DB
             Session.IsAuthorized = true;
 
-            var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath);
-            key.SetValue("Uid", uid);
-
+            //non-volatile storage of read quick access
+            RegistryService.SaveUid(uid); // save uid to windows registry.
+                                            
             MessageBox.Show("Регистрация завершена");
 
             Hide();
@@ -58,16 +61,6 @@ namespace Budgethelper.Forms
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.PasswordChar = chkShowPassword.Checked ? '\0' : '*';
-        }
-
-        private string ComputeHash(string input)
-        {
-            using (var sha = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(input);
-                var hash = sha.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
-            }
         }
     }
 }

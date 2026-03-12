@@ -1,335 +1,165 @@
-﻿using Budgethelper.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.IO;
-using System.Text.RegularExpressions;
+using Budgethelper.Models;
 
 namespace Budgethelper.Services
 {
     public static class SqlService
     {
-        private static string GetConnectionString()
+        private static string connection = "Data Source=" + Session.DbPath + ";Version=3;";
+
+        private static SQLiteConnection GetConnection()
         {
-            return $"Data Source={Session.DbPath};Version=3;";
+            return new SQLiteConnection(connection);
         }
 
-        #region Initialization
-
+        // ================== INIT DATABASE ==================
         public static void Initialize_Database()
         {
-            Logger.SendMessage(MessageType.traceroute, "SqlService/InitializeDatabase");
-
-            if (string.IsNullOrWhiteSpace(Session.DbPath))
-                throw new Exception("Session.DbPath is not set.");
-
-            if (!File.Exists(Session.DbPath))
-                SQLiteConnection.CreateFile(Session.DbPath);
-
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
+            using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sqlTUser =
-                    @"CREATE TABLE IF NOT EXISTS TUser (
-                        Uid TEXT PRIMARY KEY,
-                        Name TEXT NOT NULL,
-                        SureName TEXT NOT NULL,
-                        LastName TEXT,
-                        PasswordHash TEXT NOT NULL
-                    );";
+                string users = @"CREATE TABLE IF NOT EXISTS Users(
+                                Uid TEXT PRIMARY KEY,
+                                Name TEXT,
+                                SureName TEXT,
+                                LastName TEXT,
+                                PasswordHash TEXT
+                             );";
 
-                string sqlWallet =
-                    @"CREATE TABLE IF NOT EXISTS Wallet (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Owner TEXT NOT NULL,
-                        Name TEXT NOT NULL,
-                        FOREIGN KEY(Owner) REFERENCES TUser(Uid)
-                    );";
+                string wallets = @"CREATE TABLE IF NOT EXISTS Wallets(
+                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                UserUid TEXT,
+                                Name TEXT,
+                                Description TEXT
+                               );";
 
-                string sqlAccounts =
-                    @"CREATE TABLE IF NOT EXISTS Accounts (
-                        AccountID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        WalletId INTEGER NOT NULL,
-                        AccountName TEXT NOT NULL,
-                        Description TEXT,
-                        Balance REAL NOT NULL DEFAULT 0,
-                        CreatedAt TEXT NOT NULL,
-                        IsArchived INTEGER NOT NULL DEFAULT 0,
-                        UNIQUE (WalletId, AccountName),
-                        FOREIGN KEY(WalletId) REFERENCES Wallet(Id)
-                    );";
+                string accounts = @"CREATE TABLE IF NOT EXISTS Accounts(
+                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                WalletId INTEGER,
+                                Name TEXT,
+                                Type TEXT,
+                                Balance REAL,
+                                Description TEXT
+                                );";
 
-                string sqlTransactions =
-                    @"CREATE TABLE IF NOT EXISTS Transactions (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        AccountId INTEGER NOT NULL,
-                        Date TEXT NOT NULL,
-                        Amount REAL NOT NULL,
-                        OperationType INTEGER NOT NULL,
-                        Description TEXT,
-                        FOREIGN KEY(AccountId) REFERENCES Accounts(AccountID)
-                    );";
+                string transactions = @"CREATE TABLE IF NOT EXISTS Transactions(
+                                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        AccountId INTEGER,
+                                        Amount REAL,
+                                        Type TEXT,
+                                        Date TEXT,
+                                        Comment TEXT
+                                   );";
 
-                ExecuteNonQuery(conn, sqlTUser);
-                ExecuteNonQuery(conn, sqlWallet);
-                ExecuteNonQuery(conn, sqlAccounts);
-                ExecuteNonQuery(conn, sqlTransactions);
-            }
-
-            SeedTestData();
-            LoadAccountsToSession();
-        }
-
-        private static void ExecuteNonQuery(SQLiteConnection conn, string sql)
-        {
-            using (SQLiteCommand cmd = new SQLiteCommand(Normalize_SQL_Request(sql), conn))
-            {
-                cmd.ExecuteNonQuery();
+                new SQLiteCommand(users, conn).ExecuteNonQuery();
+                new SQLiteCommand(wallets, conn).ExecuteNonQuery();
+                new SQLiteCommand(accounts, conn).ExecuteNonQuery();
+                new SQLiteCommand(transactions, conn).ExecuteNonQuery();
             }
         }
 
-        #endregion
-
-        #region Users
-
+        // ================== USER ==================
         public static void CreateUser(User user)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
+            using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql =
-                    @"INSERT OR IGNORE INTO TUser
-                      (Uid, Name, SureName, LastName, PasswordHash)
-                      VALUES
-                      (@Uid, @Name, @SureName, @LastName, @PasswordHash);";
+                string sql = @"INSERT INTO Users(Uid,Name,SureName,LastName,PasswordHash)
+                               VALUES(@Uid,@Name,@SureName,@LastName,@PasswordHash);";
 
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@Uid", user.Uid);
                     cmd.Parameters.AddWithValue("@Name", user.Name);
                     cmd.Parameters.AddWithValue("@SureName", user.SureName);
                     cmd.Parameters.AddWithValue("@LastName", user.LastName);
                     cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-
-                    int result = cmd.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        int walletId = CreateWallet(user.Uid, "Default");
-                        Session.CurrentWalletId = walletId;
-
-                        Logger.SendMessage(MessageType.DB_success,
-                            $"User inserted + Default wallet created (Id={walletId})");
-                    }
-                    else
-                    {
-                        Logger.SendMessage(MessageType.DB_fail, "User not inserted");
-                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        #endregion
-
-        #region Wallet
-
-        public static int CreateWallet(string ownerUid, string name)
+        public static User GetUser(string uid)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
+            using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql =
-                    @"INSERT INTO Wallet (Owner, Name)
-                      VALUES (@Owner, @Name);
-                      SELECT last_insert_rowid();";
+                string sql = @"SELECT Uid,Name,SureName,LastName,PasswordHash FROM Users WHERE Uid=@Uid";
 
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                using (var cmd = new SQLiteCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Owner", ownerUid);
-                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@Uid", uid);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                Uid = reader.GetString(0),
+                                Name = reader.GetString(1),
+                                SureName = reader.GetString(2),
+                                LastName = reader.GetString(3),
+                                PasswordHash = reader.GetString(4)
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        // ================== WALLET ==================
+        public static int CreateWallet(WalletControl wallet)
+        {
+            using (var conn = GetConnection())
+            {
+                conn.Open();
+
+                string sql = @"INSERT INTO Wallets(UserUid, Name, Description)
+                               VALUES(@UserUid,@Name,@Description);
+                               SELECT last_insert_rowid();";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserUid", wallet.UserUid);
+                    cmd.Parameters.AddWithValue("@Name", wallet.Name);
+                    cmd.Parameters.AddWithValue("@Description", wallet.Description);
 
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }
 
-        #endregion
-
-        #region Accounts
-
-        public static void CreateAccount(Account account)
+        public static List<WalletControl> GetWallets(string userUid)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
+            var list = new List<WalletControl>();
+
+            using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql =
-                    @"INSERT INTO Accounts
-                      (WalletId, AccountName, Description, Balance, CreatedAt)
-                      VALUES
-                      (@walletId, @name, @description, @balance, @createdAt);
-                      SELECT last_insert_rowid();";
+                string sql = @"SELECT Id,UserUid,Name,Description FROM Wallets WHERE UserUid=@UserUid";
 
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
+                using (var cmd = new SQLiteCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@walletId", Session.CurrentWalletId);
-                    cmd.Parameters.AddWithValue("@name", account.AccountName);
-                    cmd.Parameters.AddWithValue("@description", account.Description ?? "");
-                    cmd.Parameters.AddWithValue("@balance", account.Balance);
-                    cmd.Parameters.AddWithValue("@createdAt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@UserUid", userUid);
 
-                    long newId = (long)cmd.ExecuteScalar();
-                    account.AccountID = (int)newId;
-                }
-            }
-        }
-
-        public static List<Account> GetAccounts()
-        {
-            List<Account> list = new List<Account>();
-
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
-            {
-                conn.Open();
-
-                string sql =
-                    @"SELECT * FROM Accounts
-                      WHERE WalletId = @walletId
-                      AND IsArchived = 0;";
-
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@walletId", Session.CurrentWalletId);
-
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            list.Add(new Account(
-                                Convert.ToInt32(reader["AccountID"]),
-                                reader["AccountName"].ToString(),
-                                Convert.ToDecimal(reader["Balance"]),
-                                reader["Description"]?.ToString()
-                            ));
-                        }
-                    }
-                }
-            }
-
-            return list;
-        }
-
-        public static void LoadAccountsToSession()
-        {
-            Session.AccountsList = GetAccounts();
-
-            Logger.SendMessage(MessageType.Account,
-                $"Accounts loaded: {Session.AccountsList.Count}");
-        }
-
-        #endregion
-
-        #region Transactions
-
-        public static int CreateTransaction(
-            int accountId,
-            DateTime date,
-            decimal amount,
-            int operationType,
-            string description)
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
-            {
-                conn.Open();
-
-                using (var dbTransaction = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        // INSERT Transaction
-                        string insertSql =
-                            @"INSERT INTO Transactions
-                              (AccountId, Date, Amount, OperationType, Description)
-                              VALUES
-                              (@AccountId, @Date, @Amount, @OperationType, @Description);
-                              SELECT last_insert_rowid();";
-
-                        int transactionId;
-
-                        using (SQLiteCommand cmd = new SQLiteCommand(insertSql, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@AccountId", accountId);
-                            cmd.Parameters.AddWithValue("@Date", date.ToString("yyyy-MM-dd HH:mm:ss"));
-                            cmd.Parameters.AddWithValue("@Amount", amount);
-                            cmd.Parameters.AddWithValue("@OperationType", operationType);
-                            cmd.Parameters.AddWithValue("@Description", description ?? "");
-
-                            transactionId = Convert.ToInt32(cmd.ExecuteScalar());
-                        }
-
-                        // UPDATE Balance
-                        decimal signedAmount =
-                            operationType == (int)TransactionType.Income
-                            ? amount
-                            : -amount;
-
-                        string updateSql =
-                            @"UPDATE Accounts
-                              SET Balance = Balance + @Amount
-                              WHERE AccountID = @AccountId;";
-
-                        using (SQLiteCommand updateCmd = new SQLiteCommand(updateSql, conn))
-                        {
-                            updateCmd.Parameters.AddWithValue("@Amount", signedAmount);
-                            updateCmd.Parameters.AddWithValue("@AccountId", accountId);
-                            updateCmd.ExecuteNonQuery();
-                        }
-
-                        dbTransaction.Commit();
-
-                        return transactionId;
-                    }
-                    catch
-                    {
-                        dbTransaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-        }
-
-        public static List<Transaction> GetTransactions(int accountId)
-        {
-            List<Transaction> list = new List<Transaction>();
-
-            using (SQLiteConnection conn = new SQLiteConnection(GetConnectionString()))
-            {
-                conn.Open();
-
-                string sql =
-                    @"SELECT * FROM Transactions
-                      WHERE AccountId = @AccountId
-                      ORDER BY Date DESC;";
-
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@AccountId", accountId);
-
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            list.Add(new Transaction
+                            list.Add(new WalletControl
                             {
-                                Id = Convert.ToInt32(reader["Id"]),
-                                AccountId = accountId,
-                                Date = DateTime.Parse(reader["Date"].ToString()),
-                                Amount = Convert.ToDecimal(reader["Amount"]),
-                                OperationType = (TransactionType)Convert.ToInt32(reader["OperationType"]),
-                                Description = reader["Description"]?.ToString()
+                                Id = reader.GetInt32(0),
+                                UserUid = reader.GetString(1),
+                                Name = reader.GetString(2),
+                                Description = reader.GetString(3)
                             });
                         }
                     }
@@ -339,39 +169,180 @@ namespace Budgethelper.Services
             return list;
         }
 
-        #endregion
-
-        #region TestData
-
-        public static void SeedTestData()
+        // ================== ACCOUNT ==================
+        public static int CreateAccount(AccountModel acc)
         {
-            var testUser = new User("1458569m", "Александр", "Цветаев", "Александрович", "123654");
-
-            Session.CurrentUser = testUser;
-            CreateUser(testUser);
-
-            Account[] accounts =
+            using (var conn = GetConnection())
             {
-                new Account(0, "Cash", 5000, "Наличные"),
-                new Account(0, "Card 1", 20000, "Основная карта"),
-                new Account(0, "Savings", 30000, "Накопления")
-            };
+                conn.Open();
 
-            foreach (Account acc in accounts)
-            {
-                CreateAccount(acc);
+                string sql = @"INSERT INTO Accounts(WalletId, Name, Type, Balance, Description)
+                               VALUES(@WalletId,@Name,@Type,@Balance,@Description);
+                               SELECT last_insert_rowid();";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@WalletId", acc.WalletId);
+                    cmd.Parameters.AddWithValue("@Name", acc.AccountName);
+                    cmd.Parameters.AddWithValue("@Type", acc.sourceType.ToString());
+                    cmd.Parameters.AddWithValue("@Balance", acc.Balance);
+                    cmd.Parameters.AddWithValue("@Description", acc.Description);
+
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
             }
         }
 
-        #endregion
-
-        #region Utils
-
-        private static string Normalize_SQL_Request(string sql)
+        public static List<AccountModel> GetAccounts(int walletId)
         {
-            return Regex.Replace(sql, @"\s+", " ").Trim();
+            var list = new List<AccountModel>();
+
+            using (var conn = GetConnection())
+            {
+                conn.Open();
+
+                string sql = @"SELECT Id,WalletId,Name,Type,Balance,Description FROM Accounts WHERE WalletId=@WalletId";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@WalletId", walletId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AccountModel acc = new AccountModel(
+                                reader.GetString(2),
+                                (Money_SourceType)Enum.Parse(typeof(Money_SourceType), reader.GetString(3)),
+                                reader.GetDecimal(4),
+                                reader.GetString(5)
+                            );
+                            acc.AccountID = reader.GetInt32(0);
+                            acc.WalletId = reader.GetInt32(1);
+                            list.Add(acc);
+                        }
+                    }
+                }
+            }
+
+            return list;
         }
 
-        #endregion
+        public static AccountModel GetAccount(int accountId)
+        {
+            using (var conn = GetConnection())
+            {
+                conn.Open();
+
+                string sql = @"SELECT Id,WalletId,Name,Type,Balance,Description FROM Accounts WHERE Id=@Id";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", accountId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            AccountModel acc = new AccountModel(
+                                reader.GetString(2),
+                                (Money_SourceType)Enum.Parse(typeof(Money_SourceType), reader.GetString(3)),
+                                reader.GetDecimal(4),
+                                reader.GetString(5)
+                            );
+                            acc.AccountID = reader.GetInt32(0);
+                            acc.WalletId = reader.GetInt32(1);
+                            return acc;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // ================== TRANSACTION ==================
+        public static int CreateTransaction(Transaction t)
+        {
+            using (var conn = GetConnection())
+            {
+                conn.Open();
+
+                string sql = @"INSERT INTO Transactions(AccountId, Amount, Type, Date, Comment)
+                       VALUES(@AccountId,@Amount,@Type,@Date,@Comment);
+                       SELECT last_insert_rowid();";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AccountId", t.AccountId);
+                    cmd.Parameters.AddWithValue("@Amount", t.Amount);
+                    cmd.Parameters.AddWithValue("@Type", t.OperationType.ToString());
+                    cmd.Parameters.AddWithValue("@Date", t.Date.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@Comment", t.Description);
+
+                    long id = (long)cmd.ExecuteScalar();   // SQLite возвращает long
+                    return (int)id;
+                }
+            }
+        }
+
+        public static void CreateTransaction(int accountId, DateTime date, decimal amount, TransactionType type, string description = "")
+        {
+            CreateTransaction(new Transaction
+            {
+                AccountId = accountId,
+                Date = date,
+                Amount = amount,
+                OperationType = type,
+                Description = description
+            });
+        }
+
+        public static List<Transaction> GetTransactions(int accountId)
+        {
+            var list = new List<Transaction>();
+
+            using (var conn = GetConnection())
+            {
+                conn.Open();
+
+                string sql = @"SELECT Id,AccountId,Amount,Type,Date,Comment FROM Transactions WHERE AccountId=@AccountId";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AccountId", accountId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(new Transaction
+                            {
+                                Id = reader.GetInt32(0),
+                                AccountId = reader.GetInt32(1),
+                                Amount = reader.GetDecimal(2),
+                                OperationType = (TransactionType)Enum.Parse(typeof(TransactionType), reader.GetString(3)),
+                                Date = DateTime.Parse(reader.GetString(4)),
+                                Description = reader.GetString(5)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        // ================== SESSION HELPERS ==================
+        public static void LoadWalletsToSession()
+        {
+            if (Session.CurrentUser != null)
+                Session.WalletsList = GetWallets(Session.CurrentUser.Uid);
+        }
+
+        public static void LoadAccountsToSession(int walletId)
+        {
+            Session.AccountsList = GetAccounts(walletId);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Budgethelper.Models;
+using Microsoft.Win32;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,7 +13,15 @@ namespace Budgethelper.Services
             return Guid.NewGuid().ToString();
         }
 
-        public static string ComputePasswordHash(string password)
+        public static void SaveUid(string uid)
+        {
+            using (var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath))
+            {
+                key.SetValue("Uid", uid);
+            }
+        }
+
+        public static string GetHash(string password)
         {
             using (var sha = SHA256.Create())
             {
@@ -29,7 +38,7 @@ namespace Budgethelper.Services
 
         public static bool Verify(string password, string storedHash)
         {
-            bool result = ComputePasswordHash(password) == storedHash;
+            bool result = GetHash(password) == storedHash;
             Session.IsAuthorized = result;
             return result;
         }

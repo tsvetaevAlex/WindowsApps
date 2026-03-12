@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -29,6 +29,8 @@ namespace Budgethelper.Controls
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblAccountName = new System.Windows.Forms.Label();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.tbAmount = new System.Windows.Forms.TextBox();
@@ -156,6 +158,8 @@ namespace Budgethelper.Controls
             // rtbTransact_QTY
             // 
             this.rtbTransact_QTY.BackColor = System.Drawing.Color.Black;
+            this.rtbTransact_QTY.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbTransact_QTY.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbTransact_QTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbTransact_QTY.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.rtbTransact_QTY.Location = new System.Drawing.Point(20, 70);
@@ -164,7 +168,7 @@ namespace Budgethelper.Controls
             this.rtbTransact_QTY.ReadOnly = true;
             this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbTransact_QTY.Size = new System.Drawing.Size(180, 70);
-            this.rtbTransact_QTY.TabIndex = 24;
+            this.rtbTransact_QTY.TabIndex = 3;
             this.rtbTransact_QTY.TabStop = false;
             this.rtbTransact_QTY.Text = "";
             // 
@@ -174,9 +178,9 @@ namespace Budgethelper.Controls
             this.labelSessionStats.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.labelSessionStats.Location = new System.Drawing.Point(210, 47);
             this.labelSessionStats.Name = "labelSessionStats";
-            this.labelSessionStats.Size = new System.Drawing.Size(181, 13);
+            this.labelSessionStats.Size = new System.Drawing.Size(275, 13);
             this.labelSessionStats.TabIndex = 17;
-            this.labelSessionStats.Text = "Транзакции за текущую Сессиию:";
+            this.labelSessionStats.Text = "Краткая сводка \"Транзакции за текущую Сессиию\":";
             // 
             // bAddTransact
             // 
@@ -199,39 +203,45 @@ namespace Budgethelper.Controls
             this.GB_Stats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.GB_Stats.Location = new System.Drawing.Point(20, 110);
             this.GB_Stats.Name = "GB_Stats";
-            this.GB_Stats.Size = new System.Drawing.Size(760, 550);
+            this.GB_Stats.Size = new System.Drawing.Size(760, 360);
             this.GB_Stats.TabIndex = 19;
             this.GB_Stats.TabStop = false;
             this.GB_Stats.Text = "Краткая Ствтистика Сессии:";
+            // 
             // dgvSessionStats
+            // 
             this.dgvSessionStats.AllowUserToAddRows = false;
             this.dgvSessionStats.AllowUserToDeleteRows = false;
             this.dgvSessionStats.AllowUserToResizeRows = false;
+            this.dgvSessionStats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSessionStats.BackgroundColor = System.Drawing.Color.White;
+            this.dgvSessionStats.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvSessionStats.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSessionStats.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvSessionStats.ColumnHeadersHeight = 28;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.LightSteelBlue;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSessionStats.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvSessionStats.EnableHeadersVisualStyles = false;
+            this.dgvSessionStats.Location = new System.Drawing.Point(20, 150);
             this.dgvSessionStats.MultiSelect = false;
+            this.dgvSessionStats.Name = "dgvSessionStats";
             this.dgvSessionStats.ReadOnly = true;
             this.dgvSessionStats.RowHeadersVisible = false;
-            this.dgvSessionStats.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            this.dgvSessionStats.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvSessionStats.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
-
-            this.dgvSessionStats.BackgroundColor = Color.White;
-            this.dgvSessionStats.BorderStyle = BorderStyle.FixedSingle;
-            this.dgvSessionStats.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvSessionStats.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-
-            this.dgvSessionStats.EnableHeadersVisualStyles = false;
-            this.dgvSessionStats.ColumnHeadersDefaultCellStyle.BackColor = Color.Gainsboro;
-            this.dgvSessionStats.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            this.dgvSessionStats.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgvSessionStats.ColumnHeadersHeight = 28;
-
-            this.dgvSessionStats.DefaultCellStyle.SelectionBackColor = Color.LightSteelBlue;
-            this.dgvSessionStats.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-            this.dgvSessionStats.Location = new System.Drawing.Point(20, 150);
-            this.dgvSessionStats.Name = "dgvSessionStats";
-            this.dgvSessionStats.Size = new System.Drawing.Size(730, 390);
+            this.dgvSessionStats.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSessionStats.Size = new System.Drawing.Size(730, 200);
             this.dgvSessionStats.TabIndex = 0;
             this.dgvSessionStats.TabStop = false;
             // 
@@ -243,21 +253,21 @@ namespace Budgethelper.Controls
             this.rtbTransactStats.Name = "rtbTransactStats";
             this.rtbTransactStats.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.rtbTransactStats.Size = new System.Drawing.Size(540, 70);
-            this.rtbTransactStats.TabIndex = 23;
+            this.rtbTransactStats.TabIndex = 1;
             this.rtbTransactStats.TabStop = false;
             this.rtbTransactStats.Text = "";
             // 
             // tbTransactQTY
             // 
             this.tbTransactQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.tbTransactQTY.Location = new System.Drawing.Point(20, 20);
+            this.tbTransactQTY.Location = new System.Drawing.Point(20, 30);
             this.tbTransactQTY.Multiline = true;
             this.tbTransactQTY.Name = "tbTransactQTY";
             this.tbTransactQTY.ReadOnly = true;
-            this.tbTransactQTY.Size = new System.Drawing.Size(140, 40);
-            this.tbTransactQTY.TabIndex = 19;
-            this.tbTransactQTY.Text = "количество транзакций\r\nза текущую сессию:";
-            this.tbTransactQTY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbTransactQTY.Size = new System.Drawing.Size(180, 40);
+            this.tbTransactQTY.TabIndex = 2;
+            this.tbTransactQTY.TabStop = false;
+            this.tbTransactQTY.Text = "Общее количество транзакций\r\n за текущую сессию";
             // 
             // TransactionsGroup
             // 
@@ -276,7 +286,8 @@ namespace Budgethelper.Controls
             this.Controls.Add(this.btnYesterday);
             this.Controls.Add(this.btnToday);
             this.Name = "TransactionsGroup";
-            this.Size = new System.Drawing.Size(800, 680);
+            this.Size = new System.Drawing.Size(800, 480);
+            this.Load += new System.EventHandler(this.TransactionsGroup_Load);
             this.GB_Stats.ResumeLayout(false);
             this.GB_Stats.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSessionStats)).EndInit();
@@ -288,15 +299,19 @@ namespace Budgethelper.Controls
         #endregion
 
         private System.Windows.Forms.TextBox TranzactGroup_tbAccountName;
+        private System.Windows.Forms.TextBox tbTransactQTY;
+
         private System.Windows.Forms.Label lbTransactDate;
         private System.Windows.Forms.Label lbTransactAmount;
         private System.Windows.Forms.Label TransactType;
         private System.Windows.Forms.Label trabsactComment;
-        private System.Windows.Forms.RichTextBox rtbTransact_QTY;
         private System.Windows.Forms.Label labelSessionStats;
+
         private System.Windows.Forms.Button bAddTransact;
+
         private System.Windows.Forms.GroupBox GB_Stats;
-        private System.Windows.Forms.TextBox tbTransactQTY;
+
+        private System.Windows.Forms.RichTextBox rtbTransact_QTY;
         private System.Windows.Forms.RichTextBox rtbTransactStats;
         private DataGridView dgvSessionStats;
     }

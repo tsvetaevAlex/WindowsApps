@@ -2,12 +2,16 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using Budgethelper.Models;
 using Budgethelper.Services;
 
 namespace Budgethelper.Forms
 {
     public partial class LoginForm : Form
     {
+        private const Byte ReTryCount = 3;
+        private Byte tryCount = 0;
+
 
         public LoginForm()
         {
@@ -26,24 +30,46 @@ namespace Budgethelper.Forms
                 return;
             }
 
-            string enteredPassword = HashPassword(txtPassword.Text);
-            string storedHash = HashService.ComputePasswordHash(enteredPassword);
+            string storedHash = RegistryService.LoadUid();
+            string newHash = HashService.GetHash(txtPassword.Text);
 
-            if (storedHash == null || enteredPassword != storedHash)
+            if (newHash != storedHash)
             {
+                Logger.SendMessage(MessageType.Error, "Ошибка авторизации: Введен Неверный пароль.");
+                Logger.SendMessage(MessageType.Hint, "попробуцйте еще раз.");
+
+                MessageBox.Show(
+                    "Неверный пароль",
+                    "Ошибка авторизации",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                txtPassword.Clear();
+                txtPassword.Focus();
+                return;
+            }
+
+            if (tryCount <= ReTryCount)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+
+                LoginForm auth = new LoginForm();
+                auth.ShowDialog();
+            }
+            else {
+                Logger.SendMessage(MessageType.Error,"Вы ввели неверныый пароль 3 раза.\r\n" +
+                    "пардон в целях бнзопасноти и сохранения целостности и приватности данных\r\n" +
+                    "я вынужден прекратить текущую рабочую сессию.Попробуйте позже еще раз.");
+
                 MessageBox.Show(
                     "Неверный пароль",
                     "Ошибка авторизации",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                txtPassword.Clear();
-                txtPassword.Focus();
-                return;
+                Application.Exit();
             }
 
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
 
@@ -53,22 +79,6 @@ namespace Budgethelper.Forms
         {
             txtPassword.PasswordChar =
                 chkShowPassword.Checked ? '\0' : '●';
-        }
-
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha = SHA256.Create())
-            {
-                byte[] hashBytes =
-                    sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                return Convert.ToBase64String(hashBytes);
-            }
-        }
-
-        private void VeridyPassswod()
-        {
-
         }
 
         #endregion

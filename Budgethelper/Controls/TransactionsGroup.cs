@@ -8,7 +8,7 @@ namespace Budgethelper.Controls
 {
     public partial class TransactionsGroup : UserControl
     {
-        private Account _currentAccount;
+        private AccountModel _currentAccount;
         private Transaction CurrentTransaction = null;
 
         public TransactionsGroup()
@@ -94,14 +94,9 @@ namespace Budgethelper.Controls
 
             try
             {
-                CurrentTransaction = GetTransactionFromInputs();
+                Transaction CurrentTransaction = GetTransactionFromInputs();
 
-                int newId = SqlService.CreateTransaction(
-                    CurrentTransaction.AccountId,
-                    CurrentTransaction.Date,
-                    CurrentTransaction.Amount,
-                    (int)CurrentTransaction.OperationType,
-                    CurrentTransaction.Description);
+                int newId = SqlService.CreateTransaction(CurrentTransaction);   
 
                 // --- SESSION COUNTERS ---
 
@@ -200,13 +195,13 @@ namespace Budgethelper.Controls
         }
 
 
-        public void SetAccount(Account account)
+        public void SetAccount(AccountModel account)
         {
             if (account == null)
                 return;
 
             _currentAccount = account;
-            Session.CurrentAccount = account;
+            Session.currentAccount = account;
 
             TranzactGroup_tbAccountName.Text = account.AccountName;
 
@@ -236,5 +231,9 @@ namespace Budgethelper.Controls
 
         #endregion
 
+        private void TransactionsGroup_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
