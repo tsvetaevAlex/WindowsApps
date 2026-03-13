@@ -20,7 +20,6 @@ namespace Budgethelper.Controls
 
             rtbTransact_QTY.SelectAll();
             rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
-            tbTransactQTY.TextAlign = HorizontalAlignment.Right;
             rtbTransact_QTY.DeselectAll();
 
             InitializeGrid();
@@ -30,20 +29,20 @@ namespace Budgethelper.Controls
 
         private void InitializeGrid()
         {
-            dgvSessionStats.AutoGenerateColumns = false;
-            dgvSessionStats.Columns.Clear();
+            TRG_dataGridView.AutoGenerateColumns = false;
+            TRG_dataGridView.Columns.Clear();
 
-            dgvSessionStats.Columns.Add("Id", "Id");
-            dgvSessionStats.Columns.Add("Date", "DateTime");
-            dgvSessionStats.Columns.Add("AccountName", "Account");
-            dgvSessionStats.Columns.Add("Amount", "Amount");
-            dgvSessionStats.Columns.Add("Type", "Type");
-            dgvSessionStats.Columns.Add("Description", "Comment");
+            TRG_dataGridView.Columns.Add("Id", "Id");
+            TRG_dataGridView.Columns.Add("Date", "DateTime");
+            TRG_dataGridView.Columns.Add("AccountName", "Account");
+            TRG_dataGridView.Columns.Add("Amount", "Amount");
+            TRG_dataGridView.Columns.Add("Type", "Type");
+            TRG_dataGridView.Columns.Add("Description", "Comment");
 
-            dgvSessionStats.ReadOnly = true;
-            dgvSessionStats.BringToFront();
-            dgvSessionStats.AllowUserToAddRows = false;
-            dgvSessionStats.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            TRG_dataGridView.ReadOnly = true;
+            TRG_dataGridView.BringToFront();
+            TRG_dataGridView.AllowUserToAddRows = false;
+            TRG_dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void LoadTransactionsToGrid()
@@ -51,13 +50,13 @@ namespace Budgethelper.Controls
             if (_currentAccount == null)
                 return;
 
-            dgvSessionStats.Rows.Clear();
+            TRG_dataGridView.Rows.Clear();
 
             var transactions = SqlService.GetTransactions(_currentAccount.AccountID);
 
             foreach (var t in transactions)
             {
-                int rowIndex = dgvSessionStats.Rows.Add(
+                int rowIndex = TRG_dataGridView.Rows.Add(
                     t.Id,
                     t.Date.ToString("yyyy-MM-dd HH:mm"),
                     _currentAccount.AccountName,
@@ -67,9 +66,9 @@ namespace Budgethelper.Controls
                 );
 
                 if (t.OperationType == TransactionType.Income)
-                    dgvSessionStats.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Green;
+                    TRG_dataGridView.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Green;
                 else
-                    dgvSessionStats.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Red;
+                    TRG_dataGridView.Rows[rowIndex].DefaultCellStyle.ForeColor = Color.Red;
             }
         }
 
@@ -175,23 +174,26 @@ namespace Budgethelper.Controls
         {
             if (_currentAccount == null)
                 return;
+            
+            
+            /*
+            TRG_dataGridView.Clear();
 
-            rtbTransactStats.Clear();
-
-            rtbTransactStats.SelectionColor = Color.White;
-            rtbTransactStats.AppendText(
+            TRG_dataGridView.SelectionColor = Color.White;
+            TRG_dataGridView.AppendText(
                 $"Общее число транзакций: {Session.TransactQTY} " +
                 $"Общий баланс: {Session.overallbalance}{Environment.NewLine}");
 
-            rtbTransactStats.SelectionColor = Color.Lime;
-            rtbTransactStats.AppendText(
+            TRG_dataGridView.SelectionColor = Color.Lime;
+            TRG_dataGridView.AppendText(
                 $"Income транзакции: {Session.Income_TransactQTY} " +
                 $"Income общая сумма: {Session.Income_Totalbalance}{Environment.NewLine}");
 
-            rtbTransactStats.SelectionColor = Color.Red;
-            rtbTransactStats.AppendText(
+            TRG_dataGridView.SelectionColor = Color.Red;
+            TRG_dataGridView.AppendText(
                 $"Expense транзакции: {Session.Expense_TransactQTY} " +
                 $"Expense общая сумма: {Session.Expense_Totalbalance}{Environment.NewLine}");
+            */
         }
 
 

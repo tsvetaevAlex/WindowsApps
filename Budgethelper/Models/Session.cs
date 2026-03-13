@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace Budgethelper.Models
 {
@@ -7,6 +8,7 @@ namespace Budgethelper.Models
         public static string Uid { get; set; }
         public static User CurrentUser { get; set; }
         public static AccountModel currentAccount { get; set; }
+        public static WalletModel currentWallet{ get; set; }
 
         public static string DbPath { get; set; } = "budgethelper.db";
         public static string RegistryKeyPath { get; set; } = @"Software\BudgetHelper";
@@ -17,6 +19,10 @@ namespace Budgethelper.Models
         public static bool IsAuthorized { get; set; } = false;
 
         public static string UserName => CurrentUser?.Name;
+        // accpunta hash
+        public static List<AccountModel> AccountsList { get; set; } = new List<AccountModel>();
+        // Wallet hash
+        public static List<WalletModel> WalletsList { get; set; } = new List<WalletModel>();
 
         //Session Stats
         public static int TransactQTY = 0;
@@ -46,10 +52,6 @@ namespace Budgethelper.Models
             else
                 return $" {CurrentUser.Name}";
         }
-
-        // Кэш
-        public static List<WalletModel> WalletsList { get; set; } = new List<WalletModel>();
-        public static List<AccountModel> AccountsList { get; set; } = new List<AccountModel>();
     }
 }
 

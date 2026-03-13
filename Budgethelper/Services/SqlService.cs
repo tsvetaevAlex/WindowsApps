@@ -14,7 +14,7 @@ namespace Budgethelper.Services
             return new SQLiteConnection(connection);
         }
 
-        // ================== INIT DATABASE ==================
+        // ================= INIT DATABASE =================
         public static void Initialize_Database()
         {
             using (var conn = GetConnection())
@@ -61,7 +61,7 @@ namespace Budgethelper.Services
             }
         }
 
-        // ================== USER ==================
+        // ================= USER =================
         public static void CreateUser(User user)
         {
             using (var conn = GetConnection())
@@ -111,17 +111,18 @@ namespace Budgethelper.Services
                     }
                 }
             }
+
             return null;
         }
 
-        // ================== WALLET ==================
-        public static int CreateWallet()
+        // ================= WALLET =================
+        public static int CreateWallet(WalletModel wallet)
         {
             using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql = @"INSERT INTO Wallets(UserUid, Name, Description)
+                string sql = @"INSERT INTO Wallets(UserUid,Name,Description)
                                VALUES(@UserUid,@Name,@Description);
                                SELECT last_insert_rowid();";
 
@@ -136,9 +137,9 @@ namespace Budgethelper.Services
             }
         }
 
-        public static List<WalletControl> GetWallets(string userUid)
+        public static List<WalletModel> GetWallets(string userUid)
         {
-            var list = new List<WalletControl>();
+            var list = new List<WalletModel>();
 
             using (var conn = GetConnection())
             {
@@ -154,7 +155,7 @@ namespace Budgethelper.Services
                     {
                         while (reader.Read())
                         {
-                            list.Add(new WalletControl
+                            list.Add(new WalletModel
                             {
                                 Id = reader.GetInt32(0),
                                 UserUid = reader.GetString(1),
@@ -169,14 +170,14 @@ namespace Budgethelper.Services
             return list;
         }
 
-        // ================== ACCOUNT ==================
+        // ================= ACCOUNT =================
         public static int CreateAccount(AccountModel acc)
         {
             using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql = @"INSERT INTO Accounts(WalletId, Name, Type, Balance, Description)
+                string sql = @"INSERT INTO Accounts(WalletId,Name,Type,Balance,Description)
                                VALUES(@WalletId,@Name,@Type,@Balance,@Description);
                                SELECT last_insert_rowid();";
 
@@ -217,8 +218,10 @@ namespace Budgethelper.Services
                                 reader.GetDecimal(4),
                                 reader.GetString(5)
                             );
+
                             acc.AccountID = reader.GetInt32(0);
                             acc.WalletId = reader.GetInt32(1);
+
                             list.Add(acc);
                         }
                     }
@@ -228,49 +231,16 @@ namespace Budgethelper.Services
             return list;
         }
 
-        public static AccountModel GetAccount(int accountId)
-        {
-            using (var conn = GetConnection())
-            {
-                conn.Open();
-
-                string sql = @"SELECT Id,WalletId,Name,Type,Balance,Description FROM Accounts WHERE Id=@Id";
-
-                using (var cmd = new SQLiteCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@Id", accountId);
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            AccountModel acc = new AccountModel(
-                                reader.GetString(2),
-                                (Money_SourceType)Enum.Parse(typeof(Money_SourceType), reader.GetString(3)),
-                                reader.GetDecimal(4),
-                                reader.GetString(5)
-                            );
-                            acc.AccountID = reader.GetInt32(0);
-                            acc.WalletId = reader.GetInt32(1);
-                            return acc;
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        // ================== TRANSACTION ==================
+        // ================= TRANSACTIONS =================
         public static int CreateTransaction(Transaction t)
         {
             using (var conn = GetConnection())
             {
                 conn.Open();
 
-                string sql = @"INSERT INTO Transactions(AccountId, Amount, Type, Date, Comment)
-                       VALUES(@AccountId,@Amount,@Type,@Date,@Comment);
-                       SELECT last_insert_rowid();";
+                string sql = @"INSERT INTO Transactions(AccountId,Amount,Type,Date,Comment)
+                               VALUES(@AccountId,@Amount,@Type,@Date,@Comment);
+                               SELECT last_insert_rowid();";
 
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
@@ -280,8 +250,7 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@Date", t.Date.ToString("yyyy-MM-dd HH:mm:ss"));
                     cmd.Parameters.AddWithValue("@Comment", t.Description);
 
-                    long id = (long)cmd.ExecuteScalar();   // SQLite возвращает long
-                    return (int)id;
+                    return Convert.ToInt32((long)cmd.ExecuteScalar());
                 }
             }
         }
@@ -306,7 +275,9 @@ namespace Budgethelper.Services
             {
                 conn.Open();
 
-                string sql = @"SELECT Id,AccountId,Amount,Type,Date,Comment FROM Transactions WHERE AccountId=@AccountId";
+                string sql = @"SELECT Id,AccountId,Amount,Type,Date,Comment 
+                               FROM Transactions 
+                               WHERE AccountId=@AccountId";
 
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
@@ -333,7 +304,7 @@ namespace Budgethelper.Services
             return list;
         }
 
-        // ================== SESSION HELPERS ==================
+        // ================= SESSION HELPERS =================
         public static void LoadWalletsToSession()
         {
             if (Session.CurrentUser != null)
@@ -343,6 +314,62 @@ namespace Budgethelper.Services
         public static void LoadAccountsToSession(int walletId)
         {
             Session.AccountsList = GetAccounts(walletId);
+        }
+
+        // ================= TEST DATA =================
+        public static void SeedTestData()
+        {
+            if (Session.CurrentUser == null)
+                return;
+
+            if (GetWallets(Session.CurrentUser.Uid).Count > 0)
+                return;
+
+            WalletModel fatherWallet = new WalletModel
+            {
+                UserUid = Session.CurrentUser.Uid,
+                Name = "Father Black Leather Wallet",
+                Description = "Father wallet"
+            };
+
+            int fatherWalletId = CreateWallet(fatherWallet);
+
+            int fatherCash = CreateAccount(new AccountModel("Father Cash", Money_SourceType.Cash, 500, "")
+            { WalletId = fatherWalletId });
+
+            int fatherVisa = CreateAccount(new AccountModel("Father Visa", Money_SourceType.Card, 2000, "")
+            { WalletId = fatherWalletId });
+
+            int fatherMaster = CreateAccount(new AccountModel("Father MasterCard", Money_SourceType.Card, 1500, "")
+            { WalletId = fatherWalletId });
+
+            CreateTransaction(fatherCash, DateTime.Now.AddDays(-2), 120, TransactionType.Income, "Gift");
+            CreateTransaction(fatherCash, DateTime.Now.AddDays(-1), 50, TransactionType.Expense, "Groceries");
+
+            CreateTransaction(fatherVisa, DateTime.Now.AddDays(-3), 1000, TransactionType.Income, "Salary");
+            CreateTransaction(fatherVisa, DateTime.Now.AddDays(-1), 150, TransactionType.Expense, "Fuel");
+
+            WalletModel motherWallet = new WalletModel
+            {
+                UserUid = Session.CurrentUser.Uid,
+                Name = "Mother Red Wallet",
+                Description = "Mother wallet"
+            };
+
+            int motherWalletId = CreateWallet(motherWallet);
+
+            int motherCash = CreateAccount(new AccountModel("Mother Cash", Money_SourceType.Cash, 300, "")
+            { WalletId = motherWalletId });
+
+            int motherVisa = CreateAccount(new AccountModel("Mother Visa", Money_SourceType.Card, 2500, "")
+            { WalletId = motherWalletId });
+
+            int motherDebit = CreateAccount(new AccountModel("Mother Debit Card", Money_SourceType.Card, 1800, "")
+            { WalletId = motherWalletId });
+
+            CreateTransaction(motherCash, DateTime.Now.AddDays(-2), 80, TransactionType.Expense, "Cosmetics");
+            CreateTransaction(motherVisa, DateTime.Now.AddDays(-5), 1500, TransactionType.Income, "Salary");
+            CreateTransaction(motherDebit, DateTime.Now.AddDays(-1), 90, TransactionType.Expense, "Taxi");
         }
     }
 }
