@@ -29,8 +29,6 @@ namespace Budgethelper.Controls
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblAccountName = new System.Windows.Forms.Label();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.tbAmount = new System.Windows.Forms.TextBox();
@@ -43,15 +41,27 @@ namespace Budgethelper.Controls
             this.lbTransactAmount = new System.Windows.Forms.Label();
             this.TransactType = new System.Windows.Forms.Label();
             this.trabsactComment = new System.Windows.Forms.Label();
-            this.rtbTransact_QTY = new System.Windows.Forms.RichTextBox();
-            this.labelSessionStats = new System.Windows.Forms.Label();
             this.bAddTransact = new System.Windows.Forms.Button();
-            this.GB_Stats = new System.Windows.Forms.GroupBox();
-            this.dgvSessionStats = new System.Windows.Forms.DataGridView();
-            this.rtbTransactStats = new System.Windows.Forms.RichTextBox();
-            this.tbTransactQTY = new System.Windows.Forms.TextBox();
-            this.GB_Stats.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSessionStats)).BeginInit();
+            this.TRG_GroupBox_SessionStats = new System.Windows.Forms.GroupBox();
+            this.TRG_GroupBox_SessionStats_TotalAmount = new System.Windows.Forms.GroupBox();
+            this.richTextBox4 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.GB_SуssionStats_label_Expense_totalAmount = new System.Windows.Forms.Label();
+            this.GB_SуssionStats_label_INcome_TotalAmount = new System.Windows.Forms.Label();
+            this.TRG_GroupBox_SessionStats_Transaction_QTY = new System.Windows.Forms.GroupBox();
+            this.rtbExpenseQTY = new System.Windows.Forms.RichTextBox();
+            this.rtbIncomeQTY = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.GB_SуssionStats_label_transactions_QTY = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.rtbTransact_QTY = new System.Windows.Forms.RichTextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TRG_GroupBox_SessionStats.SuspendLayout();
+            this.TRG_GroupBox_SessionStats_TotalAmount.SuspendLayout();
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblAccountName
@@ -155,33 +165,6 @@ namespace Budgethelper.Controls
             this.trabsactComment.TabIndex = 13;
             this.trabsactComment.Text = "transaction comment";
             // 
-            // rtbTransact_QTY
-            // 
-            this.rtbTransact_QTY.BackColor = System.Drawing.Color.Black;
-            this.rtbTransact_QTY.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbTransact_QTY.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rtbTransact_QTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbTransact_QTY.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.rtbTransact_QTY.Location = new System.Drawing.Point(20, 70);
-            this.rtbTransact_QTY.Margin = new System.Windows.Forms.Padding(5);
-            this.rtbTransact_QTY.Name = "rtbTransact_QTY";
-            this.rtbTransact_QTY.ReadOnly = true;
-            this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbTransact_QTY.Size = new System.Drawing.Size(180, 70);
-            this.rtbTransact_QTY.TabIndex = 3;
-            this.rtbTransact_QTY.TabStop = false;
-            this.rtbTransact_QTY.Text = "";
-            // 
-            // labelSessionStats
-            // 
-            this.labelSessionStats.AutoSize = true;
-            this.labelSessionStats.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.labelSessionStats.Location = new System.Drawing.Point(210, 47);
-            this.labelSessionStats.Name = "labelSessionStats";
-            this.labelSessionStats.Size = new System.Drawing.Size(275, 13);
-            this.labelSessionStats.TabIndex = 17;
-            this.labelSessionStats.Text = "Краткая сводка \"Транзакции за текущую Сессиию\":";
-            // 
             // bAddTransact
             // 
             this.bAddTransact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -193,91 +176,205 @@ namespace Budgethelper.Controls
             this.bAddTransact.UseVisualStyleBackColor = true;
             this.bAddTransact.Click += new System.EventHandler(this.bAddTransact_Click);
             // 
-            // GB_Stats
+            // TRG_GroupBox_SessionStats
             // 
-            this.GB_Stats.Controls.Add(this.dgvSessionStats);
-            this.GB_Stats.Controls.Add(this.rtbTransactStats);
-            this.GB_Stats.Controls.Add(this.tbTransactQTY);
-            this.GB_Stats.Controls.Add(this.rtbTransact_QTY);
-            this.GB_Stats.Controls.Add(this.labelSessionStats);
-            this.GB_Stats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.GB_Stats.Location = new System.Drawing.Point(20, 110);
-            this.GB_Stats.Name = "GB_Stats";
-            this.GB_Stats.Size = new System.Drawing.Size(760, 360);
-            this.GB_Stats.TabIndex = 19;
-            this.GB_Stats.TabStop = false;
-            this.GB_Stats.Text = "Краткая Ствтистика Сессии:";
+            this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_GroupBox_SessionStats_TotalAmount);
+            this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_GroupBox_SessionStats_Transaction_QTY);
+            this.TRG_GroupBox_SessionStats.Controls.Add(this.groupBox2);
+            this.TRG_GroupBox_SessionStats.Location = new System.Drawing.Point(600, 109);
+            this.TRG_GroupBox_SessionStats.Name = "TRG_GroupBox_SessionStats";
+            this.TRG_GroupBox_SessionStats.Size = new System.Drawing.Size(400, 495);
+            this.TRG_GroupBox_SessionStats.TabIndex = 19;
+            this.TRG_GroupBox_SessionStats.TabStop = false;
+            this.TRG_GroupBox_SessionStats.Text = "Краткая сводка Текущей Сессии";
             // 
-            // dgvSessionStats
+            // TRG_GroupBox_SessionStats_TotalAmount
             // 
-            this.dgvSessionStats.AllowUserToAddRows = false;
-            this.dgvSessionStats.AllowUserToDeleteRows = false;
-            this.dgvSessionStats.AllowUserToResizeRows = false;
-            this.dgvSessionStats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvSessionStats.BackgroundColor = System.Drawing.Color.White;
-            this.dgvSessionStats.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvSessionStats.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSessionStats.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvSessionStats.ColumnHeadersHeight = 28;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.LightSteelBlue;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvSessionStats.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvSessionStats.EnableHeadersVisualStyles = false;
-            this.dgvSessionStats.Location = new System.Drawing.Point(20, 150);
-            this.dgvSessionStats.MultiSelect = false;
-            this.dgvSessionStats.Name = "dgvSessionStats";
-            this.dgvSessionStats.ReadOnly = true;
-            this.dgvSessionStats.RowHeadersVisible = false;
-            this.dgvSessionStats.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSessionStats.Size = new System.Drawing.Size(730, 200);
-            this.dgvSessionStats.TabIndex = 0;
-            this.dgvSessionStats.TabStop = false;
+            this.TRG_GroupBox_SessionStats_TotalAmount.Controls.Add(this.richTextBox4);
+            this.TRG_GroupBox_SessionStats_TotalAmount.Controls.Add(this.richTextBox3);
+            this.TRG_GroupBox_SessionStats_TotalAmount.Controls.Add(this.GB_SуssionStats_label_Expense_totalAmount);
+            this.TRG_GroupBox_SessionStats_TotalAmount.Controls.Add(this.GB_SуssionStats_label_INcome_TotalAmount);
+            this.TRG_GroupBox_SessionStats_TotalAmount.Location = new System.Drawing.Point(220, 20);
+            this.TRG_GroupBox_SessionStats_TotalAmount.Name = "TRG_GroupBox_SessionStats_TotalAmount";
+            this.TRG_GroupBox_SessionStats_TotalAmount.Size = new System.Drawing.Size(170, 319);
+            this.TRG_GroupBox_SessionStats_TotalAmount.TabIndex = 35;
+            this.TRG_GroupBox_SessionStats_TotalAmount.TabStop = false;
+            this.TRG_GroupBox_SessionStats_TotalAmount.Text = "Общая сумма";
             // 
-            // rtbTransactStats
+            // richTextBox4
             // 
-            this.rtbTransactStats.BackColor = System.Drawing.Color.Black;
-            this.rtbTransactStats.ForeColor = System.Drawing.Color.Snow;
-            this.rtbTransactStats.Location = new System.Drawing.Point(210, 70);
-            this.rtbTransactStats.Name = "rtbTransactStats";
-            this.rtbTransactStats.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbTransactStats.Size = new System.Drawing.Size(540, 70);
-            this.rtbTransactStats.TabIndex = 1;
-            this.rtbTransactStats.TabStop = false;
-            this.rtbTransactStats.Text = "";
+            this.richTextBox4.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.richTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox4.ForeColor = System.Drawing.Color.GhostWhite;
+            this.richTextBox4.Location = new System.Drawing.Point(20, 124);
+            this.richTextBox4.Name = "richTextBox4";
+            this.richTextBox4.Size = new System.Drawing.Size(100, 25);
+            this.richTextBox4.TabIndex = 3;
+            this.richTextBox4.Text = "12569.67";
             // 
-            // tbTransactQTY
+            // richTextBox3
             // 
-            this.tbTransactQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.tbTransactQTY.Location = new System.Drawing.Point(20, 30);
-            this.tbTransactQTY.Multiline = true;
-            this.tbTransactQTY.Name = "tbTransactQTY";
-            this.tbTransactQTY.ReadOnly = true;
-            this.tbTransactQTY.Size = new System.Drawing.Size(180, 40);
-            this.tbTransactQTY.TabIndex = 2;
-            this.tbTransactQTY.TabStop = false;
-            this.tbTransactQTY.Text = "Общее количество транзакций\r\n за текущую сессию";
+            this.richTextBox3.BackColor = System.Drawing.Color.Salmon;
+            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox3.ForeColor = System.Drawing.Color.GhostWhite;
+            this.richTextBox3.Location = new System.Drawing.Point(20, 62);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(100, 25);
+            this.richTextBox3.TabIndex = 2;
+            this.richTextBox3.TabStop = false;
+            this.richTextBox3.Text = "123.45";
+            // 
+            // GB_SуssionStats_label_Expense_totalAmount
+            // 
+            this.GB_SуssionStats_label_Expense_totalAmount.AutoSize = true;
+            this.GB_SуssionStats_label_Expense_totalAmount.Location = new System.Drawing.Point(20, 107);
+            this.GB_SуssionStats_label_Expense_totalAmount.Name = "GB_SуssionStats_label_Expense_totalAmount";
+            this.GB_SуssionStats_label_Expense_totalAmount.Size = new System.Drawing.Size(129, 13);
+            this.GB_SуssionStats_label_Expense_totalAmount.TabIndex = 1;
+            this.GB_SуssionStats_label_Expense_totalAmount.Text = "Общая Сумма Доходов:";
+            // 
+            // GB_SуssionStats_label_INcome_TotalAmount
+            // 
+            this.GB_SуssionStats_label_INcome_TotalAmount.AutoSize = true;
+            this.GB_SуssionStats_label_INcome_TotalAmount.Location = new System.Drawing.Point(20, 44);
+            this.GB_SуssionStats_label_INcome_TotalAmount.Name = "GB_SуssionStats_label_INcome_TotalAmount";
+            this.GB_SуssionStats_label_INcome_TotalAmount.Size = new System.Drawing.Size(133, 13);
+            this.GB_SуssionStats_label_INcome_TotalAmount.TabIndex = 0;
+            this.GB_SуssionStats_label_INcome_TotalAmount.Text = "Общая Сумма Расходов:";
+            // 
+            // TRG_GroupBox_SessionStats_Transaction_QTY
+            // 
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Controls.Add(this.rtbExpenseQTY);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Controls.Add(this.rtbIncomeQTY);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Controls.Add(this.label2);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Controls.Add(this.GB_SуssionStats_label_transactions_QTY);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Location = new System.Drawing.Point(20, 20);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Name = "TRG_GroupBox_SessionStats_Transaction_QTY";
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Size = new System.Drawing.Size(190, 320);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.TabIndex = 34;
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.TabStop = false;
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.Text = "Количество транзакций";
+            // 
+            // rtbExpenseQTY
+            // 
+            this.rtbExpenseQTY.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.rtbExpenseQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbExpenseQTY.ForeColor = System.Drawing.Color.GhostWhite;
+            this.rtbExpenseQTY.Location = new System.Drawing.Point(20, 124);
+            this.rtbExpenseQTY.Name = "rtbExpenseQTY";
+            this.rtbExpenseQTY.Size = new System.Drawing.Size(100, 25);
+            this.rtbExpenseQTY.TabIndex = 5;
+            this.rtbExpenseQTY.Text = "95";
+            // 
+            // rtbIncomeQTY
+            // 
+            this.rtbIncomeQTY.BackColor = System.Drawing.Color.Salmon;
+            this.rtbIncomeQTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbIncomeQTY.ForeColor = System.Drawing.Color.GhostWhite;
+            this.rtbIncomeQTY.Location = new System.Drawing.Point(20, 61);
+            this.rtbIncomeQTY.Name = "rtbIncomeQTY";
+            this.rtbIncomeQTY.Size = new System.Drawing.Size(100, 25);
+            this.rtbIncomeQTY.TabIndex = 4;
+            this.rtbIncomeQTY.TabStop = false;
+            this.rtbIncomeQTY.Text = "123";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 107);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(165, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Income количество транзакций";
+            // 
+            // GB_SуssionStats_label_transactions_QTY
+            // 
+            this.GB_SуssionStats_label_transactions_QTY.AutoSize = true;
+            this.GB_SуssionStats_label_transactions_QTY.Location = new System.Drawing.Point(20, 32);
+            this.GB_SуssionStats_label_transactions_QTY.Name = "GB_SуssionStats_label_transactions_QTY";
+            this.GB_SуssionStats_label_transactions_QTY.Size = new System.Drawing.Size(127, 26);
+            this.GB_SуssionStats_label_transactions_QTY.TabIndex = 0;
+            this.GB_SуssionStats_label_transactions_QTY.Text = "количество транзакций\r\n расхода";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(-155, 28);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 100);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(237, 149);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "label4";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(209, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(163, 13);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "общее количество транзакций";
+            // 
+            // rtbTransact_QTY
+            // 
+            this.rtbTransact_QTY.BackColor = System.Drawing.Color.SteelBlue;
+            this.rtbTransact_QTY.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rtbTransact_QTY.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbTransact_QTY.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.rtbTransact_QTY.Location = new System.Drawing.Point(209, 158);
+            this.rtbTransact_QTY.Margin = new System.Windows.Forms.Padding(5);
+            this.rtbTransact_QTY.Name = "rtbTransact_QTY";
+            this.rtbTransact_QTY.ReadOnly = true;
+            this.rtbTransact_QTY.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbTransact_QTY.Size = new System.Drawing.Size(180, 52);
+            this.rtbTransact_QTY.TabIndex = 25;
+            this.rtbTransact_QTY.TabStop = false;
+            this.rtbTransact_QTY.Text = "12345";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.SteelBlue;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.textBox1.Location = new System.Drawing.Point(398, 189);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(100, 21);
+            this.textBox1.TabIndex = 35;
+            this.textBox1.TabStop = false;
+            this.textBox1.Text = "123456";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(398, 160);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 26);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Общая сумма \r\n транзакций:";
             // 
             // TransactionsGroup
             // 
-            this.Controls.Add(this.GB_Stats);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TRG_GroupBox_SessionStats);
             this.Controls.Add(this.bAddTransact);
             this.Controls.Add(this.trabsactComment);
             this.Controls.Add(this.TransactType);
             this.Controls.Add(this.lbTransactAmount);
             this.Controls.Add(this.lbTransactDate);
             this.Controls.Add(this.TranzactGroup_tbAccountName);
+            this.Controls.Add(this.rtbTransact_QTY);
             this.Controls.Add(this.lblAccountName);
             this.Controls.Add(this.datePicker);
             this.Controls.Add(this.tbAmount);
@@ -286,11 +383,13 @@ namespace Budgethelper.Controls
             this.Controls.Add(this.btnYesterday);
             this.Controls.Add(this.btnToday);
             this.Name = "TransactionsGroup";
-            this.Size = new System.Drawing.Size(800, 480);
+            this.Size = new System.Drawing.Size(1010, 768);
             this.Load += new System.EventHandler(this.TransactionsGroup_Load);
-            this.GB_Stats.ResumeLayout(false);
-            this.GB_Stats.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSessionStats)).EndInit();
+            this.TRG_GroupBox_SessionStats.ResumeLayout(false);
+            this.TRG_GroupBox_SessionStats_TotalAmount.ResumeLayout(false);
+            this.TRG_GroupBox_SessionStats_TotalAmount.PerformLayout();
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.ResumeLayout(false);
+            this.TRG_GroupBox_SessionStats_Transaction_QTY.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,20 +398,29 @@ namespace Budgethelper.Controls
         #endregion
 
         private System.Windows.Forms.TextBox TranzactGroup_tbAccountName;
-        private System.Windows.Forms.TextBox tbTransactQTY;
 
-        private System.Windows.Forms.Label lbTransactDate;
-        private System.Windows.Forms.Label lbTransactAmount;
-        private System.Windows.Forms.Label TransactType;
-        private System.Windows.Forms.Label trabsactComment;
-        private System.Windows.Forms.Label labelSessionStats;
+        private Label lbTransactDate;
+        private Label lbTransactAmount;
+        private Label TransactType;
+        private Label trabsactComment;
+        private Label GB_SуssionStats_label_Expense_totalAmount;
+        private Label GB_SуssionStats_label_INcome_TotalAmount;
+        private Label label2;
+        private Label label1;
 
         private System.Windows.Forms.Button bAddTransact;
-
-        private System.Windows.Forms.GroupBox GB_Stats;
-
-        private System.Windows.Forms.RichTextBox rtbTransact_QTY;
-        private System.Windows.Forms.RichTextBox rtbTransactStats;
-        private DataGridView dgvSessionStats;
+        private GroupBox TRG_GroupBox_SessionStats;
+        private RichTextBox rtbTransact_QTY;
+        private Label label4;
+        private Label label3;
+        private GroupBox TRG_GroupBox_SessionStats_TotalAmount;
+        private GroupBox TRG_GroupBox_SessionStats_Transaction_QTY;
+        private GroupBox groupBox2;
+        private Label GB_SуssionStats_label_transactions_QTY;
+        private TextBox textBox1;
+        private RichTextBox rtbIncomeQTY;
+        private RichTextBox richTextBox4;
+        private RichTextBox richTextBox3;
+        private RichTextBox rtbExpenseQTY;
     }
 }

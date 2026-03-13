@@ -115,7 +115,7 @@ namespace Budgethelper.Services
         }
 
         // ================== WALLET ==================
-        public static int CreateWallet(WalletControl wallet)
+        public static int CreateWallet()
         {
             using (var conn = GetConnection())
             {
