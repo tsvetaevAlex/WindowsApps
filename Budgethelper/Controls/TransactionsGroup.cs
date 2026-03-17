@@ -8,13 +8,18 @@ namespace Budgethelper.Controls
 {
     public partial class TransactionsGroup : UserControl
     {
+        public int transactionsGroup_WIdth { get; set; }
+        public int transactionsGroup_Height { get; set; }
+        //TRG_groupBox_AddBewAccount
         private AccountModel _currentAccount;
         private Transaction CurrentTransaction = null;
 
         public TransactionsGroup()
         {
-            InitializeComponent();
 
+            InitializeComponent();
+            transactionsGroup_WIdth = this.Width;
+            transactionsGroup_Height = this.Height;
             rtbTransact_QTY.Text = "0";
             cbOperationType.DataSource = Enum.GetValues(typeof(TransactionType));
 
@@ -95,7 +100,7 @@ namespace Budgethelper.Controls
             {
                 Transaction CurrentTransaction = GetTransactionFromInputs();
 
-                int newId = SqlService.CreateTransaction(CurrentTransaction);   
+                int newId = SqlService.CreateTransaction(CurrentTransaction);
 
                 // --- SESSION COUNTERS ---
 
@@ -174,8 +179,8 @@ namespace Budgethelper.Controls
         {
             if (_currentAccount == null)
                 return;
-            
-            
+
+
             /*
             TRG_dataGridView.Clear();
 
@@ -236,6 +241,52 @@ namespace Budgethelper.Controls
         private void TransactionsGroup_Load(object sender, EventArgs e)
         {
 
+
         }
+
+
+        //==============================
+        //Events
+        //==============================
+        #region Events
+        private void YRG_button_AddNewAccpunt_Click(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+            this.TRG_groupBox_AddBewAccount.Visible = true;
+            this.ResumeLayout(true);
+        }
+
+        private void TRG_TextBox_NewAccountName_MouseEnter(object sender, EventArgs e)
+        {
+            if (this.TRG_TextBox_NewAccountName.CanFocus)
+            {
+                this.TRG_TextBox_NewAccountName.Text = string.Empty;
+            }
+        }
+
+        private void TRG_textBox_NewAccountBalanse_MouseEnter(object sender, EventArgs e)
+        {
+            if (this.TRG_textBox_NewAccountBalanse.CanFocus)
+            {
+                this.TRG_textBox_NewAccountBalanse.Text = string.Empty;
+            }
+        }
+
+        private void TRG_textBox_NewAccountDescription_MouseEnter(object sender, EventArgs e)
+        {
+            if (this.TRG_textBox_NewAccountDescription.CanFocus)
+            {
+                this.TRG_textBox_NewAccountDescription.Text = string.Empty;
+            }
+        }
+
+        private void TRG_comboBox_NewACcountType_Click(object sender, EventArgs e)
+        {
+            TRG_comboBox_NewACcountType.DataSource = Enum.GetValues(typeof(Money_SourceType));
+        }
+
+        #endregion
+
     }
+
 }

@@ -99,14 +99,13 @@ namespace Budgethelper.Services
                     {
                         if (reader.Read())
                         {
-                            return new User
-                            {
-                                Uid = reader.GetString(0),
-                                Name = reader.GetString(1),
-                                SureName = reader.GetString(2),
-                                LastName = reader.GetString(3),
-                                PasswordHash = reader.GetString(4)
-                            };
+                            return new User(
+                                reader.GetString(0),
+                                reader.GetString(1),
+                                reader.GetString(2),
+                                reader.GetString(3),
+                                reader.GetString(4)
+                            );
                         }
                     }
                 }

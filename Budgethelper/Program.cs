@@ -45,7 +45,7 @@ namespace Budgethelper
                 if (Session.IsAuthorized)
                 {
                     WalletGroup wallet = new WalletGroup();
-                    wallet.ShowDialog();
+                    //wallet.ShowDialog();
 
                 }
                 else { }

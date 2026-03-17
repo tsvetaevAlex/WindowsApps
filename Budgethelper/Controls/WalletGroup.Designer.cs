@@ -77,6 +77,7 @@
             this.WF_textBox_NewWalletName.Size = new System.Drawing.Size(260, 20);
             this.WF_textBox_NewWalletName.TabIndex = 1;
             this.WF_textBox_NewWalletName.Text = "укажите короткое имя Вашего нового кошелька.";
+            this.WF_textBox_NewWalletName.MouseEnter += new System.EventHandler(this.WF_textBox_NewWalletName_MouseEnter);
             // 
             // WG_GroupBox_NewWalletMoneySource
             // 
