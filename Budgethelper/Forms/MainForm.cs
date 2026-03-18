@@ -1,4 +1,6 @@
 ﻿using Budgethelper.Controls;
+using Budgethelper.Models;
+using Budgethelper.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,58 +9,96 @@ namespace Budgethelper.Forms
 {
     public partial class MainForm : Form
     {
-        private WalletGroup walletGroup;
-        private TransactionsGroup transactionsGroup;
+        private WalletGroup _WalletGroup;
+        private TransactionsGroup _transactionsGroup;
+
+        private Timer resizeTimer;
+        private Size targetSize;
+
+        private const int Step = 25;
 
         public MainForm()
         {
             InitializeComponent();
-            this.MainForm_tabs.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            resizeTimer = new Timer();
+            resizeTimer.Interval = 10;
+            resizeTimer.Tick += resizeTimer_Tick;
+
             InitUserControls();
+
+            // стартовый размер
+            ApplySizeForCurrentTab(false);
         }
+
         private void InitUserControls()
         {
-            // Создаём контролы
-            _WalletGroup.Location = new System.Drawing.Point(0, 0);
-            _transactionsGroup.Location = new System.Drawing.Point(0, 0);
+            _WalletGroup = new WalletGroup();
+            _transactionsGroup = new TransactionsGroup();
 
-            // Добавляем в TabPage
+            _WalletGroup.Location = new Point(0, 0);
+            _transactionsGroup.Location = new Point(0, 0);
+
             MainForm_WalletTab.Controls.Add(_WalletGroup);
             MainForm_TransactionsTab.Controls.Add(_transactionsGroup);
 
-            // Вычисляем максимальный размер
-            int maxWidth = Math.Max(_WalletGroup.Width, _transactionsGroup.Width);
-            int maxHeight = Math.Max(_WalletGroup.Height, _transactionsGroup.Height);
-
-            // Подгоняем размер TabControl и формы под UserControl
-            MainForm_tabs.Size = new System.Drawing.Size(maxWidth, maxHeight);
-            this.ClientSize = new System.Drawing.Size(
-                MainForm_tabs.Location.X + maxWidth + 10,  // +10 для отступа справа
-                MainForm_tabs.Location.Y + maxHeight + 10  // +10 для отступа снизу
-            );
+            MainForm_WalletTab.AutoScroll = false;
+            MainForm_TransactionsTab.AutoScroll = false;
         }
 
-        private void MainForm_tabs_TabIndexChanged(object sender, EventArgs e)
+        private void MainForm_tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox.Show($"SelectedIndex: [{this.MainForm_tabs.SelectedIndex}]\r\n" +
-                $"SelectedTab.Text: [{this.MainForm_tabs.SelectedTab.Text}]");
+            Logger.SendMessage(MessageType.UI,
+                $"Вы перешли на закладку: [{MainForm_tabs.SelectedIndex}]: \"{MainForm_tabs.SelectedTab.Text}\"");
+
+            ApplySizeForCurrentTab(true);
         }
-        /*
-private void InitUserControls()
-{
-   walletGroup = new WalletGroup();
-   int wg_Width = walletGroup.walletGroup_WIdth;
-   int wg_jeight = walletGroup.walletGroup_Height;
-   transactionsGroup = new TransactionsGroup();
-   int tr_Width = transactionsGroup.transactionsGroup_WIdth;
-   int tr_jeight = transactionsGroup.transactionsGroup_Height;
-   walletGroup.Location = new Point(10, 10);
-   transactionsGroup.Location = new Point(10, 10);
-   var max_WIdth = Math.Max(wg_Width, tr_Width);
-   var max_Height = Math.Max(wg_jeight, tr_jeight);
-   this.ClientSize = new Size(wg_Width, wg_jeight);
-   MainForm_WalletTab.Controls.Add(walletGroup);
-   MainForm_TransactionsTab.Controls.Add(transactionsGroup);
-}*/
-    }// end of partial class MainForm
-}// end of namespace Budgethelper.Forms
+
+        private void ApplySizeForCurrentTab(bool animate)
+        {
+            if (MainForm_tabs.SelectedTab.Controls.Count == 0)
+                return;
+
+            Control activeControl = MainForm_tabs.SelectedTab.Controls[0];
+
+            int widthDiff = MainForm_tabs.Width - MainForm_tabs.DisplayRectangle.Width;
+            int heightDiff = MainForm_tabs.Height - MainForm_tabs.DisplayRectangle.Height;
+
+            int tabW = activeControl.Width + widthDiff;
+            int tabH = activeControl.Height + heightDiff;
+
+            MainForm_tabs.Size = new Size(tabW, tabH);
+
+            targetSize = new Size(
+                MainForm_tabs.Left + tabW,
+                MainForm_tabs.Top + tabH
+            );
+
+            if (animate)
+                resizeTimer.Start();
+            else
+                this.ClientSize = targetSize;
+        }
+
+        private void resizeTimer_Tick(object sender, EventArgs e)
+        {
+            int curW = this.ClientSize.Width;
+            int curH = this.ClientSize.Height;
+
+            if (Math.Abs(curW - targetSize.Width) > Step)
+                curW += (targetSize.Width > curW) ? Step : -Step;
+            else
+                curW = targetSize.Width;
+
+            if (Math.Abs(curH - targetSize.Height) > Step)
+                curH += (targetSize.Height > curH) ? Step : -Step;
+            else
+                curH = targetSize.Height;
+
+            this.ClientSize = new Size(curW, curH);
+
+            if (curW == targetSize.Width && curH == targetSize.Height)
+                resizeTimer.Stop();
+        }
+    }
+}

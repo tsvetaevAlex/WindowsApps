@@ -2,7 +2,6 @@
 {
     partial class WalletGroup
     {
-        private byte _verticalShift = 50;
         /// <summary> 
         /// Required designer variable.
         /// </summary>

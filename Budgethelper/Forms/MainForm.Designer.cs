@@ -1,5 +1,4 @@
-﻿using Budgethelper.Controls;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Budgethelper.Forms
 {
@@ -10,8 +9,7 @@ namespace Budgethelper.Forms
         private TabControl MainForm_tabs;
         private TabPage MainForm_WalletTab;
         private TabPage MainForm_TransactionsTab;
-        private WalletGroup _WalletGroup = new WalletGroup();
-        private TransactionsGroup _transactionsGroup = new TransactionsGroup();
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -37,24 +35,27 @@ namespace Budgethelper.Forms
             this.MainForm_tabs.SelectedIndex = 0;
             this.MainForm_tabs.Size = new System.Drawing.Size(675, 450);
             this.MainForm_tabs.TabIndex = 0;
-            this.MainForm_tabs.SelectedIndexChanged += new System.EventHandler(this.MainForm_tabs_TabIndexChanged);
-            this.MainForm_tabs.TabIndexChanged += new System.EventHandler(this.MainForm_tabs_TabIndexChanged);
+            this.MainForm_tabs.SelectedIndexChanged += new System.EventHandler(this.MainForm_tabs_SelectedIndexChanged);
             // 
             // MainForm_WalletTab
             // 
             this.MainForm_WalletTab.Location = new System.Drawing.Point(4, 22);
             this.MainForm_WalletTab.Name = "MainForm_WalletTab";
+            this.MainForm_WalletTab.Padding = new System.Windows.Forms.Padding(0);
             this.MainForm_WalletTab.Size = new System.Drawing.Size(667, 424);
             this.MainForm_WalletTab.TabIndex = 0;
             this.MainForm_WalletTab.Text = "Кошелёк";
+            this.MainForm_WalletTab.UseVisualStyleBackColor = true;
             // 
             // MainForm_TransactionsTab
             // 
             this.MainForm_TransactionsTab.Location = new System.Drawing.Point(4, 22);
             this.MainForm_TransactionsTab.Name = "MainForm_TransactionsTab";
+            this.MainForm_TransactionsTab.Padding = new System.Windows.Forms.Padding(0);
             this.MainForm_TransactionsTab.Size = new System.Drawing.Size(667, 424);
             this.MainForm_TransactionsTab.TabIndex = 1;
             this.MainForm_TransactionsTab.Text = "Транзакции";
+            this.MainForm_TransactionsTab.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -64,7 +65,6 @@ namespace Budgethelper.Forms
             this.Text = "BudgetHelper";
             this.MainForm_tabs.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
     }
 }
