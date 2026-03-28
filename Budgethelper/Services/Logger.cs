@@ -53,7 +53,7 @@ namespace Budgethelper.Services
         #region Public API
 
         public static void SendMessage(
-            MessageType type,
+            Message_Type type,
             string message,
             [CallerMemberName] string member = "",
             [CallerFilePath] string file = "",
@@ -75,7 +75,7 @@ namespace Budgethelper.Services
 
         #region Core Logic
 
-        private void Append_ByMessageType(MessageType type, string message)
+        private void Append_ByMessageType(Message_Type type, string message)
         {
             string prompt = GetPrompt(type);
             Color color = GetColor(type);
@@ -109,35 +109,35 @@ namespace Budgethelper.Services
 
         #region Helpers
 
-        private string GetPrompt(MessageType mType)
+        private string GetPrompt(Message_Type mType)
         {
             switch (mType)
             {
-                case MessageType.UI:
+                case Message_Type.UI:
                     return "Сообщение от Пользовательского интерфейса:";
 
-                case MessageType.Account:
+                case Message_Type.Account:
                     return "Сообщение от сервиса работы со счетами :";
 
-                case MessageType.User:
+                case Message_Type.User:
                     return "Сообщение от сервиса работы с учетной записью пользователя приложения:";
 
-                case MessageType.DB:
-                case MessageType.DB_success:
-                case MessageType.DB_fail:
+                case Message_Type.DB:
+                case Message_Type.DB_success:
+                case Message_Type.DB_fail:
                     return "Сообщение от сервиса Базы Данных:";
 
-                case MessageType.TransactionExpence:
-                case MessageType.TransactionIncome:
+                case Message_Type.TransactionExpence:
+                case Message_Type.TransactionIncome:
                     return "Сообщение от сервиса работы с транзакциями:";
 
-                case MessageType.Warn:
+                case Message_Type.Warn:
                     return "Сообщение Предупреждение:";
 
-                case MessageType.Error:
+                case Message_Type.Error:
                     return "Системное Сообщение об Ошибке:";
 
-                case MessageType.Debug:
+                case Message_Type.Debug:
                     return "Отладочное сообщение:";
 
                 default:
@@ -145,55 +145,55 @@ namespace Budgethelper.Services
             }
         }
 
-        private Color GetColor(MessageType mType)
+        private Color GetColor(Message_Type mType)
         {
             switch (mType)
             {
-                case MessageType.UI:
+                case Message_Type.UI:
                     return Color.LightBlue;
 
-                case MessageType.Info:
+                case Message_Type.Info:
                     return Color.White;
 
-                case MessageType.Account:
+                case Message_Type.Account:
                     return Color.LightGreen;
 
-                case MessageType.AccountSelect:
+                case Message_Type.AccountSelect:
                     return Color.Yellow;
 
-                case MessageType.AccountCReate:
+                case Message_Type.AccountCReate:
                     return Color.Blue;
 
-                case MessageType.User:
+                case Message_Type.User:
                     return Color.LightSkyBlue;
 
-                case MessageType.DB:
+                case Message_Type.DB:
                     return Color.Orange;
 
-                case MessageType.DB_success:
+                case Message_Type.DB_success:
                     return Color.Green;
 
-                case MessageType.DB_fail:
+                case Message_Type.DB_fail:
                     return Color.Red;
 
-                case MessageType.Transaction:
+                case Message_Type.Transaction:
                     return Color.ForestGreen;
-                case MessageType.TransactionIncome:
+                case Message_Type.TransactionIncome:
                     return Color.LawnGreen;
 
-                case MessageType.TransactionExpence:
+                case Message_Type.TransactionExpence:
                     return Color.IndianRed;
 
-                case MessageType.Warn:
+                case Message_Type.Warn:
                     return Color.PaleVioletRed;
 
-                case MessageType.Error:
+                case Message_Type.Error:
                     return Color.Red;
 
-                case MessageType.Debug:
+                case Message_Type.Debug:
                     return Color.LightGray;
 
-                case MessageType.Hint:
+                case Message_Type.Hint:
                     return Color.Yellow;
                 
                 default:

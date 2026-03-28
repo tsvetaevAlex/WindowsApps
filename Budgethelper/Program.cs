@@ -24,9 +24,9 @@ namespace Budgethelper
             if (String.IsNullOrEmpty(storedUid))// если на ПК нет Uid а значит и базы с уже имеющимися, данными. ИНИциалиизируем работу приложения.
                                                 // создаем пользователя пккпунты к которым будут привязаны транзкции (чеки), для составления отчетов в ближайшем будущем.,
             {
-                Logger.SendMessage(MessageType.User, "при запуске я не нашел артефактов работы приложения на данном компьютере\r\n" +
+                Logger.SendMessage(Message_Type.User, "при запуске я не нашел артефактов работы приложения на данном компьютере\r\n" +
                     "полагаю, что это первый запуск.");
-                Logger.SendMessage(MessageType.Info, "Первое, что мы сделаем это добавим  в приложение нового пользоваателя с Вашими данными.\r\n" +
+                Logger.SendMessage(Message_Type.Info, "Первое, что мы сделаем это добавим  в приложение нового пользоваателя с Вашими данными.\r\n" +
                     "\r\nвторым этапом начала работы, будет создание ВАшего первого кошелька и добавление источников денежных средств доступных из кошелька. Наличные / карточки." +
                     "\r\n - заполните пожалуйста поля формы регистрации:" +
                     "\r\n - Имя Фамилия и пароль,поля обязательные для заполнения:" +
@@ -58,7 +58,7 @@ namespace Budgethelper
             SqlService.LoadAccountsToSession(0); // Session.AccountsList = GetAccounts();
 
             // 4. Сообщение о запуске
-            Logger.SendMessage(MessageType.Info,"Application started");
+            Logger.SendMessage(Message_Type.Info,"Application started");
 
             // 5. Запуск главной формы
             Application.Run(new MainForm());

@@ -1,6 +1,6 @@
 ﻿namespace Budgethelper.Models
 {
-    public enum MessageType
+    public enum Message_Type
     {
         undefined,
         Success,

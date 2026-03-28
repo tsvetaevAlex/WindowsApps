@@ -36,7 +36,7 @@ namespace Budgethelper.Forms
         {
             base.OnShown(e);
 
-            Logger.SendMessage(MessageType.Info,
+            Logger.SendMessage(Message_Type.Info,
                 "logger successfully initiated.");
         }
 

@@ -39,7 +39,7 @@
             this.WG_Label_NewWalletCshInitBalance = new System.Windows.Forms.Label();
             this.WG_GroupBox_NewWalletMoneySourcess_List = new System.Windows.Forms.GroupBox();
             this.WG_Button_newWallet_Add_MoneySources = new System.Windows.Forms.Button();
-            this.G_GroupBox_available_Money_Sourcess = new System.Windows.Forms.GroupBox();
+            this.WG_GroupBox_available_Money_Sourcess = new System.Windows.Forms.GroupBox();
             this.WG_GroupBox_NewWalletName.SuspendLayout();
             this.WG_GroupBox_NewWalletMoneySource.SuspendLayout();
             this.SuspendLayout();
@@ -156,20 +156,20 @@
             this.WG_Button_newWallet_Add_MoneySources.Text = "<= Добавить";
             this.WG_Button_newWallet_Add_MoneySources.UseVisualStyleBackColor = true;
             // 
-            // G_GroupBox_available_Money_Sourcess
+            // WG_GroupBox_available_Money_Sourcess
             // 
-            this.G_GroupBox_available_Money_Sourcess.Location = new System.Drawing.Point(246, 180);
-            this.G_GroupBox_available_Money_Sourcess.Name = "G_GroupBox_available_Money_Sourcess";
-            this.G_GroupBox_available_Money_Sourcess.Size = new System.Drawing.Size(120, 100);
-            this.G_GroupBox_available_Money_Sourcess.TabIndex = 5;
-            this.G_GroupBox_available_Money_Sourcess.TabStop = false;
-            this.G_GroupBox_available_Money_Sourcess.Text = "Досьупные счета:";
+            this.WG_GroupBox_available_Money_Sourcess.Location = new System.Drawing.Point(246, 180);
+            this.WG_GroupBox_available_Money_Sourcess.Name = "WG_GroupBox_available_Money_Sourcess";
+            this.WG_GroupBox_available_Money_Sourcess.Size = new System.Drawing.Size(120, 100);
+            this.WG_GroupBox_available_Money_Sourcess.TabIndex = 5;
+            this.WG_GroupBox_available_Money_Sourcess.TabStop = false;
+            this.WG_GroupBox_available_Money_Sourcess.Text = "Досьупные счета:";
             // 
             // WalletGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.G_GroupBox_available_Money_Sourcess);
+            this.Controls.Add(this.WG_GroupBox_available_Money_Sourcess);
             this.Controls.Add(this.WG_Button_newWallet_Add_MoneySources);
             this.Controls.Add(this.WG_GroupBox_NewWalletMoneySourcess_List);
             this.Controls.Add(this.WG_GroupBox_NewWalletMoneySource);
@@ -189,7 +189,7 @@
         private System.Windows.Forms.GroupBox WG_GroupBox_NewWalletName;
         private System.Windows.Forms.GroupBox WG_GroupBox_NewWalletMoneySource;
         private System.Windows.Forms.GroupBox WG_GroupBox_NewWalletMoneySourcess_List;
-        private System.Windows.Forms.GroupBox G_GroupBox_available_Money_Sourcess;
+        private System.Windows.Forms.GroupBox WG_GroupBox_available_Money_Sourcess;
 
         private System.Windows.Forms.TextBox WF_textBox_NewWalletName;
         private System.Windows.Forms.TextBox WG_TextBox_NewWalletCardInitBalance;

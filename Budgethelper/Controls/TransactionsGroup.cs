@@ -111,14 +111,14 @@ namespace Budgethelper.Controls
                     Session.Income_TransactQTY++;
                     Session.Income_Totalbalance += CurrentTransaction.Amount;
                     Session.overallbalance += CurrentTransaction.Amount;
-                    Logger.SendMessage(MessageType.TransactionIncome, loggerMsg);
+                    Logger.SendMessage(Message_Type.TransactionIncome, loggerMsg);
                 }
                 else
                 {
                     Session.Expense_TransactQTY++;
                     Session.Expense_Totalbalance += CurrentTransaction.Amount;
                     Session.overallbalance -= CurrentTransaction.Amount;
-                    Logger.SendMessage(MessageType.TransactionExpence, loggerMsg);
+                    Logger.SendMessage(Message_Type.TransactionExpence, loggerMsg);
                 }
 
                 rtbTransact_QTY.Text = Session.TransactQTY.ToString();
@@ -128,9 +128,9 @@ namespace Budgethelper.Controls
 
                 UpdateSEssionStats();
                 if (CurrentTransaction.OperationType == TransactionType.Income)
-                    Logger.SendMessage(MessageType.TransactionIncome, loggerMsg);
+                    Logger.SendMessage(Message_Type.TransactionIncome, loggerMsg);
                 else
-                    Logger.SendMessage(MessageType.TransactionExpence, loggerMsg);
+                    Logger.SendMessage(Message_Type.TransactionExpence, loggerMsg);
                 LoadTransactionsToGrid();
             }
             catch (Exception ex)
@@ -282,7 +282,7 @@ namespace Budgethelper.Controls
 
         private void TRG_comboBox_NewACcountType_Click(object sender, EventArgs e)
         {
-            TRG_comboBox_NewACcountType.DataSource = Enum.GetValues(typeof(Money_SourceType));
+            TRG_comboBox_NewACcountType.DataSource = Enum.GetValues(typeof(FundsSource_Type));
         }
 
         #endregion

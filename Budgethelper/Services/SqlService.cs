@@ -213,7 +213,7 @@ namespace Budgethelper.Services
                         {
                             AccountModel acc = new AccountModel(
                                 reader.GetString(2),
-                                (Money_SourceType)Enum.Parse(typeof(Money_SourceType), reader.GetString(3)),
+                                (FundsSource_Type)Enum.Parse(typeof(FundsSource_Type), reader.GetString(3)),
                                 reader.GetDecimal(4),
                                 reader.GetString(5)
                             );
@@ -333,13 +333,13 @@ namespace Budgethelper.Services
 
             int fatherWalletId = CreateWallet(fatherWallet);
 
-            int fatherCash = CreateAccount(new AccountModel("Father Cash", Money_SourceType.Cash, 500, "")
+            int fatherCash = CreateAccount(new AccountModel("Father Cash", FundsSource_Type.Cash, 500, "")
             { WalletId = fatherWalletId });
 
-            int fatherVisa = CreateAccount(new AccountModel("Father Visa", Money_SourceType.Card, 2000, "")
+            int fatherVisa = CreateAccount(new AccountModel("Father Visa", FundsSource_Type.Card, 2000, "")
             { WalletId = fatherWalletId });
 
-            int fatherMaster = CreateAccount(new AccountModel("Father MasterCard", Money_SourceType.Card, 1500, "")
+            int fatherMaster = CreateAccount(new AccountModel("Father MasterCard", FundsSource_Type.Card, 1500, "")
             { WalletId = fatherWalletId });
 
             CreateTransaction(fatherCash, DateTime.Now.AddDays(-2), 120, TransactionType.Income, "Gift");
@@ -357,13 +357,13 @@ namespace Budgethelper.Services
 
             int motherWalletId = CreateWallet(motherWallet);
 
-            int motherCash = CreateAccount(new AccountModel("Mother Cash", Money_SourceType.Cash, 300, "")
+            int motherCash = CreateAccount(new AccountModel("Mother Cash", FundsSource_Type.Cash, 300, "")
             { WalletId = motherWalletId });
 
-            int motherVisa = CreateAccount(new AccountModel("Mother Visa", Money_SourceType.Card, 2500, "")
+            int motherVisa = CreateAccount(new AccountModel("Mother Visa", FundsSource_Type.Card, 2500, "")
             { WalletId = motherWalletId });
 
-            int motherDebit = CreateAccount(new AccountModel("Mother Debit Card", Money_SourceType.Card, 1800, "")
+            int motherDebit = CreateAccount(new AccountModel("Mother Debit Card", FundsSource_Type.Card, 1800, "")
             { WalletId = motherWalletId });
 
             CreateTransaction(motherCash, DateTime.Now.AddDays(-2), 80, TransactionType.Expense, "Cosmetics");

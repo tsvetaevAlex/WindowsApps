@@ -1,6 +1,6 @@
 ﻿namespace Budgethelper.Models
 {
-    public enum Money_SourceType
+    public enum FundsSource_Type
     {
         Cash,
         Card
@@ -8,15 +8,15 @@
 
     public class MoneySource
     {
-        public Money_SourceType Type { get; set; }
+        public FundsSource_Type Type { get; set; }
 
         public override string ToString()
         {
             switch (Type)
             {
-                case Money_SourceType.Cash:
+                case FundsSource_Type.Cash:
                     return "Наличные";
-                case Money_SourceType.Card:
+                case FundsSource_Type.Card:
                     return "Банковская карта";
                 default:
                     return Type.ToString();

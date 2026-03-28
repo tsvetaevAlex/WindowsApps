@@ -35,8 +35,8 @@ namespace Budgethelper.Forms
 
             if (newHash != storedHash)
             {
-                Logger.SendMessage(MessageType.Error, "Ошибка авторизации: Введен Неверный пароль.");
-                Logger.SendMessage(MessageType.Hint, "попробуцйте еще раз.");
+                Logger.SendMessage(Message_Type.Error, "Ошибка авторизации: Введен Неверный пароль.");
+                Logger.SendMessage(Message_Type.Hint, "попробуцйте еще раз.");
 
                 MessageBox.Show(
                     "Неверный пароль",
@@ -57,7 +57,7 @@ namespace Budgethelper.Forms
                 auth.ShowDialog();
             }
             else {
-                Logger.SendMessage(MessageType.Error,"Вы ввели неверныый пароль 3 раза.\r\n" +
+                Logger.SendMessage(Message_Type.Error,"Вы ввели неверныый пароль 3 раза.\r\n" +
                     "пардон в целях бнзопасноти и сохранения целостности и приватности данных\r\n" +
                     "я вынужден прекратить текущую рабочую сессию.Попробуйте позже еще раз.");
 

@@ -48,10 +48,10 @@ namespace Budgethelper.Forms
 
         private void MainForm_tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Logger.SendMessage(MessageType.UI,
+            Logger.SendMessage(Message_Type.UI,
                 $"Вы перешли на закладку: [{MainForm_tabs.SelectedIndex}]: \"{MainForm_tabs.SelectedTab.Text}\"");
 
-            ApplySizeForCurrentTab(true);
+            ApplySizeForCurrentTab(false);
         }
 
         private void ApplySizeForCurrentTab(bool animate)

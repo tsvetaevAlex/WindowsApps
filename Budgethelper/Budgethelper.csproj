@@ -94,8 +94,8 @@
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\BalanceResult.cs" />
-    <Compile Include="Models\MessageType.cs" />
-    <Compile Include="Models\Money_SourceType.cs" />
+    <Compile Include="Models\Message_Type.cs" />
+    <Compile Include="Models\FundsSource_Type.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Models\User.cs" />
