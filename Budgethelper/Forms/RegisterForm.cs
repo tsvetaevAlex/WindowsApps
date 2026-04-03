@@ -42,7 +42,7 @@ namespace Budgethelper.Forms
             );
             Session.CurrentUser = user;
 
-            SqlService.CreateUser(user); //save user data ti YUser table
+            SqlService.CreateUser(user); //save user data to TUser table
 
             Session.CurrentUser = user; //save user details to session 
                                         //keep data closer reduce QTY of requests to DB
