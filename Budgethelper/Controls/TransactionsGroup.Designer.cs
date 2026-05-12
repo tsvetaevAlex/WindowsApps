@@ -41,7 +41,8 @@ namespace Budgethelper.Controls
             this.trabsactComment = new System.Windows.Forms.Label();
             this.TRG_bAddTransact = new System.Windows.Forms.Button();
             this.TRG_GroupBox_SessionStats = new System.Windows.Forms.GroupBox();
-            this.TRG_groupBox_AddBewAccount = new System.Windows.Forms.GroupBox();
+            this.TRG_groupBox_AddNewAccount = new System.Windows.Forms.GroupBox();
+            this.TRG_button_SaveVew_MoneySource = new System.Windows.Forms.Button();
             this.TRG_textBox_NewAccountDescription = new System.Windows.Forms.TextBox();
             this.TRG_textBox_NewAccountBalanse = new System.Windows.Forms.TextBox();
             this.TRG_comboBox_NewACcountType = new System.Windows.Forms.ComboBox();
@@ -65,7 +66,7 @@ namespace Budgethelper.Controls
             this.TRG_comboBox_Header_AccountSElector = new System.Windows.Forms.ComboBox();
             this.TRG_Button_Header_AccpuntSelect = new System.Windows.Forms.Button();
             this.TRG_GroupBox_SessionStats.SuspendLayout();
-            this.TRG_groupBox_AddBewAccount.SuspendLayout();
+            this.TRG_groupBox_AddNewAccount.SuspendLayout();
             this.TRG_GroupBox_SessionStats_TotalAmount.SuspendLayout();
             this.TRG_GroupBox_SessionStats_Transaction_QTY.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TRG_dataGridView)).BeginInit();
@@ -185,7 +186,7 @@ namespace Budgethelper.Controls
             // 
             // TRG_GroupBox_SessionStats
             // 
-            this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_groupBox_AddBewAccount);
+            this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_groupBox_AddNewAccount);
             this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_SessionStats_RichTextBox_Overal_Balanse);
             this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_SessionStats_Label_OveralTransactionsQTY);
             this.TRG_GroupBox_SessionStats.Controls.Add(this.TRG_GroupBox_SessionStats_TotalAmount);
@@ -200,25 +201,38 @@ namespace Budgethelper.Controls
             this.TRG_GroupBox_SessionStats.TabStop = false;
             this.TRG_GroupBox_SessionStats.Text = "Краткая сводка Текущей Сессии";
             // 
-            // TRG_groupBox_AddBewAccount
+            // TRG_groupBox_AddNewAccount
             // 
-            this.TRG_groupBox_AddBewAccount.Controls.Add(this.TRG_textBox_NewAccountDescription);
-            this.TRG_groupBox_AddBewAccount.Controls.Add(this.TRG_textBox_NewAccountBalanse);
-            this.TRG_groupBox_AddBewAccount.Controls.Add(this.TRG_comboBox_NewACcountType);
-            this.TRG_groupBox_AddBewAccount.Controls.Add(this.TRG_TextBox_NewAccountName);
-            this.TRG_groupBox_AddBewAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TRG_groupBox_AddBewAccount.Location = new System.Drawing.Point(20, 290);
-            this.TRG_groupBox_AddBewAccount.Name = "TRG_groupBox_AddBewAccount";
-            this.TRG_groupBox_AddBewAccount.Size = new System.Drawing.Size(370, 145);
-            this.TRG_groupBox_AddBewAccount.TabIndex = 11;
-            this.TRG_groupBox_AddBewAccount.TabStop = false;
-            this.TRG_groupBox_AddBewAccount.Text = "Добавить новый Аккаунт";
-            this.TRG_groupBox_AddBewAccount.Visible = false;
+            this.TRG_groupBox_AddNewAccount.Controls.Add(this.TRG_button_SaveVew_MoneySource);
+            this.TRG_groupBox_AddNewAccount.Controls.Add(this.TRG_textBox_NewAccountDescription);
+            this.TRG_groupBox_AddNewAccount.Controls.Add(this.TRG_textBox_NewAccountBalanse);
+            this.TRG_groupBox_AddNewAccount.Controls.Add(this.TRG_comboBox_NewACcountType);
+            this.TRG_groupBox_AddNewAccount.Controls.Add(this.TRG_TextBox_NewAccountName);
+            this.TRG_groupBox_AddNewAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TRG_groupBox_AddNewAccount.Location = new System.Drawing.Point(20, 290);
+            this.TRG_groupBox_AddNewAccount.Name = "TRG_groupBox_AddBewAccount";
+            this.TRG_groupBox_AddNewAccount.Size = new System.Drawing.Size(370, 145);
+            this.TRG_groupBox_AddNewAccount.TabIndex = 11;
+            this.TRG_groupBox_AddNewAccount.TabStop = false;
+            this.TRG_groupBox_AddNewAccount.Text = "Добавить новый Аккаунт";
+            this.TRG_groupBox_AddNewAccount.Visible = false;
+            // 
+            // TRG_button_SaveVew_MoneySource
+            // 
+            this.TRG_button_SaveVew_MoneySource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TRG_button_SaveVew_MoneySource.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TRG_button_SaveVew_MoneySource.Location = new System.Drawing.Point(210, 76);
+            this.TRG_button_SaveVew_MoneySource.Name = "TRG_button_SaveVew_MoneySource";
+            this.TRG_button_SaveVew_MoneySource.Size = new System.Drawing.Size(100, 25);
+            this.TRG_button_SaveVew_MoneySource.TabIndex = 27;
+            this.TRG_button_SaveVew_MoneySource.Text = "Сохранить";
+            this.TRG_button_SaveVew_MoneySource.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.TRG_button_SaveVew_MoneySource.UseVisualStyleBackColor = true;
             // 
             // TRG_textBox_NewAccountDescription
             // 
             this.TRG_textBox_NewAccountDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TRG_textBox_NewAccountDescription.Location = new System.Drawing.Point(140, 51);
+            this.TRG_textBox_NewAccountDescription.Location = new System.Drawing.Point(140, 50);
             this.TRG_textBox_NewAccountDescription.Name = "TRG_textBox_NewAccountDescription";
             this.TRG_textBox_NewAccountDescription.Size = new System.Drawing.Size(170, 20);
             this.TRG_textBox_NewAccountDescription.TabIndex = 26;
@@ -248,7 +262,7 @@ namespace Budgethelper.Controls
             this.TRG_comboBox_NewACcountType.Text = "Income / Expense";
             this.TRG_comboBox_NewACcountType.Click += new System.EventHandler(this.TRG_comboBox_NewACcountType_Click);
             // 
-            // TRG_TExtBox_NewAccountName
+            // TRG_TextBox_NewAccountName
             // 
             this.TRG_TextBox_NewAccountName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TRG_TextBox_NewAccountName.Location = new System.Drawing.Point(10, 20);
@@ -433,7 +447,7 @@ namespace Budgethelper.Controls
             this.YRG_button_AddNewAccpunt.TabIndex = 27;
             this.YRG_button_AddNewAccpunt.Text = "Добавить новый аккаунт";
             this.YRG_button_AddNewAccpunt.UseVisualStyleBackColor = true;
-            this.YRG_button_AddNewAccpunt.Click += new System.EventHandler(this.YRG_button_AddNewAccpunt_Click);
+            this.YRG_button_AddNewAccpunt.Click += new System.EventHandler(this.TRG_button_AddNewAccount_Click);
             // 
             // TRG_dataGridView
             // 
@@ -486,8 +500,8 @@ namespace Budgethelper.Controls
             this.Load += new System.EventHandler(this.TransactionsGroup_Load);
             this.TRG_GroupBox_SessionStats.ResumeLayout(false);
             this.TRG_GroupBox_SessionStats.PerformLayout();
-            this.TRG_groupBox_AddBewAccount.ResumeLayout(false);
-            this.TRG_groupBox_AddBewAccount.PerformLayout();
+            this.TRG_groupBox_AddNewAccount.ResumeLayout(false);
+            this.TRG_groupBox_AddNewAccount.PerformLayout();
             this.TRG_GroupBox_SessionStats_TotalAmount.ResumeLayout(false);
             this.TRG_GroupBox_SessionStats_TotalAmount.PerformLayout();
             this.TRG_GroupBox_SessionStats_Transaction_QTY.ResumeLayout(false);
@@ -534,11 +548,10 @@ namespace Budgethelper.Controls
         private Button YRG_button_AddNewAccpunt;
 
         private ComboBox TRG_comboBox_Header_AccountSElector;
-        private GroupBox TRG_groupBox_AddBewAccount;
+        private GroupBox TRG_groupBox_AddNewAccount;
         private ComboBox TRG_comboBox_NewACcountType;
 
         private DataGridView TRG_dataGridView;
-
-
+        private Button TRG_button_SaveVew_MoneySource;
     }
 }

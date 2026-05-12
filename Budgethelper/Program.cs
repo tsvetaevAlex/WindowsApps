@@ -17,7 +17,6 @@ namespace Budgethelper
 
             // 1. Инициализация логгера
             Logger.Initialize();
-            Session.IsAuthorized = true;
 
             //Verify reristryfou Uid tto understand, is user works before 
             var storedUid = RegistryService.LoadUid();
@@ -26,21 +25,21 @@ namespace Budgethelper
             {
                 Logger.SendMessage(Message_Type.User, "при запуске я не нашел артефактов работы приложения на данном компьютере\r\n" +
                     "полагаю, что это первый запуск.");
-                Logger.SendMessage(Message_Type.Info, 
-                    "\r\n1.Что мы сделаем это добавим  в приложение нового пользоваателя с Вашими данными.\r\n" +
-                    "\r\n2.Начало работы, будет создание Вашего первого кошелька и добавление источников денежных средств доступных из кошелька. Наличные / карточки." +
-                    "\r\n - заполните пожалуйста поля формы регистрации:" +
-                    "\r\n - Имя Фамилия и пароль,поля обязательные для заполнения:" +
-                    "\r\n - если Отчество будт указано, будет приоритетно обращение по Имя Отчество, если нет, то по имени.:" +
-                    "\r\n - Используйте глоачку [x]Показать Пароль," +
-                    "\r\n   для проверки введенного ароля перепд нажатием кнопки  [Регистрация]."); 
+                Logger.SendMessage(Message_Type.Info,
+                    ".Что мы сейчас будем делать:" +
+                    "\r\n1добавим в приложение нового пользоваателя с Вашими данными.\r\n" +
+                    "\r\n2.добавим Ваш первыый кошелёк и добавим источник денежных средств доступных из кошелька. Наличные / карточки.");
 
                 // 5. Запуск  формы регистрации пользователя.
                 Application.Run(new RegisterForm());
-
-                //вводим пароль, авторизация.
-                LoginForm auth = new LoginForm();
-                auth.ShowDialog();
+                Logger.SendMessage(Message_Type.Info, "\r\n +----------------------------------+" +
+                                                      "\r\n | Регистрация нового пользователя. |" +
+                                                      "\r\n +----------------------------------+");
+                    Logger.SendMessage(Message_Type.User, "  - заполните пожалуйста поля формы регистрации:\" +\r\n" +
+                    "\r\n -1. Имя Фамилия и пароль,поля обязательные для заполнения:\" +" +
+                    "\r\n -2. если Отчество будт указано, будет приоритетно обращение по Имя Отчество, если нет, то по имени.:\" +" +
+                    "\r\n -3. Используйте глоачку [x]Показать Пароль, \r\n" +
+                    "\r\n -3.1. для проверки введенного ароля перепд нажатием кнопки  [Регистрация].");
 
                 if (Session.IsAuthorized)
                 {
@@ -49,10 +48,17 @@ namespace Budgethelper
 
                 }
                 else { }
+            } // if (String.IsNullOrEmpty(storedUid))// если на ПК нет Uid 
+            else
+            {
+                Logger.SendMessage(Message_Type.traceroute, "Budgethelper.Program.Main> Account found");
+                Logger.SendMessage(Message_Type.User, "Учетная запись найдена, необходимо пойти авторизацию.");
+                //вводим пароль, авторизация.
+                LoginForm auth = new LoginForm();
+                auth.ShowDialog();
             }
-
             // 2. Путь к БД
-            Session.DbPath = "budgethelper.db";
+            Session.DbPath = Session.DbPath;
             Session.dropAccounts();
             // 3. Инициализация базы
             SqlService.Initialize_Database();

@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Budgethelper.Models;
+using Budgethelper.Services;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using Budgethelper.Models;
+using System.IO;
 
 namespace Budgethelper.Services
 {
     public static class SqlService
     {
+
+
+           
         private static string connection = "Data Source=" + Session.DbPath + ";Version=3;";
 
         private static SQLiteConnection GetConnection()
@@ -17,6 +22,12 @@ namespace Budgethelper.Services
         // ================= INIT DATABASE =================
         public static void Initialize_Database()
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.Initialize_Database()");
+            string roamingAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "Roaming";
+            string DbPath = Path.Combine(roamingAppDataPath, "Budgethelper\\budgethelper.sqlite");
+            Session.DbPath = DbPath;
+            Logger.SendMessage(Message_Type.DB, $"DbPath: ${DbPath}");
+
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -54,16 +65,59 @@ namespace Budgethelper.Services
                                         Comment TEXT
                                    );";
 
-                new SQLiteCommand(users, conn).ExecuteNonQuery();
-                new SQLiteCommand(wallets, conn).ExecuteNonQuery();
-                new SQLiteCommand(accounts, conn).ExecuteNonQuery();
-                new SQLiteCommand(transactions, conn).ExecuteNonQuery();
+                //"Create table: TUser
+                try
+                {
+                    new SQLiteCommand(users, conn).ExecuteNonQuery();
+                    Logger.SendMessage(Message_Type.DB, $"Создаем таблицу: TUser");
+                    Logger.SendMessage(Message_Type.DB_success, $"Таблица: TUser, успешно срздана");
+                }
+                catch (Exception e)
+                {
+                    Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: TUser. не удалось.");
+                    Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
+                }
+
+                //Create table: wallets
+                try
+                {
+                    new SQLiteCommand(wallets, conn).ExecuteNonQuery();
+                    Logger.SendMessage(Message_Type.DB, $"Создаем таблицу: wallets");
+                }
+                catch (Exception e)
+                {
+                Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: wallets. не удалось.");
+                Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
+                }
+                //Create table: accounts
+                try
+                {
+                    new SQLiteCommand(accounts, conn).ExecuteNonQuery();
+                    Logger.SendMessage(Message_Type.DB, $"Создаем таблицу: accounts");
+                }
+                catch (Exception e)
+                {
+                    Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: accounts. не удалось.");
+                    Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
+                }
+                //Create table: transactions
+                try
+                {
+                    new SQLiteCommand(transactions, conn).ExecuteNonQuery();
+                    Logger.SendMessage(Message_Type.DB, $"Создаем таблицу: transactions");
+                }
+                catch (Exception e)
+                {
+                    Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: transactions. не удалось.");
+                    Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
+                }
             }
         }
 
         // ================= USER =================
         public static void CreateUser(User user)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateUser(User user)");
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -85,6 +139,8 @@ namespace Budgethelper.Services
 
         public static User GetUser(string uid)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.GetUser(string uid)");
+
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -117,6 +173,8 @@ namespace Budgethelper.Services
         // ================= WALLET =================
         public static int CreateWallet(WalletModel wallet)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateWallet(WalletModel wallet)");
+            int returnValue = -1;
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -130,14 +188,17 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@UserUid", wallet.UserUid);
                     cmd.Parameters.AddWithValue("@Name", wallet.Name);
                     cmd.Parameters.AddWithValue("@Description", wallet.Description);
-
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+                    returnValue =  Convert.ToInt32(cmd.ExecuteScalar());
+                    Logger.SendMessage(Message_Type.DB_success,$"запись успешно добавлена в БазуДанных, присвоен iD: {returnValue}");
                 }
+                return returnValue;
             }
         }
 
         public static List<WalletModel> GetWallets(string userUid)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.GetWallets(string userUid)");
+
             var list = new List<WalletModel>();
 
             using (var conn = GetConnection())
@@ -172,6 +233,8 @@ namespace Budgethelper.Services
         // ================= ACCOUNT =================
         public static int CreateAccount(AccountModel acc)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateAccount(AccountModel acc)");
+
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -195,6 +258,8 @@ namespace Budgethelper.Services
 
         public static List<AccountModel> GetAccounts(int walletId)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.GetAccounts(int walletId)");
+
             var list = new List<AccountModel>();
 
             using (var conn = GetConnection())
@@ -233,6 +298,8 @@ namespace Budgethelper.Services
         // ================= TRANSACTIONS =================
         public static int CreateTransaction(Transaction t)
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateTransaction(Transaction t)");
+
             using (var conn = GetConnection())
             {
                 conn.Open();
@@ -256,6 +323,8 @@ namespace Budgethelper.Services
 
         public static void CreateTransaction(int accountId, DateTime date, decimal amount, TransactionType type, string description = "")
         {
+            Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateTransaction(int accountId, DateTime date, decimal amount, TransactionType type, string description = \"\")");
+
             CreateTransaction(new Transaction
             {
                 AccountId = accountId,
@@ -333,20 +402,46 @@ namespace Budgethelper.Services
 
             int fatherWalletId = CreateWallet(fatherWallet);
 
-            int fatherCash = CreateAccount(new AccountModel("Father Cash", FundsSource_Type.Cash, 500, "")
+            int fatherCash = CreateAccount(new AccountModel("Father Cash", FundsSource_Type.Cash, 500, "Добрый Папа")
             { WalletId = fatherWalletId });
 
-            int fatherVisa = CreateAccount(new AccountModel("Father Visa", FundsSource_Type.Card, 2000, "")
+            int fatherVisa = CreateAccount(new AccountModel("Father Visa", FundsSource_Type.Card, 2000, "Мамина Виза")
             { WalletId = fatherWalletId });
 
-            int fatherMaster = CreateAccount(new AccountModel("Father MasterCard", FundsSource_Type.Card, 1500, "")
+            int fatherMaster = CreateAccount(new AccountModel("Father MasterCard", FundsSource_Type.Card, 1500, "Папа МАстер")
             { WalletId = fatherWalletId });
 
-            CreateTransaction(fatherCash, DateTime.Now.AddDays(-2), 120, TransactionType.Income, "Gift");
-            CreateTransaction(fatherCash, DateTime.Now.AddDays(-1), 50, TransactionType.Expense, "Groceries");
 
-            CreateTransaction(fatherVisa, DateTime.Now.AddDays(-3), 1000, TransactionType.Income, "Salary");
-            CreateTransaction(fatherVisa, DateTime.Now.AddDays(-1), 150, TransactionType.Expense, "Fuel");
+            var Gift  = new Transaction
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-2),
+                Amount = 120,
+                OperationType = TransactionType.Income,
+                Description = "Gift"
+            };
+            CreateTransaction(Gift);
+
+            //CreateTransaction(fatherCash, DateTime.Now.AddDays(-1), 50, TransactionType.Expense, "Groceries");
+            var Groceries = new Transaction
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-1),
+                Amount = 50,
+                OperationType = TransactionType.Expense,
+                Description = "Groceries"
+            };
+            CreateTransaction(Groceries);
+            var Fuel = new Transaction
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-1),
+                Amount = 150,
+                OperationType = TransactionType.Expense,
+                Description = "Fuel"
+            };
+            //CreateTransaction(fatherVisa, DateTime.Now.AddDays(-1), 150, TransactionType.Expense, "Fuel");
+            CreateTransaction(Fuel);
 
             WalletModel motherWallet = new WalletModel
             {

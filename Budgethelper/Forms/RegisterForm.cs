@@ -2,6 +2,7 @@
 using Budgethelper.Services;
 using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace Budgethelper.Forms
     {
         public RegisterForm()
         {
+            Logger.SendMessage(Message_Type.traceroute, "RegisterForm");
             SqlService.Initialize_Database();
             InitializeComponent();
         }
@@ -27,10 +29,17 @@ namespace Budgethelper.Forms
             }
 
             string uid = Guid.NewGuid().ToString();
+            Logger.SendMessage(Message_Type.User,$"Вaм присвоен ID: {uid}");
             string passwordHash = HashService.GetHash(txtPassword.Text);
 
             Session.Uid = uid;
-            Session.DbPath = $"{uid}.sqlite";
+            //Session.DbPath = $"{uid}.sqlite";
+            string roamingAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            Session.DbPath = Path.Combine(roamingAppDataPath, "{uid}.sqlite");
+
+            Logger.SendMessage(Message_Type.Debug, $"roaming AppData Folder Path: {roamingAppDataPath}");
+            Logger.SendMessage(Message_Type.traceroute, $"appliction db file: {Session.DbPath}");
+
             SqlService.Initialize_Database(); //create TUser table
 
             var user = new User(
@@ -40,8 +49,6 @@ namespace Budgethelper.Forms
                 txtLastName.Text,
                 passwordHash
             );
-            Session.CurrentUser = user;
-
             SqlService.CreateUser(user); //save user data to TUser table
 
             Session.CurrentUser = user; //save user details to session 
@@ -50,8 +57,9 @@ namespace Budgethelper.Forms
 
             //non-volatile storage of read quick access
             RegistryService.SaveUid(uid); // save uid to windows registry.
-                                            
-            MessageBox.Show("Регистрация завершена");
+
+            Logger.SendMessage(Message_Type.Success, "Регистрация успешно завершена");
+            MessageBox.Show("Регистрация успешно завершена");
 
             Hide();
 

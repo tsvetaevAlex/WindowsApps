@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Principal;
 
 namespace Budgethelper.Models
@@ -10,7 +11,7 @@ namespace Budgethelper.Models
         public static AccountModel currentAccount { get; set; }
         public static WalletModel currentWallet{ get; set; }
 
-        public static string DbPath { get; set; } = "budgethelper.db";
+        public static string DbPath { get; set; } = "budgethelper.sqlite";
         public static string RegistryKeyPath { get; set; } = @"Software\BudgetHelper";
 
         public static int TransactionQTY { get; set; } = 0;
@@ -25,7 +26,7 @@ namespace Budgethelper.Models
         public static List<WalletModel> WalletsList { get; set; } = new List<WalletModel>();
 
         //Session Stats
-        public static int TransactQTY = 0;
+        //public static int TransactQTY = 0;
         public static int Income_TransactQTY = 0;
         public static int Expense_TransactQTY = 0;
         public static User currentUser { get; set; }

@@ -10,9 +10,10 @@ namespace Budgethelper.Controls
     {
         public int transactionsGroup_WIdth { get; set; }
         public int transactionsGroup_Height { get; set; }
-        //TRG_groupBox_AddBewAccount
+        
+        //TRG_groupBox_AddNewAccount
         private AccountModel _currentAccount;
-        private Transaction CurrentTransaction = null;
+        private Transaction _сurrentTransaction = null;
 
         public TransactionsGroup()
         {
@@ -98,36 +99,35 @@ namespace Budgethelper.Controls
 
             try
             {
-                Transaction CurrentTransaction = GetTransactionFromInputs();
-
-                int newId = SqlService.CreateTransaction(CurrentTransaction);
+                _сurrentTransaction = GetTransactionFromInputs();
+                int newId = SqlService.CreateTransaction(_сurrentTransaction);
 
                 // --- SESSION COUNTERS ---
 
-                Session.TransactQTY++;
-                string loggerMsg = $"Транзакция: $ID[{newId}]  | {CurrentTransaction.OperationType}, на сумму: {CurrentTransaction.Amount}, добавлена.";
-                if (CurrentTransaction.OperationType == TransactionType.Income)
+                Session.TransactionQTY++;
+                string loggerMsg = $"Транзакция: $ID[{newId}]  | {_сurrentTransaction.OperationType}, на сумму: {_сurrentTransaction.Amount}, добавлена.";
+                if (_сurrentTransaction.OperationType == TransactionType.Income)
                 {
                     Session.Income_TransactQTY++;
-                    Session.Income_Totalbalance += CurrentTransaction.Amount;
-                    Session.overallbalance += CurrentTransaction.Amount;
+                    Session.Income_Totalbalance += _сurrentTransaction.Amount;
+                    Session.overallbalance += _сurrentTransaction.Amount;
                     Logger.SendMessage(Message_Type.TransactionIncome, loggerMsg);
                 }
                 else
                 {
                     Session.Expense_TransactQTY++;
-                    Session.Expense_Totalbalance += CurrentTransaction.Amount;
-                    Session.overallbalance -= CurrentTransaction.Amount;
+                    Session.Expense_Totalbalance += _сurrentTransaction.Amount;
+                    Session.overallbalance -= _сurrentTransaction.Amount;
                     Logger.SendMessage(Message_Type.TransactionExpence, loggerMsg);
                 }
 
-                rtbTransact_QTY.Text = Session.TransactQTY.ToString();
+                rtbTransact_QTY.Text = Session.TransactionQTY.ToString();
                 rtbTransact_QTY.SelectAll();
                 rtbTransact_QTY.SelectionAlignment = HorizontalAlignment.Right;
                 rtbTransact_QTY.DeselectAll();
 
                 UpdateSEssionStats();
-                if (CurrentTransaction.OperationType == TransactionType.Income)
+                if (_сurrentTransaction.OperationType == TransactionType.Income)
                     Logger.SendMessage(Message_Type.TransactionIncome, loggerMsg);
                 else
                     Logger.SendMessage(Message_Type.TransactionExpence, loggerMsg);
@@ -249,10 +249,10 @@ namespace Budgethelper.Controls
         //Events
         //==============================
         #region Events
-        private void YRG_button_AddNewAccpunt_Click(object sender, EventArgs e)
+        private void TRG_button_AddNewAccount_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
-            this.TRG_groupBox_AddBewAccount.Visible = true;
+            this.TRG_groupBox_AddNewAccount.Visible = true;
             this.ResumeLayout(true);
         }
 
