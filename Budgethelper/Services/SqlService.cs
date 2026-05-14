@@ -1,5 +1,4 @@
 ﻿using Budgethelper.Models;
-using Budgethelper.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -11,7 +10,7 @@ namespace Budgethelper.Services
     {
 
 
-           
+
         private static string connection = "Data Source=" + Session.DbPath + ";Version=3;";
 
         private static SQLiteConnection GetConnection()
@@ -86,8 +85,8 @@ namespace Budgethelper.Services
                 }
                 catch (Exception e)
                 {
-                Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: wallets. не удалось.");
-                Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
+                    Logger.SendMessage(Message_Type.DB_fail, $"Создание Таблицы: wallets. не удалось.");
+                    Logger.SendMessage(Message_Type.Error, $"exception thrown {e.Message}");
                 }
                 //Create table: accounts
                 try
@@ -115,7 +114,7 @@ namespace Budgethelper.Services
         }
 
         // ================= USER =================
-        public static void CreateUser(User user)
+        public static void CreateUser(UserModel user)
         {
             Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateUser(User user)");
             using (var conn = GetConnection())
@@ -137,7 +136,7 @@ namespace Budgethelper.Services
             }
         }
 
-        public static User GetUser(string uid)
+        public static UserModel GetUser(string uid)
         {
             Logger.SendMessage(Message_Type.traceroute, "SqlService.GetUser(string uid)");
 
@@ -155,7 +154,7 @@ namespace Budgethelper.Services
                     {
                         if (reader.Read())
                         {
-                            return new User(
+                            return new UserModel(
                                 reader.GetString(0),
                                 reader.GetString(1),
                                 reader.GetString(2),
@@ -188,8 +187,8 @@ namespace Budgethelper.Services
                     cmd.Parameters.AddWithValue("@UserUid", wallet.UserUid);
                     cmd.Parameters.AddWithValue("@Name", wallet.Name);
                     cmd.Parameters.AddWithValue("@Description", wallet.Description);
-                    returnValue =  Convert.ToInt32(cmd.ExecuteScalar());
-                    Logger.SendMessage(Message_Type.DB_success,$"запись успешно добавлена в БазуДанных, присвоен iD: {returnValue}");
+                    returnValue = Convert.ToInt32(cmd.ExecuteScalar());
+                    Logger.SendMessage(Message_Type.DB_success, $"запись успешно добавлена в БазуДанных, присвоен iD: {returnValue}");
                 }
                 return returnValue;
             }
@@ -296,7 +295,7 @@ namespace Budgethelper.Services
         }
 
         // ================= TRANSACTIONS =================
-        public static int CreateTransaction(Transaction t)
+        public static int CreateTransaction(TransactionModel t)
         {
             Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateTransaction(Transaction t)");
 
@@ -325,7 +324,7 @@ namespace Budgethelper.Services
         {
             Logger.SendMessage(Message_Type.traceroute, "SqlService.CreateTransaction(int accountId, DateTime date, decimal amount, TransactionType type, string description = \"\")");
 
-            CreateTransaction(new Transaction
+            CreateTransaction(new TransactionModel
             {
                 AccountId = accountId,
                 Date = date,
@@ -335,9 +334,9 @@ namespace Budgethelper.Services
             });
         }
 
-        public static List<Transaction> GetTransactions(int accountId)
+        public static List<TransactionModel> GetTransactions(int accountId)
         {
-            var list = new List<Transaction>();
+            var list = new List<TransactionModel>();
 
             using (var conn = GetConnection())
             {
@@ -355,7 +354,7 @@ namespace Budgethelper.Services
                     {
                         while (reader.Read())
                         {
-                            list.Add(new Transaction
+                            list.Add(new TransactionModel
                             {
                                 Id = reader.GetInt32(0),
                                 AccountId = reader.GetInt32(1),
@@ -412,7 +411,7 @@ namespace Budgethelper.Services
             { WalletId = fatherWalletId });
 
 
-            var Gift  = new Transaction
+            var Gift = new TransactionModel
             {
                 AccountId = fatherCash,
                 Date = DateTime.Now.AddDays(-2),
@@ -423,7 +422,7 @@ namespace Budgethelper.Services
             CreateTransaction(Gift);
 
             //CreateTransaction(fatherCash, DateTime.Now.AddDays(-1), 50, TransactionType.Expense, "Groceries");
-            var Groceries = new Transaction
+            var Groceries = new TransactionModel
             {
                 AccountId = fatherCash,
                 Date = DateTime.Now.AddDays(-1),
@@ -432,7 +431,7 @@ namespace Budgethelper.Services
                 Description = "Groceries"
             };
             CreateTransaction(Groceries);
-            var Fuel = new Transaction
+            var Fuel = new TransactionModel
             {
                 AccountId = fatherCash,
                 Date = DateTime.Now.AddDays(-1),
@@ -462,8 +461,39 @@ namespace Budgethelper.Services
             { WalletId = motherWalletId });
 
             CreateTransaction(motherCash, DateTime.Now.AddDays(-2), 80, TransactionType.Expense, "Cosmetics");
+            var Cosmetics = new TransactionModel
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-2),
+                Amount = 80,
+                OperationType = TransactionType.Expense,
+                Description = "Fuel"
+            };
+            CreateTransaction(Cosmetics);
+
             CreateTransaction(motherVisa, DateTime.Now.AddDays(-5), 1500, TransactionType.Income, "Salary");
-            CreateTransaction(motherDebit, DateTime.Now.AddDays(-1), 90, TransactionType.Expense, "Taxi");
+            var Salary = new TransactionModel
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-5),
+                Amount = 1500,
+                OperationType = TransactionType.Expense,
+                Description = "Salary"
+            };
+            CreateTransaction(Salary);
+
+            //CreateTransaction(motherDebit, DateTime.Now.AddDays(-1), 90, TransactionType.Expense, "Taxi");
+            var Taxi = new TransactionModel
+            {
+                AccountId = fatherCash,
+                Date = DateTime.Now.AddDays(-1),
+                Amount = 90,
+                OperationType = TransactionType.Expense,
+                Description = "Taxi"
+            };
+            CreateTransaction(Taxi);
+
         }
-    }
-}
+    } // Ebd of public class
+
+}// End of namespace

@@ -35,14 +35,14 @@ namespace Budgethelper.Forms
             Session.Uid = uid;
             //Session.DbPath = $"{uid}.sqlite";
             string roamingAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            Session.DbPath = Path.Combine(roamingAppDataPath, "{uid}.sqlite");
+            Session.DbPath = Path.Combine(roamingAppDataPath + "_Budgethelper", "{uid}.sqlite");
 
             Logger.SendMessage(Message_Type.Debug, $"roaming AppData Folder Path: {roamingAppDataPath}");
             Logger.SendMessage(Message_Type.traceroute, $"appliction db file: {Session.DbPath}");
 
             SqlService.Initialize_Database(); //create TUser table
 
-            var user = new User(
+            var user = new UserModel(
                 uid,
                 txtName.Text,
                 txtSureName.Text,
@@ -56,7 +56,7 @@ namespace Budgethelper.Forms
             Session.IsAuthorized = true;
 
             //non-volatile storage of read quick access
-            RegistryService.SaveUid(uid); // save uid to windows registry.
+            RegistryService.SaveUid(user); // save uid to windows registry.
 
             Logger.SendMessage(Message_Type.Success, "Регистрация успешно завершена");
             MessageBox.Show("Регистрация успешно завершена");

@@ -2,7 +2,7 @@
 
 namespace Budgethelper.Models
 {
-    public class Transaction
+    public class TransactionModel
     {
         public int Id { get; set; }
         public int AccountId { get; set; }  // must have

@@ -7,7 +7,7 @@ namespace Budgethelper.Models
     public static class Session
     {
         public static string Uid { get; set; }
-        public static User CurrentUser { get; set; }
+        public static UserModel CurrentUser { get; set; }
         public static AccountModel currentAccount { get; set; }
         public static WalletModel currentWallet{ get; set; }
 
@@ -29,7 +29,7 @@ namespace Budgethelper.Models
         //public static int TransactQTY = 0;
         public static int Income_TransactQTY = 0;
         public static int Expense_TransactQTY = 0;
-        public static User currentUser { get; set; }
+        public static UserModel currentUser { get; set; }
         public static decimal Income_Totalbalance { get; set; } = 0;
         public static decimal Expense_Totalbalance { get; set; } = 0;
         public static decimal overallbalance { get; set; } //= Income_TOtalbalance - Expense_Totalbalance

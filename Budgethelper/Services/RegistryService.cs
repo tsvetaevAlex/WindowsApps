@@ -5,20 +5,20 @@ namespace Budgethelper.Services
 {
     public static class RegistryService
     {
-        public static void SaveUid(string uid)
+        public static void SaveUid(UserModel user)
         {
             
             using (var key = Registry.CurrentUser.CreateSubKey(Session.RegistryKeyPath))
             {
-                key.SetValue("Uid", uid);
-                key.SetValue("Name", Session.currentUser.Name);
-                key.SetValue("SusreName", Session.currentUser.SureName);
-                key.SetValue("LastName", Session.currentUser.LastName);
-                Logger.SendMessage(Message_Type.Debug, "Datasaved ro Registry:");
-                Logger.SendMessage(Message_Type.Debug, $"Uid:${uid};");
-                Logger.SendMessage(Message_Type.Debug, $"Name: {Session.currentUser.Name};");
-                Logger.SendMessage(Message_Type.Debug, $"SusreName: {Session.currentUser.SureName};");
-                Logger.SendMessage(Message_Type.Debug, $"LastName: {Session.currentUser.LastName};");
+                key.SetValue("Uid", user.Uid);
+                key.SetValue("Name", user.Name);
+                key.SetValue("SusreName", user.SureName);
+                key.SetValue("LastName", user.LastName);
+                Logger.SendMessage(Message_Type.Debug, "Data saved ro Registry:");
+                Logger.SendMessage(Message_Type.Debug, $"Uid:${user.Uid};");
+                Logger.SendMessage(Message_Type.Debug, $"Name: {user.Name};");
+                Logger.SendMessage(Message_Type.Debug, $"SusreName: {user.SureName};");
+                Logger.SendMessage(Message_Type.Debug, $"LastName: {user.LastName};");
             }
         }
 

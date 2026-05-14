@@ -66,6 +66,7 @@
             this.WG_Button_NewWalletName_Save.TabIndex = 2;
             this.WG_Button_NewWalletName_Save.Text = "Сохранить";
             this.WG_Button_NewWalletName_Save.UseVisualStyleBackColor = true;
+            this.WG_Button_NewWalletName_Save.Click += new System.EventHandler(this.WG_Button_NewWalletName_Save_Click);
             // 
             // WF_textBox_NewWalletName
             // 
@@ -76,6 +77,7 @@
             this.WF_textBox_NewWalletName.Size = new System.Drawing.Size(260, 20);
             this.WF_textBox_NewWalletName.TabIndex = 1;
             this.WF_textBox_NewWalletName.Text = "укажите короткое имя Вашего нового кошелька.";
+            this.WF_textBox_NewWalletName.TextChanged += new System.EventHandler(this.WF_textBox_NewWalletName_TextChanged);
             this.WF_textBox_NewWalletName.MouseEnter += new System.EventHandler(this.WF_textBox_NewWalletName_MouseEnter);
             // 
             // WG_GroupBox_NewWalletMoneySource
@@ -145,7 +147,7 @@
             this.WG_GroupBox_NewWalletMoneySourcess_List.Size = new System.Drawing.Size(110, 100);
             this.WG_GroupBox_NewWalletMoneySourcess_List.TabIndex = 3;
             this.WG_GroupBox_NewWalletMoneySourcess_List.TabStop = false;
-            this.WG_GroupBox_NewWalletMoneySourcess_List.Text = "ВАш Кошелёк:\r\n {uid}";
+            this.WG_GroupBox_NewWalletMoneySourcess_List.Text = "Ваш Кошелёк:";
             // 
             // WG_Button_newWallet_Add_MoneySources
             // 

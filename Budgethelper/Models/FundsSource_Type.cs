@@ -3,23 +3,22 @@
     public enum FundsSource_Type
     {
         Cash,
-        Card
+        Card,
     }
 
-    public class MoneySource
+    public static class FundsSourceTypeExtensions
     {
-        public FundsSource_Type Type { get; set; }
-
-        public override string ToString()
+        // Убрали override, изменили имя метода на ToFriendlyString
+        public static string ToFriendlyString(this FundsSource_Type type)
         {
-            switch (Type)
+            switch (type)
             {
                 case FundsSource_Type.Cash:
                     return "Наличные";
                 case FundsSource_Type.Card:
                     return "Банковская карта";
                 default:
-                    return Type.ToString();
+                    return "Наличные";
             }
         }
     }

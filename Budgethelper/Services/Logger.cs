@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Security.Permissions;
 using System.Threading;
 using System.Windows.Forms;
 using Budgethelper.Models;
@@ -140,6 +141,8 @@ namespace Budgethelper.Services
                 case Message_Type.Debug:
                     return "Отладочное сообщение:";
 
+                case Message_Type.traceroute:
+                    return "сообщение [traceroute] от сситемы  Трассировкb работы приложения.";
                 default:
                     return "Сообщение общего характера:";
             }
@@ -178,6 +181,7 @@ namespace Budgethelper.Services
 
                 case Message_Type.Transaction:
                     return Color.ForestGreen;
+
                 case Message_Type.TransactionIncome:
                     return Color.LawnGreen;
 
@@ -195,8 +199,11 @@ namespace Budgethelper.Services
 
                 case Message_Type.Hint:
                     return Color.Yellow;
-                
-                default:
+
+                case Message_Type.traceroute:
+                    return Color.CadetBlue;
+
+                    default:
                     return Color.White;
             }
         }

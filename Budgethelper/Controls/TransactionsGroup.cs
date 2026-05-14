@@ -13,7 +13,7 @@ namespace Budgethelper.Controls
         
         //TRG_groupBox_AddNewAccount
         private AccountModel _currentAccount;
-        private Transaction _сurrentTransaction = null;
+        private TransactionModel _сurrentTransaction = null;
 
         public TransactionsGroup()
         {
@@ -218,7 +218,7 @@ namespace Budgethelper.Controls
 
 
 
-        public Transaction GetTransactionFromInputs()
+        public TransactionModel GetTransactionFromInputs()
         {
             if (!decimal.TryParse(tbAmount.Text, out decimal amount))
                 throw new Exception("Сумма введена неверно.");
@@ -226,7 +226,7 @@ namespace Budgethelper.Controls
             if (_currentAccount == null)
                 throw new Exception("Аккаунт не выбран.");
 
-            return new Transaction
+            return new TransactionModel
             {
                 AccountId = _currentAccount.AccountID,
                 Date = datePicker.Value,
